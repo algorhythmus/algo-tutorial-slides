@@ -1,0 +1,440 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{16. Juni \thisyear}
+
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+
+\begin{frame}{Schwarzes Brett}
+	\begin{itemize}
+		\item \textbf{Erinnerung}: Am \textbf{21.06.} statt Übungstermin \textbf{Probeklausur}! Hingehen lohnt sich!
+		\item Nächstes Mal (23.06.) bin ich \textbf{nicht da} – werde aber \textbf{vertreten} von \textbf{Christopher} (dem Schöpfer der Vorlage dieser Folien \smiley). \\
+		Blätter kriegt ihr vermutlich von ihm.
+	\end{itemize}
+\end{frame}
+	
+\begin{headframe}
+	Eimerweise Sortieralgorithmen
+\end{headframe}
+	
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\textbf{Erinnerung: Bucketsort} 
+	\begin{itemize}
+		\item $n$ Elemente \textbf{beschränkter} Größe (also $\in \{a, ..., b\} $)
+		\item Lege an $buckets: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad {($k := \abs{buckets}$)}
+		\item Schmeiße jedes Element $e$ in seinen Eimer: $buckets[e].pushBack(e)$ (hinten anhängen)
+		\item Am \textbf{Ende}: „Eimer“ zusammenhängen
+		\implitem Array sortiert. 
+		\item \textbf{Laufzeit}: $O(n+k)$
+		\item \textbf{Aufpassen} bei großen/unbeschränkten $k$!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{CountingSort}
+	\textbf{Zahlen zählen} 
+	\begin{itemize}
+		\item Sagen wir jetzt ganz konkret: $n$ Zahlen $\in \{1,...,k\}$.
+		\pause
+		\item \textbf{Neue Idee}: \textbf{Zähle} (in einem Extra-Array), welche Zahl \textbf{wie oft vorkommt} (in $\Theta(n)$)
+		\pause
+		\item Bestimme dann, welche Zahl \textbf{in welchen Bereich} des sortierten Arrays gehört (in $\Theta(k)$)
+		\pause
+		\item Füge die Zahlen dann dort ein (in $\Theta(n)$)
+		\pause
+		\item Gesamtlaufzeit von \emph{CountingSort}: $O(n + k)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{CountingSort}
+	\begin{exampleblock}{CountingSort}
+		\begin{algorithm}[H]
+			\small
+			\Function{CountingSort$(A : \KwArray[1...n] \KwOf \N)$} {
+				$C[1...k] := (0,...,0) : \KwArray \KwOf \N$ \LComment{das Zählerarray} \;
+				$B[1...n] : \KwArray \KwOf \N$ \RComment{das sortierte Array (in VL ein Parameter)} \;
+				\For{$i := 1 \KwTo n$} {
+					$C[A[i]]\pp$\;
+				}
+				$C[0] := 1$\;
+				\For{$i := 2 \KwTo k$} {
+					$C[i] \pluseq C[i-1]$\;
+				}
+				\LComment{$C[\ell-1]$ sagt jetzt, wo in $B$ der Bereich für die Zahl $\ell \in A$ beginnt}
+				
+				\For{$i := 1 \KwTo n$} {
+					$B\Big[C\big[A[i]-1\big]\Big] := A[i]$ \RComment{$A[i]$ in den zugehörigen Bereich einfügen}
+					$C\left[A[i]-1\right]\pp$ \LComment{verschiebe Start des Bereiches um eins nach rechts}
+				}
+				\Return{$B$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{CountingSort}
+	\textbf{Eigenschaften}  \\
+	\impl \textbf{Spezialfall} von Bucketsort: Eimer \entspr Zähler \\
+	\pause
+	\QuestionVspace
+	\YesQuestion{Ist CountingSort stabil?} 
+	\NoQuestion{Ist Countingsort in-place?}
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Aufgabe 1: Das zählt nicht} \\
+	Gegeben sei $ A \in \left( \bigcup\limits_{i=1}^{k} \left\lbrace i,\ i+\frac{1}{2} \right\rbrace\right)^n$. Gebt ein Verfahren an, mit dem $A$ in $O(n + k)$ sortiert werden kann. 
+	% NICHT vereinfachen: Eigentliche Aufgabe ist, den Formalkram zu verstehen (sonst zu trivial)
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Lösung zu Aufgabe 1} \\
+	($A$ ist ein \textbf{Tupel} (da Element eines kartesischen Produktes).) \\
+	Sortiere $A' := 2 \cdot A$ durch \emph{CountingSort} mit $k' := 2k+1$ und teile jeden Wert im sortierten Array wieder durch 2. \\
+	\textbf{Laufzeit}: Da $|A'| = |A| = n$ in \\ 
+	$O(n + k')$ = $O(n + 2k+1)$ = $O(n + k)$ 
+\end{frame}
+
+\begin{frame}{Radixsort}
+	\textbf{Ein neuer Ansatz} \\
+	\begin{itemize}
+		\item \textbf{Geg}.: $n$ Zahlen $\in \N_0$  in Darstellung zur Basis $K$ mit jeweils $d$ Stellen pro Zahl 
+		\pause
+		\item \textbf{Idee}: $\forall $ Stelle von niedrigstwertig nach höchstwertig: \\ Sortiere mit \textbf{Bucketsort} (Buckets von $0$ bis $K-1$) nach \textbf{dieser} Stelle
+		%\item \textbf{Idee}: Wende für die niedrigstwertige Stelle (\emph{LSD}) Bucketsort an und fahre mit der nächsthöherwertigen Stelle fort (das Intervall für \emph{BucketSort} geht hierbei jeweils von $0$ bis $K-1$)
+		\pause
+		\item \textbf{Warum} geht das? \\
+		\pause 
+		\impl \textbf{Stabilität} von Bucketsort
+		\item \textbf{Laufzeit} von (LSD-)Radixsort: $O(d \cdot (n + K))$ \\
+		{\small (LSD: \textbf{L}owest \textbf{s}ignificant \textbf{d}igit)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Aufgabe 2: Radixchensalat} \\
+	Sortiert die folgende Liste mit \emph{LSD-Radixsort}:  $\langle 36, 78, 50, 1, 92, 15, 43, 99, 64 \rangle$
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Lösung zu Aufgabe 2} \\[0,25cm]
+	Eingabe:  $\langle 36, 78, 50, \gray{0}1, 92, 15, 43, 99, 64 \rangle$
+	\\[0,25cm]
+	Nach der ersten Stelle (von rechts): \\ $\langle 5\textbf{0}, \gray{0}\textbf{1}, 9\textbf{2}, 4\textbf{3}, 6\textbf{4}, 1\textbf{5}, 3\textbf{6}, 7\textbf{8}, 9\textbf{9} \rangle$
+	\\[0,25cm]
+	Nach der zweiten Stelle: \\ $\langle \textbf{0}1, \textbf{1}5, \textbf{3}6, \textbf{4}3, \textbf{5}0, \textbf{6}4, \textbf{7}8, \textbf{9}2, \textbf{9}9 \rangle$
+\end{frame}
+
+\begin{frame}{(LSD-)Radixsort}
+	\textbf{Eigenschaften}   
+	\begin{itemize}
+		\item \textbf{Laufzeit}: linear (für \textbf{konstante} $d$ \textbf{und} $K$!) \\
+		\pause
+		(für große $d$: Verfahren in $\Theta(n \log n)$ geeigneter)
+		\pause
+		\item Ebenfalls \textbf{Spezialfall} von \emph{BucketSort}
+		\pause
+		\item ... und ebenfalls \textbf{stabil}, aber \textbf{nicht in-place}.
+		\pause
+		\item \emph{MSD-Radixsort} gibt's auch, wird hier nicht behandelt
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Aufgabe 3: Liste der bedrohten Sortierarten} \\
+	Gegeben seien $n$ Zahlen im Bereich von $0$ bis $n^3 - 1$. Gebt ein Verfahren an, mit dem diese in $\Theta(n)$ sortiert werden können.
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Lösung zu Aufgabe 3} \\
+	Betrachte die Zahlen in Darstellung zur Basis $n$, d.h. jede Zahl hat in dieser Darstellung 3 Stellen. \\ 
+	Wende $RadixSort$ an \impl die Zahlen werden in $\Theta(3 \cdot (n + n)) = \Theta(n)$ sortiert.
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Aufgabe 4: PancakeSort} \\
+	Für eine Familienfeier habt ihr euch großzügigerweise bereiterklärt, einen großen Stapel Pfannkuchen zu liefern. Ärgerlicherweise bemerkt ihr zu spät, dass eure Schöpfkelle ein Loch hat, so dass jedesmal eine unterschiedliche Menge Teig in der Pfanne gelandet ist -- somit ist jeder Pfannkuchen unterschiedlich groß und der Stapel sieht völlig chaotisch aus, weshalb \emph{bestimmt} die Welt untergeht. Glücklicherweise steht euch euer Vetter Donald mit Rat und Tat zur Seite, denn er ist der unbestrittene Weltmeister in der Kunst des Pfannkuchenwendens. Phänomenalerweise ist er sogar in der Lage, einen beliebig großen (Teil-)Stapel Pfannkuchen in einem Schwung komplett umzudrehen! Leider ist er seit einem Zwischenfall beim Pfannenwenderweitwurf etwas beschränkt, so dass er auf eure Anleitung angewiesen ist. Gebt ein In-place-Verfahren an, mit dem der Pfannkuchenstapel in möglichst geringer Zeit (bzgl. Anzahl der Pfannkuchen) sortiert werden kann.
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\underline{Lösung zu Aufgabe 4} \\
+	\begin{itemize}
+		\item Zu Beginn sieht der Stapel so aus: [bottom...biggest...top]
+		\item Wende Teilstapel [biggest..top] \LComment{Größter nach oben}
+		\item Wende ganzen Stapel \LComment{Größter ganz unten}
+		\item Für alle Teilstapel über dem nun korrekt einsortierten: \textbf{Wiederhole}.
+		\implitem Pro Pfannkuchen höchstens 2-mal wenden \impl $O(n)$.
+	\end{itemize}
+	%Wende den Teilstapel bestehend aus dem größten Pfannkuchen und allen Pfannkuchen, die sich über diesem befinden (somit befindet sich der größte Pfannkuchen ganz oben). Wende im Anschluss den gesamten Stapel (nun ist der größte Pfannkuchen ganz unten). Setze dieses Verfahren in Bezug auf den restlichen unsortierten Teilstapel (über dem eben „einsortierten“ Pfannkuchen) fort. Folglich sind maximal zwei Wendungen pro Pfannkuchen nötig (die letzten zwei Pfannkuchen erfordern weniger), also läuft das Ganze in linearer Zeit.
+\end{frame}
+
+
+
+\begin{headframe}[And now for something completely different...]
+	Binäre Heaps
+\end{headframe}
+
+\begin{frame}{Binäre Heaps}
+	\textbf{} 
+	\begin{itemize}
+		\item \textbf{Binärbaum}: Baum, wobei jeder Knoten \textbf{max. zwei Kinder} hat.
+		\pause
+		\item Ein Baum $T$ erfüllt die \textbf{Heap-Eigenschaft} :\gdw \\ 
+		$\forall v \in T : \quad parent(v) \leq v$ \\ 
+		{\small (je näher an Wurzel $=$ Minimum, desto kleiner die Werte) } \\
+		\textcolor{red}{\textbf{Achtung}}: Das heißt \textbf{nicht} \xcancel{\text{„T ist sortiert“}}!
+		\pause
+		\item Ein \textbf{binärer Heap} ist ein Binärbaum, der die Heap-Eigenschaft erfüllt.
+		\pause
+		\item \textbf{Wofür}? \impl (un/beschränkte) \textit{PriorityQueues}  {\small (brauchen wir später noch!)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Binäre Heaps}
+	\textbf{Implementierung} \\
+	\begin{itemize}
+		\item Repräsentiere binären Baum als $\KwArray[1...n]$ 
+		%\pause
+		\item Die Ebenen des Baumes liegen von \textbf{oben \~~> unten} und \\ von \textbf{links \~~> rechts} nacheinander im Array 
+		\pause
+		\item Von Knoten $j$ kriegt man \textbf{Eltern} und \textbf{Kinder} wie folgt:
+	\end{itemize}
+		%\item Hat man den Index $j$ eines Elementes, kann man somit leicht den Index der mit ihm verbundenen Elemente bestimmen: % <-- wollte ich umformulieren, aber LaTeX spackte aus O_o
+		%\pause
+		%\pause
+	\begin{columns}
+		\column{.4\textwidth}
+			\vspace{-7\baselineskip} % [T] option doesn't even work. Fuck you, LaTeX!
+			\begin{align*}
+				&parent(j) = \floor{\tfrac{j}{2}} \\
+				&leftChild(j) = 2j \\
+				&rightChild(j) = 2j + 1
+			\end{align*}
+		\column[c]{.5\textwidth}
+			\includegraphics[height=4.7cm]{heaparray}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Binäre Heaps}
+	\textbf{Einfügen von Elementen (insert)} 
+	\begin{itemize}
+		\item Setze Element $e$ in die \textbf{unterste} Ebene, so weit \textbf{rechts} wie möglich
+		\pause
+		\item Heap-Eigenschaft \textbf{fixen}: mit \emph{siftUp} \\
+		Vertausche $e$ solange mit seinem Parent, bis wieder erfüllt
+		\pause
+		\item Laufzeit: $O(\log n)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Binäre Heaps}
+	\textbf{Entfernen des Minimums (deleteMin)}
+	\begin{itemize}
+		\item Einfach: Minimum $= A[1]$ „\textbf{oben wegnehmen}“
+		\pause
+		\item \textbf{Lücke schließen}: Letztes Element $u$ aus \textbf{unterster} Ebene nach oben holen ($A[1] := A[n] = u$).
+		\pause
+		\item Heap-Eigenschaft \textbf{fixen}: mit \emph{siftDown} \\
+		Vertausche $u$ solange mit dem jew. \textbf{kleinsten} Kind, bis wieder erfüllt
+		\pause
+		\item Laufzeit: $O(\log n)$
+		\pause
+	\end{itemize}
+	\forcenewline
+	\textbf{Minimum abfragen (min)}
+	\begin{itemize}
+		\item \Return{$A[1]$}
+		\item Laufzeit: $O(1)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Binäre Heaps}
+	\textbf{Aufbau aus einem chaotischen Array (buildHeap)} 
+	\begin{itemize}
+		\item Haben chaotisches Array $A$, wollen \textbf{Heapstruktur} auf $A$ herstellen
+		\implitem Systematisch richtigrum tauschen: \\
+		\lForEach{$\text{Ebene} \in \text{Zweittiefste ... Oberste}$}{} % ftfs, I don't want to start an algo environment here
+		\quad \lFor{$elem \in \text{Ebene} \KwFrom right \KwTo left$}{}
+		\qquad \lIf{elem \text{too high}}{siftDown($elem$)}
+		%\item Vorgehen: Gehe die Ebenen von der Zweitniedrigsten bis zur Obersten durch und tausche größere Elemente nach unten durch (mit „sift-down“)
+		\pause
+		\item Klingt nach $O(n \log n)$, aber Vorlesung sagt: \\
+		\textbf{Laufzeit} $O(n)$
+	\end{itemize}
+\end{frame}
+
+\iffalse
+\begin{frame}{Binäre Heaps}
+	\textbf{Adressierbare Heaps} \\[0,125cm]
+	\begin{itemize}
+		\item Vorhaben: Ermögliche die Änderung des Wertes eines Elementes (d.h. nach der Wertänderung wird das Element an seine neue Position hoch- bzw. runtergetauscht)
+		\pause
+		\item Problem: Wenn Elemente ihre Position im Array (und somit im Speicher) ständig ändern, können sie nicht beständig adressiert werden
+		\pause
+		\item Lösung: Halte nicht die Elemente selbst, sondern Referenzen auf diese Elemente in der Datenstruktur
+	\end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}{Haufenweise Sortieralgorithmen}
+	\textbf{Heapsort} 
+	\begin{itemize}
+		\item buildHeap($A$) \qquad in $O(n)$ 
+		\item $n$-mal: \quad deleteMin() \qquad jeweils in $O(\log n)$ \\
+		\pause
+		Nach jedem deleteMin() wird ein \textbf{Platz hinten frei}: Schmeiß es \textbf{dorthin}! (\impl liefert \textbf{absteigende} Sortierung)
+		\visible<2->{\includegraphics[width=.9\textwidth]{heapsort-inplace}}
+		\pause
+		\implitem \textbf{Gesamt-Laufzeit}: $O(n \log n)$ \\
+		\Cons \textbf{nicht} stabil \quad (wg. siftUp/Down) \\
+		\Pros in-place  \\
+		\Pros Cache-effizient
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{headframe}[– Literally –]
+	Sorting Algorithms
+\end{headframe}
+
+\begin{frame}{Sorting Algorithms}
+	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{Stabilität}. \\
+	\pause
+	\forcenewline
+	\centering
+	\begin{tabular}{m{.3\linewidth} | m{.2\linewidth} |}
+		\hline
+		InsertionSort \newline 
+		SelectionSort \newline
+		Mergesort \newline
+		CountingSort \newline
+		Bucketsort \newline
+		Radixsort & \YesCell \\
+		\hline
+		Heapsort \newline
+		Quicksort & \NoCell \\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Sorting Algorithms}
+	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{Cache-Effizienz}. \\
+	\pause
+	\forcenewline
+	\centering
+	\begin{tabular}{m{.3\linewidth} | m{.2\linewidth} |}
+		\hline
+		InsertionSort \newline 
+		SelectionSort \newline
+		Heapsort \newline
+		CountingSort \newline
+		Quicksort & \YesCell \\
+		\hline
+		Bucketsort \newline
+		Mergesort \newline
+		Radixsort & \NoCell \\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Sorting Algorithms}
+	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{Platzverbrauch}. \\
+	\pause
+	\forcenewline
+	\centering
+	\begin{tabular}{m{.55\linewidth} | m{.15\linewidth} }
+		\hhline{=|=}
+		InsertionSort \newline 
+		SelectionSort \newline
+		Mergesort (ohne Rekursionsoverhead) \newline
+		Quicksort (ohne Rekursionsoverhead) & $O(1)$ \\
+		\hline
+		Heapsort & $O(n)$ \\
+		\hhline{=|=}
+		CountingSort \newline 
+		Bucketsort & $O(n+k)$ \\
+		\hhline{=|=}
+		Radixsort & $O(n+K)$ \\
+		\hhline{=|=}
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Sorting Algorithms}
+	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{Worst-Case-Laufzeit}. \\ 
+	\pause
+	\forcenewline
+	\begin{columns}
+		\column{.45\textwidth}
+		\begin{tabular}{m{.4\linewidth} | m{.3\linewidth} }
+			\hhline{=|=}
+			Mergesort \newline
+			Heapsort & $O(n \log n)$ \\
+			\hline
+			Quicksort \newline 
+			InsertionSort \newline 
+			SelectionSort & $O(n^2)$ \\
+			\hhline{=|=}
+		\end{tabular}
+		\column{.45\textwidth}
+		\hspace{-2\baselineskip}
+		\begin{tabular}{m{.37\linewidth} | m{.47\linewidth} }
+			\hhline{=|=}
+			Radixsort & $O(d \cdot (n + K))$ \newline ($K$: Basis, \newline $d$: Digits)\\
+			\hhline{=|=}
+			Bucketsort \newline
+			Countingsort & $O(n+k)$ \newline ($k$: „maxValue“) \\
+			\hhline{=|=}
+		\end{tabular}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Sorting Algorithms}
+	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{„Standard-Laufzeit“}. \\
+	\pause
+	\forcenewline
+	\begin{columns}
+		\column{.55\textwidth}
+		\hspace{.2\baselineskip}
+		\begin{tabular}{m{.487\linewidth} | m{.3\linewidth} }
+			\hhline{=|=}
+			Mergesort \newline
+			Heapsort \newline 
+			Quicksort (erwartet) & $O(n \log n)$ \\
+			\hline 
+			InsertionSort \newline 
+			SelectionSort & $O(n^2)$ \\
+			\hhline{=|=}
+		\end{tabular}
+		\column{.45\textwidth}
+		\hspace{-1\baselineskip}
+		\begin{tabular}{m{.37\linewidth} | m{.47\linewidth} }
+			\hhline{=|=}
+			Radixsort & $O(d \cdot (n + K))$ \newline ($K$: Basis, \newline $d$: Digits)\\
+			\hhline{=|=}
+			Bucketsort \newline
+			Countingsort & $O(n+k)$ \newline ($k$: „maxValue“) \\
+			\hhline{=|=}
+		\end{tabular}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Schönes Wochenende noch! \smiley}
+	\centering
+	\includegraphics[width=.83\textwidth]{xkcd-835}
+\end{frame}
+
+
+\end{document}

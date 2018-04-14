@@ -1,0 +1,278 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{07. Juli \thisyear}
+
+\morescalingdelimiters
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+\begin{frame}{Noch was zu DFS/BFS}
+	\begin{itemize}
+		\item DFS/BFS finden \textbf{Pfade} von Startknoten $s$ zu allen anderen erreichbaren Knoten \\
+		\impl $parent$-Array zum Rekonstruieren der Pfade \\
+		{\small ($parent[v]$: Vorgänger von $v$ im Pfad zu $v$)}
+		\item DFS/BFS messen „\textbf{Distanz}“ der Knoten \\
+		\impl $d$-Array mit $d[v] = $ Anzahl Kanten auf dem Weg zu $v$ 
+		\Implitem \textbf{Rückgabewerte} von BFS/DFS im Pseudocode benutzbar: \\
+		$(parent, d) := \text{BFS}(G, s)$ \RComment{DFS similar} \\
+		\LComment{Now use $parent[\cdot]$ and $d[\cdot]$} 
+	\end{itemize}
+\end{frame}
+
+\begin{headframe}[Es kommt halt \textit{doch} auf die Länge an...]
+	Kürzeste Pfade
+\end{headframe}
+	
+\begin{frame}{Kürzeste Pfade – Dijkstra}
+	\textbf{Der unaussprechliche Algorithmus} 
+	\begin{itemize}
+		\item \underline{Gesucht}: \textbf{Kürzeste gewichtete} Pfade \\
+		von Startknoten $s \in V$ zu \textbf{allen} anderen Knoten
+		\pause
+		\item \textit{Breitensuche}: Findet kürzeste Pfade bei \textbf{ungewichteten} Kanten
+		\pause
+		\implitem Passe BFS für gewichtete Kanten an, \\
+		verwende zwei $\KwArray$s:
+		\begin{itemize}
+			\item $d[v]$: Länge des \textbf{bisher bekannten} kürzesten Pfades zu $v$ 
+			\vspace{.2\baselineskip}
+			\item $parent[v]$: \textbf{Direkter} Vorgänger von $v$ im \textbf{bisher bekannten} kürzesten Pfad zu $v$
+		\end{itemize}
+		\pause
+		\item Rüste Queue $Q$ auf zu einer \textbf{PriorityQueue} $PQ$ (z.B. binärer Heap), Knoten $v$ wird mit $d[v]$ gewichtet
+		%\pause
+		%\item Invariante: Kürzester Pfad zu $PQ.min$ ist bekannt
+		\pause
+		\item Wichtige Einschränkung: \textbf{Keine negativen Kantengewichte!}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade – Dijkstra}  \vspace{-.25\baselineskip}
+	\begin{exampleblock}{} \vspace{-.4\baselineskip}
+		\begin{algorithm}[H]
+			\small
+			\Function {Dijkstra$(G = (V, E),\ s \in V)$} {
+				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$\;
+				$parent := (\bot, .., \bot) : \KwArray[1...n] \KwOf V$\;
+				$PQ = \{s\} : $ PriorityQueue\;
+				$parent[s] := s, \quad d[s] := 0$ \;
+				\While{$PQ \neq \emptyset$} {
+					$u := PQ.$deleteMin$()$ \RComment{u wird jetzt „gescannt“} \;
+					\ForEach(\RComment{„Relaxiere“ e}){$e = (u, v) \in E$} {
+						\If{$d[u] + c(e) < d[v]$} {
+							$d[v] := d[u] +c(e)$\;
+							$parent[v] := u$\;
+							\eIf{$v \in PQ$} {
+								$PQ.$decreaseKey$(v)$\;
+							}{
+							$PQ.$insert$(v)$\;
+							}
+						}
+					}
+				}
+				\Return{$(d, parent)$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade – Dijkstra}
+	\textbf{Korrektheit}
+	\begin{itemize}
+		%\pause
+		\item \textbf{Invariante}: Wenn ein Knoten aus $PQ$ entnommen wird, ist zu diesem der \textbf{endgültige} kürzeste Pfad bekannt
+		\pause
+		\item Beweis der Invariante durch \textbf{vollständige Induktion} über die Schleifendurchläufe möglich
+	\end{itemize}
+\end{frame}
+
+\iffalse
+
+\begin{frame}{Kürzeste Pfade – Dijkstra}
+	\textbf{Korrektheitsbeweis} \\
+	%\begin{itemize}
+	%\pause
+	\underline{IA.:} Endgültiger kürzester Pfad zu $s$: Trivial \yop \\[0,125cm]
+	\pause
+	\underline{IV.:} Zu allen Knoten $v_1, ..., v_{i-1}$, die aus der $PQ$ entnommen wurden, \\
+	\quad\ \ ist der \textbf{endgültige} kürzeste Pfad bekannt \\[0,125cm]
+	\pause
+	\underline{IS.:} Knoten $v_i$ wird entnommen. Der bekannte kürzeste Pfad führt \\
+	\quad\ \ „irgendwie“ über $v_1 ... v_{i-1}$ zu $v_i$. \\
+	\pause
+	\quad\ \ Ang., es gibt einen \textbf{echt} kürzeren Pfad zu $v_i$. Dieser \textbf{muss} dann über \\
+	\quad\ \ einen Knoten $p$ aus der $PQ$ zu $v_i$ führen. \\
+	\pause
+	\quad\ \ Dafür gibt es zwei Möglichkeiten: \\
+	\pause
+	\quad\ \ Fall 1: Zu $p$ gibt es einen kürzeren Pfad als zu $v_i$ \\
+	\pause
+	\qquad\qquad\ \ \impl $p$ wurde \textbf{vor} $v_i$ aus der $PQ$ entnommen \crash \\
+	\pause
+	\quad\ \ Fall 2: Der Pfad über $p$ zu $v_i$ ist kürzer als der kürzeste Pfad zu $p$ \\
+	\pause
+	\qquad\qquad\ \ \impl $c((p, v_i)) < 0$ \crash { \small(Keine negativen Kantengewichte erlaubt!)}
+	%\end{itemize}
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade – Dijkstra}
+	\textbf{Korrektheitsbeweis} \\
+	\begin{itemize}
+		\item \textbf{Terminierung}: In \textbf{jedem} Schleifendurchlauf wird ein Knoten $v$ aus $PQ$ entnommen. Da dann der \textbf{endgültige} kürzeste Pfad zu $v$ bekannt ist, wird $v$ danach \textbf{nicht} mehr erneut in die $PQ$ eingefügt \\
+		\impl Nach maximal $n$ Schleifendurchläufen ist $PQ$ leer und der Algorithmus terminiert.
+	\end{itemize}
+\end{frame}
+
+\fi
+
+\begin{frame}{Kürzeste Pfade – Dijkstra}
+	\textbf{Laufzeit von Dijkstra} 
+	\begin{itemize}
+		\item[] Im Worst-Case $m$-mal $decreaseKey$
+		\item[$+$] Genau $n$-mal $deleteMin$ und $insert$
+		\pause
+		\item[$=$] Mit binärem Heap: $O\left((m+n)\log n\right)$
+		\pause
+		\item[$=$] Mit Fibonacci-Heap: $O(m + n \log n)$ \quad (amortisiert und mit höheren konstanten Faktoren)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade}
+	\underline{Aufgabe 1: Noch kürzere kürzeste Pfade} \\
+	Gegeben sei ein ( gerichteter oder ungerichteter) zusammenhängender Graph $G = (V, E)$ mit nichtnegativen Kantengewichten $\omega : E \functionto \R^{+}$. Beschreibt einen effizienten Algorithmus, der für einen Startknoten $s$ und alle Zielknoten $t \in V$ den Pfad mit den \textbf{wenigsten} Kanten unter allen kürzesten Pfaden von $s$ nach $t$ berechnet.
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade}
+	\underline{Lösung zu Aufgabe 1} \\
+	\textbf{Modifiziere} Dijkstra: Definiere Kantengewichte um als \textbf{Tupel} $c'(e) := \left(c(e), 1\right)$ (mit komponentenweiser Addition) und folgender Ordnung: \\ $(a, b) < (c, d) \Gdw a < c \ \lor\  (a = c \land b < d)$ 
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade – Bellman-Ford}
+	\textbf{Rohe Gewalt: Bellman-Ford} 
+	\begin{itemize}
+		\pause
+		\item \textbf{Problem}: Dijkstra „erstickt“ an negativen Kantengewichten
+		\pause
+		\item \textbf{Überlegung}: Längster (zyklenfreier) Pfad hat \textbf{maximal} $n-1$ Kanten
+		\pause
+		\implitem Relaxiere jede Kante $(n-1)$-mal \impl \textbf{jeder} minimale zyklenfreie Pfad wurde bestimmt
+		\pause
+		\item \textbf{Laufzeit}: $O(n \cdot m)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade – Bellman-Ford}
+	\begin{exampleblock}{}
+		\begin{algorithm}[H]
+			\small
+			\Function {BellmanFord$(G = (V, E),\ s \in V)$} {
+				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$\;
+				$parent := (\bot, ..., \bot) : \KwArray[1...n] \KwOf V$\;
+				$parent[s] := s ; \quad d[s] := 0$ \;
+				\KwSty{do} $n-1$ \KwSty{times} \EmptyBlock{
+					\ForEach{$e = (u, v) \in E$} {
+						\If{$d[u] + c(e) < d[v]$} {
+							$d[v] := d[u] + c(e)$\;
+							$parent[v] := u$\;
+						}
+					}
+				}
+				\ForEach{$e = (u, v) \in E$} {
+					\If{$d[u] + c(e) < d[v]$} {
+						\LComment{kleinerer zyklenfreier Pfad ist nicht möglich \impl Negativer Zyklus}
+						$d[v] := -\infty$\;
+					}
+				}
+				\KwRet{$(d, parent)$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+
+
+\begin{frame}{Graphen}
+	\underline{Aufgabe 2: Der Klassiker} \\
+	Ein Fährmann soll einen Wolf, eine Ziege und einen Kohlkopf von der linken auf die rechte Seite eines Flusses befördern. Sein kleines Boot hat aber nur Platz für ihn und ein weiteres Objekt. \\
+	Außerdem frisst der Wolf die Ziege und die Ziege den Kohlkopf, wenn der Fährmann nicht dabei ist. Zum Glück mag der Wolf kein Gemüse. Wie kann der Fährmann den Wolf, die Ziege und den Kohlkopf unbeschadet übersetzen? \\
+	Löst das Problem mithilfe eines Graphen zeichnerisch.
+\end{frame}
+
+\begin{frame}{Graphen}
+	\underline{Lösung zu Aufgabe 2} \\
+	Ein Zustandsgraph: \\
+	\includegraphics[width=1.03\textwidth]{faehrmann} \\
+	Weg von [WZKF|] nach [|WZKF] ist Lösung.
+\end{frame}
+
+\begin{frame}{Graphen}
+	\underline{Aufgabe 3: Domino Day} \\
+	Ihr habt folgende Dominosteine gegeben: \\
+	\includegraphics[width=.7\textwidth]{domino-aufg} \\
+	Ist es möglich, alle Steine als einen geschlossenen Ring anzuordnen, sodass nur gleiche Zahlen aneinanderliegen? Löst das Problem mithilfe eines Graphen zeichnerisch.
+\end{frame}
+
+\begin{frame}{Graphen}
+	\underline{Lösung zu Aufgabe 3} \\
+	Pro Zahl ein Knoten, pro Stein eine Kante zwischen zwei Knoten. \\
+	Zyklus $1 \rightarrow 4 \rightarrow 6 \rightarrow 2 \rightarrow 5 \rightarrow 3 \rightarrow 1 \rightarrow 2 \rightarrow 4 \rightarrow 5 \rightarrow 1$ ist Lösung. \\
+	\includegraphics[width=.4\textwidth]{domino-lsg} \\
+	\pause
+	Allgemein lösbar, wenn Graph zusammenhängend ist und eulerschen Kreis enthält (\gdw nur gerade Knotengrade enthält). \\
+	{\small (siehe Exkurs nächste Folie)}
+\end{frame}
+
+\begin{frame}{Exkurs Eulerkreis/Hamiltonkreis}
+	\textbf{Eulerkreis}: \\
+	Kreis, der jede \textbf{Kante} genau einmal beschreitet. {\small (\textbf{E}uler \impl \textbf{E}dges \impl Kanten)} \\
+	\forcenewline
+	\pause
+	\textbf{Hamiltonkreis}: \\
+	Kreis, der jeden \textbf{Knoten} genau einmal beschreitet. \\
+	\forcenewline
+	\pause
+	$\exists$ Eulerkreis in $G$ \gdw $G$ hat nur gerade Knotengrade. \\
+	$\exists$ Hamiltonkreis in $G$ \gdw Ausprobieren! :P (Gibt kein einfaches Kriterium)
+\end{frame}
+
+
+\begin{frame}{Graphen}
+	\underline{Aufgabe 4: Tiefensuche revisited} \\
+	Implementiert Tiefensuche nicht-rekursiv als Pseudocode. Das asymptotische Laufzeitverhalten von Tiefensuche darf hierbei nicht überschritten werden.
+\end{frame}
+
+\begin{frame}{Kürzeste Pfade}
+	\underline{Lösung zu Aufgabe 4} \\
+	Recursion-Faking mittels Stack: 
+	\begin{algorithm}[H]
+		\Procedure{DFS$\left(G=(V,E),\ s \in V\right)$}{
+			$S := \llist{s} : \text{Stack}$ \;
+			$visited := (\KwFalse, ..., \KwFalse): \KwArrayOf \text{Boolean}$ \;
+			\While{$S \neq \emptyset$}{
+				$u := S$.pop$()$ \;
+				\If{$\KwNot visited[u]$}{
+					$visited[u] := \KwTrue$ \; 
+					\For{$(u,v) \in E$}{
+						\If{$\KwNot visited[v]$}{
+							$S$.push$(v)$
+						}	
+					}
+				}
+			}
+		}
+	\end{algorithm}
+\end{frame}
+
+\end{document}

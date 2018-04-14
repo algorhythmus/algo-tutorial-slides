@@ -1,0 +1,501 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\input{../preamble/tutpreamble}
+
+\date{19. Mai \thisyear}
+
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+%TODO headframe? Datenstrukturen? Folgen?
+	
+\begin{frame}{Datenstrukturen – dynamisch viele Elemente}
+	Arrays = toll, aber ...
+		\pause
+		\begin{itemize}
+			\item[\Cons] nur begrenzt groß
+			\pause
+			\item[\Cons] \emph{von Anfang an} volle Größe
+			\pause
+			\item[\Cons] Einfügen zwischendrin ist scheiße
+		\end{itemize}
+\end{frame}
+
+\begin{frame}{(Doppelt) Verkettete Listen}
+	\begin{itemize}
+		\item Mehrere \textbf{Segmente} (\emph{Items}): durch Referenzen  (\emph{Handles}) jeweils miteinander „verbunden“
+		\pause
+		\item Ein \textbf{Segment} besteht jeweils aus
+		\begin{itemize}
+			\item dem \textbf{Element}: Eigentliches Datum an der Stelle
+			\pause
+			\item \textbf{next}: Referenz auf das nächste Segment
+			\pause
+			\item \textbf{prev}: Referenz auf das vorherige Segment
+		\end{itemize}
+		\pause
+		\implitem Ganze Liste von \textit{einem} Segment aus erreichbar! (Dank Verlinkung)
+		\pause 
+		\item Invariante: $next \access prev = prev \access next = \KwThis$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{(Doppelt) Verkettete Listen}
+	\begin{itemize}
+		\item Was folgt auf das \textbf{letzte} Segment? Was kommt vor dem \textbf{ersten} Segment?
+		\pause
+		\item Möglichkeit: Nullpointer \\
+		\pause
+		\hanging \Cons \ Viele Sonderfälle und die Invariante geht \textcolor{red}{\textbf{kaputt}} \frownie
+		\pause
+		\item Praktischer: Zyklische Verknüpfung
+		\pause
+		\item Anfang, Ende erkennen? Leere Liste!?
+		\pause
+		\implitem Verwende einen \textbf{Dummy-Header} ($h$) – hält kein Element und markiert „breaking point“:
+		\pause
+		\begin{itemize}
+			\item $h.next$: \textbf{erstes} Segment der eigentlichen Liste
+			\item $h.prev$: \textbf{letztes} Segment der eigentlichen Liste
+		\end{itemize}
+		\pause
+		\item[\Pros] Bequemer Code, denn: Viel \textbf{weniger Sonderfälle} und eine happy Invariante! \smiley
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{(Doppelt) Verkettete Listen}
+	\begin{itemize}
+		\item Jetzt möglich:
+		\pause
+		\begin{itemize}
+			\item \textbf{Einfügen} und \textbf{Entfernen} in $O(1)$ (wir brauchen eine konkrete Stelle)
+			\pause 
+			\item \textbf{Inter-List-Splice} (Abschnitte zwischen Listen umhängen) in $O(1)$
+			\pause
+			\item Platzbedarf linear
+			%\item Dynamische Größe auch im Speicher, abgesehen vom $dummy header$ werden nur so viele Segmente verwaltet, wie es Elemente in der Liste gibt
+		\end{itemize}
+		\pause
+		\item Auch möglich: \textbf{Einfach} verketten statt doppelt \impl Weniger Speicher \newline \impl schränkt manche Funktionen deutlich ein
+	\end{itemize}
+\end{frame}
+
+\iffalse
+
+\begin{frame}{Verkettete Listen}
+	\begin{exampleblock}{Anwendung: Konstruierung einer \emph{Unbounded Queue}}
+		\begin{tabular}{  p{5cm} c }
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				$head = createHandle(\bot) : Handle$\;
+				\;
+				\Procedure{pushBack$(e : Element)$} {
+					$new := createHandle(e)$\;
+					$last := head \access prev$\;
+					\;
+					$last \access next := new$\;
+					$new \access prev := last$\;
+					\;
+					$head \access prev := new$\;
+					$new \access next := head$\;
+				}
+				
+				\only<beamer:0>{\;
+				\Function{isEmpty : Bool}{
+					\Return head.next = head
+				}	
+				}
+			\end{algorithm}
+			&
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				\;
+				\Function{popBack$ : Element$} {
+					$\KwAssert \neg isEmpty$\;
+					$old := head \access prev$\;
+					$last := old \access prev$\;
+					$e := old \access e$\;
+					\;
+					$last \access next := head$\;
+					$head \access prev := last$\;
+					\;
+					$\KwDispose old$\;
+					\Return{$e$}\;
+				}
+			\end{algorithm}
+		\end{tabular}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Verkettete Listen}
+	\begin{exampleblock}{Anwendung: Konstruierung einer \emph{Unbounded Queue}}
+		\begin{tabular}{  p{5cm} c }
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				\Procedure{pushFront$(e : Element)$} {
+					$new := createHandle(e)$\;
+					$first := head \access next$\;
+					\;
+					$new \access next := first$\;
+					$first \access prev := new$\;
+					\;
+					$head \access next := new$\;
+					$new \access prev := head$\;
+				}
+			\end{algorithm}
+			&
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				\;
+				\Function{popFront$ : Element$} {
+					$\KwAssert \neg isEmpty$\;
+					$old := head \access next$\;
+					$first := old \access next$\;
+					$e := old \access e$\;
+					\;
+					$first \access prev := head$\;
+					$head \access next := first$\;
+					\;
+					$\KwDispose old$\;
+					\Return{$e$}\;
+				}
+			\end{algorithm}
+		\end{tabular}
+	\end{exampleblock}
+\end{frame}
+
+\fi
+
+\begin{frame}{Einschub}
+	\textbf{Inter-List-Splice}
+	\vspace{-1.0\baselineskip}
+	\begin{figure}[htp]
+		%\centering
+		\includegraphics[height=7cm]{splice}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Verkettete Listen}
+	\begin{exampleblock}{Anwendung: Konstruierung einer \emph{Unbounded Queue}}
+		\LComment{Erinnerung: $splice(a, b, t : Handle)$ schneidet $\langle a,...,b \rangle$ aus} \\
+		\LComment{seiner zugehörigen Liste aus und fügt es nach $t$ ein} \\
+		\begin{tabular}{  p{5,5cm} c }
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				$head = createHandle(\bot) : Handle$\;
+				\;
+				\Procedure{pushBack$(e : Element)$} {
+					$new := createHandle(e)$\;
+					$new \access prev := new \access next := new$\;
+					$splice(new, new, head\access prev)$\;
+				}
+			\end{algorithm}
+			&
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				\;
+				\Function{popBack$ : Element$} {
+					$\KwAssert \neg isEmpty$\;
+					$old := head \access prev$\;
+					$e := old \access e$\;
+					$d := createHandle(\bot)$\;
+					$d \access prev := d \access next := d$\;
+					\;
+					$splice(old, old, d)$\;
+					\;
+					$\KwDispose old, d$\;
+					\KwRet{$e$}\;
+				}
+			\end{algorithm}
+		\end{tabular}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Verkettete Listen}
+	\begin{exampleblock}{Anwendung: Konstruierung einer \emph{Unbounded Queue}}
+		\LComment{Erinnerung: $splice(a, b, t : Handle)$ schneidet $\langle a,...,b \rangle$ aus} \\
+		\LComment{seiner zugehörigen Liste aus und fügt es nach $t$ ein}
+		\begin{tabular}{  p{5,5cm} c }
+			\begin{algorithm}[H]
+				\footnotesize\;
+				$head = createHandle(\bot) : Handle$\;
+				\;
+				\Procedure{pushFront$(e : Element)$} {
+					$new := createHandle(e)$\;
+					$new \access prev := new \access next := new$\;
+					$splice(new, new, head)$\;
+				}
+			\end{algorithm}
+			&
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\footnotesize
+				\;
+				\Function{popFront$ : Element$} {
+					$\KwAssert \neg isEmpty$\;
+					$old := head \access next$\;
+					$e := old \access e$\;
+					$d := createHandle(\bot)$\;
+					$d \access prev := d \access next := d$\;
+					\;
+					$splice(old, old, d)$\;
+					\;
+					$\KwDispose old, d$\;
+					\KwRet{$e$}\;
+				}
+			\end{algorithm}
+		\end{tabular}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Verkettete Listen – Zweifel?}
+	Arrays:  nur begrenzt toll \\
+			 verkettete Listen: \textbf{unbegrenzt toll}? \quad (\#WorstPunEver)
+	\pause
+	\begin{itemize}
+		\item[\Cons] List[i] nicht in $O(1)$, sondern linear
+		\pause
+		\item[\Cons] List.$size$ in $O(1)$ \gdw \textit{Inter-List-Splice}: \\
+		Autsch
+		\pause
+		\item[\Cons] Cache-Freundlichkeit sieht anders aus
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschub: Cache-Freundlichkeit}
+	\begin{itemize}
+		\item \textbf{Cache}: Prozessor-nahes Datenzwischenlager. Schneller als RAM.
+		\pause
+		\item \textbf{Lokalitätsprinzip}: Irgendwo Zugriff im RAM \impl demnächst wieder Zugriff in der Nähe
+		\pause
+		\implitem \textit{Idee}: Nicht nur \textbf{einen} Wert im Cache puffern, sondern dessen \textbf{Nachbarschaft} gleich mit! \\
+		Kostet auch nicht mehr.
+		\pause
+		\item Verkettete Listen: Segmente \textbf{nach Bedarf} angelegt: \\ Landen da, wo's passt \impl \textbf{kreuz und quer} im RAM verteilt
+		\pause 
+		\implitem Vorgänger/Nachfolger sicher \textbf{nicht nebeneinander} \impl selten gemeinsam im Cache
+		\pause
+		\item Wie kriegen wir bloß Daten \textbf{zusammenhängend} in den Speicher?
+		
+		%\item Ein Cache „versteckt“ kürzlich abgerufene Werte aus dem Speicher in Prozessornähe
+		%\pause
+		%\item Ausnutzung des \textbf{Lokalitätsprinzips}: Wird ein Wert aus dem Speicher abgerufen, dann wird wahrscheinlich in zeitlicher Nähe ein Wert aus räumlicher Nähe abgerufen
+		%\pause
+		%\item Das Liefern der Nachbarschaft an den Cache ist kein echter Mehraufwand, da die meiste Zeit für den Datentransport benötigt wird (rein physikalische Beschränkung durch die Distanz zwischen Prozessor und Hauptspeicher)
+		%\pause
+		%\item Bei verketteten Listen werden Segmente nach Bedarf im Speicher allokiert, d.h. man kann nicht bestimmen, wo genau sie dann im Speicher liegen (meistens kreuz und quer verteilt). \\
+		%\pause
+		%\item Wenn es doch nur eine Möglichkeit gäbe, Elemente als zusammenhängenden Block im Speicher anzulegen ...
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Arrays to the rescue\only<1-2|handout:0>{?}\only<3->{!}}
+	\begin{itemize}
+		\item Array läuft voll \impl Größeres Array anlegen und Daten umkopieren
+		\pause
+		\item Naiv: Einfügen von $n$ Elementen in $\Theta(n^2)$
+		\pause
+		\item \textbf{Trick}: Jedes Mal ein doppelt so großes Array anlegen
+		\item Ist das nicht trotzdem \textbf{teuer}!?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse – a taste}
+	\textbf{Einfügen} in ein \textbf{volles} Array (Größe $2n$):
+	\begin{itemize}
+		\implitem Array muss vergrößert (also umkopiert werden)
+		\pause
+		\item Genau \textbf{dieses} Einfügen kostet jetzt $2n$ (wegen Kopiererei)
+		\pause
+		\item \textbf{Vorher} mind. $n$ Einfüge-Operationen  in $O(1)$
+		\pause
+		\implitem \textbf{Amortisierte} Kopierkosten pro Einfügen: $\frac{2n}{n} = 2 \in O(1)$
+	\end{itemize} \pause
+	\forcenewline
+	Genauso: \textbf{Entfernen} aus einem \textbf{viertel-vollen} Array ($n$ von $4n$ gefüllt)
+	\begin{itemize} 
+		\implitem Array muss verkleinert (= umkopiert) werden
+		\pause
+		\item Genau \textbf{dieses} Entfernen kostet $n$ (wegen Kopiererei)
+		\pause
+		\item \textbf{Vorher} mind. $n$ Entfern-Operationen  in $O(1)$
+		\pause
+		\implitem \textbf{Amortisierte} Kopierkosten pro Entfernen: $\frac{n}{n} = 1 \in O(1)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse – How to}
+	Entweder \\
+	\textbf{Aggregatmethode}: Schätze nach oben ab:
+	\[
+		\text{Gesamtkosten von $n$ \textcolor{blue}{beliebigen} Ops} = \text{„}T_\text{Gesamt}\text{“} \ \leq \ c \cdot n 
+	\]
+	($c$ irgendeine Konstante). \\ \forcenewline
+	Knifflig: Diese Abschätzung finden und zeigen.
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse – How to}
+	... oder \\
+	\textbf{Kontomethode}: Kosten von teuren Operationen auf die billigen \textbf{umlegen} \\ \forcenewline 
+	\pause
+	\hanging Für jede Op der Art $i$: \quad  $c_i$ „Münzen“ auf ein „Konto“ einzahlen ($c_i$ \textbf{konstant}!) \\ 
+	\pause
+	\textcolor{blue}{Bsp}.: \hanging Arten von Ops \{Einfügen, Löschen\} \impl $c_\text{Einfügen}, c_\text{Löschen}$ festlegen) \\
+	\pause
+	\hanging {Begründen: \newline Wenn mal eine Op \textbf{mehr als konstante Zeit} kostet (sagen wir $x$) \impl auf dem Konto mind. $x$ Münzen da, um das zu bezahlen.} \\
+	\pause \forcenewline
+	Knifflig: Begründen und die jeweiligen $c_i$ finden.
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse – How to}
+	\begin{itemize}
+		\item \textbf{Generell}: Genau überlegen, unter welchen Vorbedingungen die teuren Operationen auftreten
+		\item \textbf{Aufgabenstellung} beachten, ob spezifische Methode gefordert ist! (Falls nein \impl klare logische Begründung des Sachverhaltes reicht (im Prinzip))
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Aufgabe 1: Hochgestackte Ziele} \\
+	Gegeben seien zwei Stacks mit $size() : \N_0$, $pushBack(e : Element)$ und $popBack() : Element$, alle jeweils in konstanter Zeit. \\
+	Entwerft daraus eine Queue, die die Operationen $pushBack(e : Element)$ und $popFront() : Element$ jeweils in amortisiert konstanter Zeit beherrscht.
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Lösung zu Aufgabe 1} \\
+	\begin{itemize}
+		\item ein „\textbf{Input}-Stack“, ein „\textbf{Output}-Stack“
+		\item Queue.\textit{pushBack}: auf den Input-Stack legen
+		\item Queue.\textit{popFront}: vom Output-Stack oben wegnehmen \\ 
+		\pause
+			  Output $= \emptyset$? \\
+			  \impl Gesamten \textbf{Input}-Stack nach und nach auf Output \textbf{umschaufeln} (in $O(n)$). Dabei wird automatisch Reihenfolge richtigrum-gedreht. 
+		\pause
+		\item Queue.\textit{pushBack} sowieso in $O(1)$
+		\pause
+		\item Queue.\textit{popFront} hat \textbf{einmal} Kopieraufwand $n$, aber \textbf{danach} geht \textit{popFront} $n$-mal in $O(1)$ \\
+		\pause
+		\impl amortisiert in $O(1)$
+	\end{itemize}
+	% Verwende einen Stack als Input-Stack und einen Stack als Output-Stack, d.h. alle Elemente, die angehängt werden, werden auf den Input-Stack gelegt. Elemente, die entnommen werden, werden vom Output-Stack genommen, und falls dieser leer ist, wird in linearer Zeit der gesamte Inhalt vom Input-Stack auf den Output-Stack gelegt (die Reihenfolge wird dabei umgedreht, so dass das letzte Element vom Input-Stack das erste Element vom Output-Stack wird). $pushBack(e : Element)$ läuft immer in konstanter Zeit. Wenn $popFront()$ den Kopieraufwand $n$ hat, heißt das, dass danach n-mal $popFront()$ in konstanter Zeit funktionieren wird \\
+	% $\Rightarrow$ amortisiert konstante Laufzeit.
+\end{frame}
+
+
+
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Aufgabe 2: A little bit more?} \\
+	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operation $increment$ (erhöht den im Zähler gespeicherten Wert um 1). Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Aggregatmethode}, dass die Operation \emph{increment} stets in amortisiert konstanter Zeit läuft.
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Lösung zu Aufgabe 2} \\
+	\textbf{Beobachtung}: \\
+	Bit Nr. $i\ (i \geq 0)$ wird genau alle $2^i$ Aufrufe geflippt \\
+	{\small \hanging (d.h. Bit Nr. 0 bei jedem Aufruf, Bit Nr. 1 alle zwei Aufrufe usw.)} \\
+	\pause
+	\impl im Schnitt wird Bit Nr. $i$ pro Aufruf „$\frac{1}{2^i}$-mal“ geflippt \\
+	\pause
+	\impl im Schnitt haben $n$ Aufrufe von \textit{increment} die Kosten \[
+		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} = 2 \cdot n
+	\] ($M$: Index des höchsten gesetzten Bits) \\
+	\pause
+	\impl läuft amortisiert in $O(1)$.
+\end{frame}
+
+
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Aufgabe 3: Bitte null Bit!} \\
+	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operationen $increment$ (erhöht den im Zähler gespeicherten Wert um 1) \textbf{und} $reset$ (setzt den im Zähler gespeicherten Wert auf 0 zurück). Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Kontomethode}, dass beide Methoden stets in amortisiert konstanter Zeit laufen.
+\end{frame}
+
+\begin{frame}{Amortisierte Analyse}
+	\underline{Lösung zu Aufgabe 3} \\
+	\textbf{Beobachtung}: 
+	\begin{itemize}
+		\item Bei jedem \emph{increment}-Aufruf: \\
+			  \textbf{genau ein} Bit von $0 \rightsquigarrow 1 \Impl O(1)$ \\
+			  u. U. \textbf{viele} Bits von $1 \rightsquigarrow 0 \Impl$ nicht-konstante Zeit
+		\pause
+		\item Bei jedem \emph{reset}-Aufruf: \\
+			  u. U. \textbf{viele} Bits von $1 \rightsquigarrow 0 \Impl$ nicht-konstante Zeit
+	\end{itemize}
+	\pause
+	%\textbf{Beobachtung}: Bei jedem Aufruf von $increment$ wird genau ein Bit von 0 auf 1 geflippt \impl Die nicht-konstanten Kosten von $increment$ und $reset$ entstehen durch die vielen 1er, die auf 0 gesetzt werden müssen. \\ 
+	\textbf{Idee}: Jedes Mal wenn ein Bit von $0 \rightsquigarrow 1$ (pro Methodenaufruf max. $1$-mal!): $+1$ Münze einzahlen. Wenn das entspr. Bit wieder von $1 \rightsquigarrow 0$: Bezahle mit dieser Münze. \\
+	\pause
+	\impl Anzahl 1er im Zähler $=$ Anzahl Münzen auf dem Konto \\
+	\pause
+	\impl Bei beliebiger Op kann das Setzen von $n$ Bits von $1 \rightsquigarrow 0$ garantiert mit $n$ Münzen bezahlt werden. \\
+	\pause
+	\impl Beide Ops laufen amortisiert in $O(1)$.
+	%\textbf{Idee}: Zahle jedes Mal, wenn eine 0 auf 1 geflippt wird (was pro Methodenaufruf max. 1-mal passiert), eine Münze aufs Konto ein. Bezahle mit dieser Münze, wenn das zugehörige Bit wieder auf 0 gesetzt wird. \\
+	%Die Anzahl der 1er im Zähler repräsentiert also die Anzahl der Münzen auf dem Konto und garantiert somit, dass das Setzen von $n$ Bits von 1 auf 0 mit $n$ Münzen bezahlt werden kann. \\
+	%\impl Amortisiert konstante Laufzeit beider Operationen.
+\end{frame}
+
+
+
+\begin{frame}{Datenstrukturen}
+	\underline{Aufgabe 4} \\
+	Nehmt an, dass eine Speicherallokation beliebiger Größe in $O(1)$ läuft. Entwickelt eine Datenstruktur mit
+	\begin{itemize}
+		\item $pushBack(e : Element)$ und $popBack() : Element$ in $O(1)$ im Worst-Case (\textbf{nicht} nur amortisiert)
+		\item Zugriff auf das $k$-te Element in $O(\log n)$ im Worst-Case (\textbf{nicht} nur amortisiert)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Datenstrukturen}
+	\underline{Lösung zu Aufgabe 4} \\
+	Lege eine verkettete Liste von Arrays an, deren Größe sich jeweils verdoppelt, und habe immer eine Referenz auf das letzte Array inklusive Index des letzten belegten Slots
+	\pause
+	\begin{itemize}
+		\item Element anfügen: Falls Slot frei \impl offensichtlich konstant. Falls kein Slot frei \impl lege neues Array doppelter Größe an, füge es an die verkettete Liste hinzu, lege Element rein (alles in konstanter Zeit möglich)
+		\pause
+		\item Zugriff auf das $k$-te Element: Laufe die verkettete Liste ab und verringere den Index um die Länge des aktuell betrachteten Arrays, bis der Index für das aktuell betrachtete Array gültig ist. Es sind insgesamt logarithmisch viele Arrays, also auch logarithmische Laufzeit
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Datenstrukturen}
+	\underline{Aufgabe 5: Aufgabe 4 remastered} \\
+	Nehmt an, dass eine Speicherallokation beliebiger Größe in $O(1)$ läuft. Entwickelt eine Datenstruktur mit
+	\begin{itemize}
+		\item $pushBack(e : Element)$ und $popBack() : Element$ in $O(\log n)$ im Worst-Case (\textbf{nicht} nur amortisiert)
+		\item Zugriff auf das $k$-te Element in $O(1)$ im Worst-Case (\textbf{nicht} nur amortisiert)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Datenstrukturen}
+	\underline{Lösung zu Aufgabe 5} \\
+	Analog zur Lösung von Aufgabe 4: Lege ein Array $A$ mit Referenzen auf Arrays an, deren Größe sich jeweils verdoppelt (d.h. das Array an der Stelle $A[i]$ hat die Größe $2^i$)
+	\pause
+	\begin{itemize}
+		\item Element anfügen: Falls Slot frei \impl offensichtlich konstant. Falls kein Slot frei \impl lege neues Array $B$ der Größe $2^{|A|}$ an, kopiere $A$ mit logarithmisch vielen Array-Referenzen in ein neues Array der Größe $|A|+1$ (an dessen Ende $B$ landet) und füge das Element in $B$ ein $\impl O(\log n)$
+		\pause
+		\item Zugriff auf das $k$-te Element: Berechne mit dem Logarithmus den Index von $B$ in $A$ und den Index des $k$-ten Elements in $B$, der Zugriff ist in konstanter Zeit.
+	\end{itemize}
+\end{frame}
+	
+
+\end{document}

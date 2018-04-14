@@ -1,0 +1,256 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{23. Juni \thisyear}
+
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+\begin{frame}{Schwarzes Brett}
+	\begin{itemize}
+		\item \textbf{Probeklausur} kriegt ihr nächstes Mal {\small (30. Juni)}
+		\item Zu \textbf{Blatt 6}: Wer bei Aufgabe 3 für fehlendes \textit{„läuft in O(1)“} \textbf{–1~P} Abzug bekommen hat: Björn war nochmal gnädig. \smiley \\
+		\impl Blatt bitte \textbf{nächstes Mal mitbringen}! 
+		\item \textbf{Raumverlegung}: Nächstes Tut (\textbf{30. Juni}) in Raum \textbf{–108} \\ 
+		(direkt nebenan).
+		\item \textbf{VL-Verlegung}: VL/Übung am \textbf{Mi, 28. Juni}, im Fasanengarten-HS!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Zum letzten Tut bzw. Blatt (\#7)}
+	\Large GROßES SORRY! \frownie \\
+	
+	\normalsize
+	\textit{„\underline{Insertion}BuildHeap“} war \textbf{nicht wörtlich} gemeint! \\
+	\impl Da wird \textbf{nichts eingefügt}, nur das chaotische Array genommen, \textbf{wie es ist} und darauf dann mit \textit{siftDown} getauscht \\
+	Ich bitte vielmals um Entschuldigung. Musste dafür dementsprechend leider Abzug geben.
+\end{frame}
+	
+\begin{headframe}[Die eierlegende Wollmilchdatenstruktur]
+	Sortierte Folgen
+\end{headframe}
+
+\begin{frame}{Sortierte Folgen}
+	\textbf{Heap- und stichfest?} 
+	\begin{itemize}
+		\item \textbf{Ziel}: eine \textbf{dynamische} und \textbf{stets sortierte} Datenstruktur
+		\pause
+		\item \textbf{Operationen}: \\ 
+		\emph{Einfügen}, \\
+		\emph{Entfernen}, \\
+		\emph{Finden} des nächstkleineren/größeren Elements \\
+		\impl \emph{so schnell wie möglich}
+		\pause
+		\item \textbf{Idee}: Binärer Heap – sieht sortiert aus, ist es aber \textbf{nicht}!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortierte Folgen}
+	\textbf{Einfach sortierter Binärbaum} 
+	\begin{itemize} 
+		\item \textbf{Vorschlag}: Binärbaum mit strengerer Ordnung: \\
+		$\forall v \in V : \ \text{LeftChild}(v) \leq v < \text{RightChild}(v)$
+		\pause
+		\item Intuitiv: Laufzeiten in $O(\log n)$ mittels \textbf{binärer Suche}
+		\pause
+		\item[\Cons] \textbf{Worst-Case}: Füge aufsteigende Folge ein \\
+		\impl Lange Kette entsteht („Baum \textbf{unbalanciert}“), \\
+		Laufzeiten in $O(n)$ \frownie \\
+		\pause
+		\impl I. A. eher ungeeignet
+		\pause
+		\implitem Wollen \textbf{balancierten} Baum (alle Blätter haben gleiche Tiefe) 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortierte Folgen}
+	\textbf{(a, b)-Bäume} 
+	\begin{itemize}
+		\item \textbf{Besser}: Baum mit \textbf{flexiblem} Knotengrad \\
+		\impl Anzahl \textbf{Kinder} zwischen $a...b$ \\
+		{\small Ausnahme: Wurzel kann weniger haben}
+		\item Dafür sinnvoll: $a \geq 2$ und $b \geq 2a-1$
+		\pause
+		\item Jeder \textbf{Knoten} hat ein \textbf{Navigations-Array}: \\
+		Einträge mit $(k: \text{Key}, T_k: \text{Subtree})$: \\
+		\quad $T_k$ führt nur zu Elementen $e \leq k$ \\
+		\quad \textbf{Letzter} Eintrag: kein Key $k$, führt zu Elementen $e > \text{letztes } k$
+		\pause
+		\item \textbf{Blätter}: Eigentliche Elemente/Daten als \textbf{verkettete Liste}
+		\pause
+		\item Zur Vermeidung von Sonderfällen: \\ 
+		„Dummy-Wert“ $\infty$ ganz am Ende
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Beispiel: (2, 4)-Baum} („00“ steht in VL für $\infty$) \\[0,125cm]
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=\textwidth]{baum24}
+	\end{figure}
+\end{frame}
+
+%\begin{frame}{Sortierte Folgen}
+%	\textbf{(a, b)-Bäume - Finden von (nächstkleineren/-größeren) Elementen} \\[0,125cm]
+%	\begin{itemize}
+%		\item Ziel: Finde in der sortierten Folge das nächstgrößte Element zum Wert $i$
+%		\pause
+%		\item Suche kleinstes Element $j$ im Navigationsarray des Knotens (der zu Beginn die Wurzel ist), für das gilt $i \leq j$, und fahre auf dem somit verlinkten Knoten fort (falls $j$ nicht vorhanden ist: Laufe rechteste Verlinkung entlang)
+%		\pause
+%		\item Wiederhole obiges, bis man auf der verlinkten Liste ankommt (was algorithmisch anhand einer zusätzlich stets brav verringerten Höhenvariable festgestellt wird)
+%		\pause
+%		\item Laufzeit?
+%	\end{itemize}
+%\end{frame}
+
+
+\begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Finden von (nächstgrößeren {\small (-kleineren)}) Elementen}
+	\begin{itemize}
+		\item \textbf{Geg}.: Wert $e$ \\
+		\textbf{Ges}.: (Nächstgrößeres) Element $z \geq e$
+		\pause
+		\implitem
+			Starte bei \textbf{Wurzel} \\
+			\pause
+			\textbf{Suche} kleinstes Element im Navigationsarray \\
+			\quad $j := \min\ \{\, j \mid e \leq j\,\}$ \\
+			\pause 
+			\textbf{Blatt-Ebene erreicht?} \impl \Return{$j$} \\
+			Sonst \textbf{Wiederhole} auf Subtree von $j$ oder ganz rechtem Link falls $\nexists\ j$ 
+		\item \textbf{Laufzeit} in $O(b \cdot \text{Höhe}) = O(b \cdot \log_a n)$
+		\pause
+		\vspace{\baselineskip}
+		\item Finden von \textit{nächstkleinerem} Element: \\ 
+		\pause
+		\quad Finde nächstgrößeres; \\
+		\quad Falls $j \neq e$: Nehme Vorgänger von $j$ in verketteter Liste
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Einfügen von Elementen} 
+	\begin{itemize}
+		\item[1.] Finde Einfügestelle (wie beim Suchen)
+		\visible<all:2->{\item[2a.] \textbf{Fall 1}: Platz im Navigationsarray frei? \\
+			\impl Einfügen, \textcolor{blue}{im Nav-Array verlinken}, fertig! \smiley \\
+			(falls neues Maximum: \textbf{Verlinkung anpassen}!)}
+	\end{itemize}
+	\centering  
+	\only<all:1>{\includegraphics[width=\textwidth]{ab-insert-space-left-1}}
+	\visible<all:2->{\includegraphics[width=\textwidth]{ab-insert-space-left-2}}
+\end{frame}
+
+\begin{frame}[t]{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Einfügen von Elementen} (Forts.)
+	\begin{itemize}
+		\item[2b.] \textbf{Fall 2}: Kein Platz im Nav-Array frei? \impl \emph{„split“} \\
+		D.h. Element einfügen, Knoten \textbf{halbieren}: \\
+		\textbf{Linker} Teil $L$ (enthält \textbf{Mittelelement} $M$), \textbf{Rechter} Teil $R$
+	\end{itemize}
+	\centering
+	\vspace{1.4\baselineskip}
+	\includegraphics[width=1.03\textwidth]{ab-insert-split-1}
+\end{frame}
+
+\begin{frame}[t]{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Einfügen von Elementen} (Forts.)
+	\begin{itemize}
+		\item [3.] Füge $M$ in Vorgänger ein, hänge $L$ als Subtree daran; $R$ hängt schon im Vorgänger \\
+	\end{itemize}
+	\centering
+	\only<all:1>{\vspace{2.5\baselineskip}\includegraphics[width=1.03\textwidth]{ab-insert-split-2}}
+	\only<all:2>{\includegraphics[width=1.03\textwidth]{ab-insert-split-3}}
+	\visible<all:3->{\includegraphics[width=1.03\textwidth]{ab-insert-split-4}}
+	\begin{itemize}
+		\item<all:2->[4.] Vorgänger \textbf{voll}? \impl \textbf{Recurse} from step 2b. \\
+		\visible<all:3->{Endet ggf. mit Anlegen einer \emph{neuen Wurzel}}
+	\end{itemize}
+\end{frame}
+
+%\begin{frame}{Sortierte Folgen}
+%	\textbf{(a, b)-Bäume - Entfernen von Elementen} \\[0,125cm]
+%	\begin{itemize}
+%		\item Finde das entsprechende Element und entferne es. Falls es sich um ein in seinem Teilbaum maximales Element handelt, muss die Verlinkung in Vorgängerknoten auf das neue Maximum aktualisiert werden.
+%		\pause
+%		\item Übrig gebliebener Knoten ist zu klein? Zwei Möglichkeiten:
+%			\pause
+%			\begin{itemize}
+%				\item $"$Ausreichend leerer$"$ Nachbarknoten existiert? $\Rightarrow$ Füge beide Knoten zusammen ($"$fuse$"$)
+%				\pause
+%				\item Ansonsten gibt es einen $"$ziemlich vollen$"$ Nachbarknoten $\Rightarrow$ Zwacke von diesem ein paar (minimale) Elemente ab, um den Knoten wieder aufzufüllen ($"$balance$"$)
+%				\pause
+%				\item In allen Fällen das Anpassen der Verlinkungen in Vorgängerknoten nicht vergessen
+%			\end{itemize}
+%	\end{itemize}
+%\end{frame}
+
+\begin{frame}[t]{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Entfernen von Elementen} 
+	\begin{itemize}
+		\item<all:1->[1.] Einfach: Finden \visible<2-|handout:2->{und Entfernen. }\\
+		\pause
+		\visible<3-|handout:2->{Knotenmaximum wurde entfernt? \\ 
+		\impl \textbf{Aktualisiere Verlinkung auf neues Maximum!}}
+	\end{itemize}
+	\forcenewline
+	\only<all:1>{\includegraphics[width=1.03\textwidth]{ab-delete-1-before}}
+	\only<2|handout:0>{\includegraphics[width=1.03\textwidth]{ab-delete-1-wrong}}
+	\visible<3-|handout:2->{\includegraphics[width=1.03\textwidth]{ab-delete-1-right}}
+\end{frame}
+
+\begin{frame}[t]{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Entfernen von Elementen} 
+	\begin{itemize}
+		\item<all:1->[2.] Knoten jetzt \textbf{zu klein?} \\
+		2a. \textbf{Fall 1}: ...und $\exists$ Nachbar, der leer genug? \\
+		\impl \emph{„fuse“}: Knoten zusammenfügen \\
+		\visible<all:2->{...und \textbf{Verlinkung anpassen!}}
+	\end{itemize}	
+	\only<all:1>{\includegraphics[width=1.03\textwidth]{ab-delete-2-fuse-1}}
+	\visible<all:2->{\includegraphics[width=1.03\textwidth]{ab-delete-2-fuse-2}}
+	\begin{itemize}
+		\item<all:3->[] Vorgänger jetzt \textbf{zu klein}? \impl \textbf{Recurse} from step 2.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Entfernen von Elementen} 
+	\begin{itemize}
+		\item[2.] Knoten jetzt \textbf{zu klein?} \\
+		2b. \textbf{Fall 2}: ...und $\exists$ Nachbar, der voll genug? \\
+		\pause
+		\impl \emph{„balance“}: Klaue Elemente vom fetten Nachbarn \\ 
+		{\small (von links: maximale, von rechts: minimale Elemente)} \\
+		\pause 
+		...und \textbf{Verlinkung anpassen!}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Laufzeiten}: \\[.5\baselineskip]
+	$\casesr{\textit{locate} \\ \textit{insert} \\ \textit{remove}}$ in $O(b \cdot \text{Höhe}) = O(b \cdot \log_a n)$ \quad (für konst. $a$, $b$: $O(\log n)$).
+\end{frame}
+
+%\begin{frame}{Zur Übungsklausur}
+%	\textbf{Colpa mia} \\[0,125cm]
+%	\begin{itemize}
+%		\item Aufgabe 1b) gab immer zwei Punkte, wenn irgendwas von Aufgabe 1 in irgendeiner Form bearbeitet war
+%		\pause
+%		\item Wer sich also trotzdem mit dem fehlerhaften $dpartition$-Algorithmus rumgequält hat, bekam zusätzliche Bonuspunkte
+%	\end{itemize}
+%\end{frame}
+
+\end{document}

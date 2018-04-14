@@ -1,0 +1,430 @@
+%beamer 
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{14. Juli \thisyear}
+
+
+\begin{document}
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+\begin{frame}{Schwarzes Brett + Klausurinfos!}
+	\begin{itemize}
+		\item $\forall$, die nicht in die VL gehen: $\exists$ Aufzeichnung vom \textbf{letzten Jahr}! \\
+		\impl {\footnotesize \url{https://www.youtube.com/playlist?list=PLfk0Dfh13pBPqVarZXE8VZxsyBlW8taxe}}
+		\item \textbf{Gesamtpunkte} der \textbf{ÜBs} stehen fest: \\
+		Es wird \textbf{11 Blätter} geben \impl \textbf{198~P} insgesamt! \\
+		\impl für 25~\% mind. notwendig: 49.5~P \\
+		\impl für 50~\% mind. notwendig: 99~P \\
+		\impl für 75~\% mind. notwendig: 148.5~P \\
+		\item \textbf{Klausuranmeldung} freigeschaltet (bis \textbf{spätestens} zum 28.08.!) \\
+		\textbf{Klausur} selbst am \textbf{04.09.2017} von \textbf{11–13~Uhr}.
+	\end{itemize}
+\end{frame}
+
+\begin{headframe}[Spannung pur!]
+	Spannbäume
+\end{headframe}
+
+\begin{frame}{Spannbäume}
+	\textbf{Ein paar Definitionen} 
+	\begin{itemize}
+		\item Für heute: Alle Graphen $G = (V, E)$ \\ 
+		ungerichtet, zusammenhängend, mit positiven Kantengewichten
+		\pause
+		\item \textbf{Spannbaum}: Baum $(V, T \subseteq E)$ von $G$, \\
+		„spannt $G$ auf“ ($=$ zusammenhängend)
+		\pause
+		\item Bekannte Algorithmen, die Spannbäume bestimmen:
+		\begin{itemize}
+			\item Tiefensuche
+			\item Breitensuche
+			\item Dijkstra
+		\end{itemize}
+		\pause
+		\item Spannbaum hat \textbf{Gewicht} $ \sum\limits_{t \in T} c(t)$
+		\pause
+		\item \textbf{Minimaler} Spannbaum (MST $=$ Minimum Spanning Tree): \\ Spannbaum mit \textbf{minimalem Gewicht}
+		\pause
+		\item Minimales Gewicht ist \textbf{eindeutig}, \\
+		minimaler Spannbaum jedoch i.~A. \textbf{nicht}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Spannbäume}
+	\underline{Aufgabe 1: Scharf hinsehen} \\
+	Gebt von folgendem Graphen einen MST an: \\
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[height=6cm]{scharfhinsehen}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Lösung zu Aufgabe 1} \\
+	\forcenewline
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[height=6cm]{scharfhinsehensolution}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Spannbäume} %TODO: Maybe {u,v} \in E | u \in S, v \in V\S ?
+	\textbf{Die Schnitteigenschaft („Cut Property“)} 
+	\begin{itemize}
+		\item Sei $U\ \dot{\cup}\ W = V$ irgendeine „Aufteilung“ von $V$ und $C = \big\lbrace \{u, w\} \in E \bigm| u \in U, w \in W \big\rbrace$ alle „Brücken dazwischen“ (genannt \textbf{Schnitt})
+		\pause
+		\implitem \textbf{Schnitteigenschaft}: \\ 
+		Die \textbf{leichteste} Kante $e \in C$ kann in einem MST verwendet werden.
+		\pause 
+		\item \textbf{Warum?} \\
+		\pause \impl Betrachte MST $T$. $U$ und $W$ in $T$ durch $e$ verbunden? \\
+		\impl \textbf{Ja}: \yop \\
+		\impl \textbf{Nein}: Dann $U$ und $W$ durch andere Kante $e' \in C$ verbunden, und $e'$ darf \textbf{nicht schwerer} als $e$ sein (sonst \crash $T$ minimal) \impl $e$ und $e'$ \textbf{austauschbar}. \qed
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Spannbäume}
+	\textbf{Die Kreiseigenschaft („Cycle Property“)} 
+	\begin{itemize}
+		\item Sei $C \subseteq E$ ein  (beliebiger) Kreis in $G$
+		\pause
+		\implitem \textbf{Kreiseigenschaft}: \\ 
+		Für einen MST $T$ von $G$ wird die \textbf{schwerste} Kante $e \in C$ \textbf{nicht} benötigt.
+		\pause 
+		\item \textbf{Warum}? \\
+		\pause \impl Angenommen, $e \in T$ und dafür \textbf{leichtere Kreiskante} $e' \notin T$: \\
+		Durch \textbf{Austausch} von $e$ und $e'$ wird Gewicht von $T$ \textbf{kleiner} \\ 
+		\impl \crash $T$ minimal \impl Müssen $e$ rausschmeißen. \qed
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Spannbäume – Jarník-Prim}
+	\textbf{Ein Algorithmus für MSTs: Jarník-Prim} 
+	\begin{itemize}
+		\implitem \textbf{Idee}: Schnitteigenschaft irgendwie ausnutzen! \\
+		\pause
+		1. Starte ab beliebigem $s \in V$, setze $S := \{s\}$ \\
+		2. \textbf{Erweitere} Knotenmenge $S$ und Baum $T$ \textbf{schrittweise} um die \textbf{minimale} Verbindungskante zu $\ V \setminus S$
+		\pause
+		\item Schnittkantenmenge $C$ zwischen $S$ und $V \setminus S$ \\
+		\impl Verwalte sie in einer \textbf{PriorityQueue} $PQ$
+		\pause
+		\item[\yop] Funktioniert dank Schnitteigenschaft
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Spannbäume – Jarník-Prim}
+	\vspace{-.4\baselineskip}
+	\begin{exampleblock}{}
+		\vspace{-.4\baselineskip}
+		\begin{algorithm}[H]
+			\small							
+			\Function {Jarník-Prim$(G = (V, E))$ \RComment{sieht aus wie Dijkstra}} {
+				$\KwSty{pick any } s \in V$\;
+				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$  \RComment{Distanz zu Knotenmenge S, nicht zu $s \in V$!} \;
+				$parent := (\bot, ..., \bot) : \KwArray[1...n] \KwOf V$\;
+				$PQ = \{s\} : \text{PriorityQueue}$\;
+				$parent[s] := s$ \;
+				\While{$PQ \neq \emptyset$} {
+					$u := PQ.\text{deleteMin}()$, \quad $d[u] := 0$ \;
+					\ForEach{$e = \{u, v\} \in E$} {
+						\If{$c(e) < d[v]$} {
+							$d[v] := c(e)$\;
+							$parent[v] := u$\;
+							\begin{tabbing}
+								\leIf{$v \in PQ$} {
+									\=$PQ.\text{decreaseKey}(v)$ \\
+								} {
+									\>$PQ.\text{insert}(v)$
+								} 
+							\end{tabbing}
+							\vspace{-\baselineskip}
+						}
+					}
+				}
+			\KwRet{$\big\lbrace\,(parent[v],\, v) \mid s \neq v \in V \,\big\rbrace$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\input{jarnik-prim-ex}
+
+\begin{frame}{Spannbäume – Jarník-Prim}
+	\textbf{Laufzeit von Jarník-Prim: same as Dijkstra} 
+	\begin{itemize}
+		\item[] Im Worst-Case $m$-mal $decreaseKey$
+		\item[$+$] Genau $n$-mal $deleteMin$ und $insert$
+		\pause
+		\item[$=$] Mit binärem Heap: $O\left((m+n)\log n\right)$
+		\pause
+		\item[$=$] Mit Fibonacci-Heap: $O(m + n \log n)$ \quad (amortisiert und mit höheren konstanten Faktoren)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Spannbäume – Kruskal}
+	\textbf{Rosinen rauspicken mit Kruskal} 
+	\begin{itemize}
+		\item \textbf{Idee}: Baum (bzw. Wald) \textbf{schrittweise} \textbf{wachsen} lassen 
+		\pause
+		\implitem Durchlaufe \textbf{Kanten} nach \textbf{aufsteigendem} Gewicht: \\
+		Nehme Kante zum Wald \textbf{dazu}, falls dadurch \textbf{kein Kreis} entsteht \\
+		{\small (also wenn die Kante \textbf{zwei separate} Bäume vereinigt)}
+		\pause
+		\item Am \textbf{Ende}: Alle ausgewählten Kanten ergeben einen MST
+		\pause
+		\item[\yop] Funktioniert dank Schnitt- und Kreiseigenschaft
+	\end{itemize}
+	\pause
+	\forcenewline
+	\textbf{Wollen dafür effizient}...
+	\begin{itemize}
+		\item ...heraus\textbf{finden}, zu welcher Menge ein Element gehört ($find$)
+		\item ...die Mengen zweier Elemente \textbf{vereinigen} ($union$)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Union-Find}
+	\textbf{\impl Eine neue Datenstruktur!} \\
+	Fürs Grobe...
+	\begin{itemize}
+		\item Repräsentiere Menge $M \subseteq \{1...n\}$ durch \textbf{beliebiges} Element $w \in M$
+		\pause
+		\item Intern: $M$ wird als \textbf{Baum}, $w$ als \textbf{Wurzel} von $M$ behandelt
+		\pause
+		\implitem Verwalte $parent: \KwArray[1...n] \KwOf 1...n$, \ wobei \\
+		$parent[v] = v \gdw v$ ist Wurzel \\ Am \textbf{Anfang}: $parent[v] := v$ \RComment{Alle Elemente sind eigene Wurzel} \\
+		\visible<3->{\includegraphics[width=.2\textwidth]{init}}
+	\end{itemize}
+	\pause
+	...und für die Effizienz
+	\begin{itemize}
+		\implitem Verwalte $rank = (0,...,0) : \KwArray[1...n] \KwOf 0 ...\log n$, \ wobei \\
+		$rank[v] = \casesl{
+			\begin{varwidth}{\linewidth} Höhe von Baum von $v$ \vspace{-.13\baselineskip} \\ \footnotesize (ohne Pfadkompression) \end{varwidth},
+				& \text{$v$ ist Wurzel} \\
+			\textit{garbage}, 
+				& \text{$v$ ist \textbf{keine} Wurzel}}$
+		%\item Für eine \textbf{Wurzel} $w \in M$ ist $rank[w]$ die \textbf{maximal mögliche} Länge des \textbf{längsten} Pfades von einem Element $e \in M$ zu $w$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Union-Find – Operationen}
+	\begin{exampleblock}{Finden}
+		\begin{columns}[T] 
+			\begin{column}[T]{.5\linewidth} 
+				\begin{algorithm}[H]
+					\Function {find$(e : 1..n) : 1..n$} {
+						\eIf{$parent[e] = e$} {
+							\KwRet{$e$}\;
+						} {
+							$w := \text{find}(parent[e])$\;
+							\LComment{Pfadkompression} \;
+							$parent[e] := w$\;
+							\KwRet{$w$}\;
+						}
+					}
+				\end{algorithm}
+			\end{column}
+			\begin{column}[T]{.4\linewidth} 
+				\bigskip
+				\begin{figure}[b]
+					\centering
+					\includegraphics[width=.7\textwidth]{pfadkompression}
+					\caption{Pfadkompression}
+				\end{figure}
+			\end{column}
+		\end{columns}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Union-Find – Operationen}
+	\begin{exampleblock}{Vereinigen}
+		\begin{columns}[T] 
+			\begin{column}[T]{.5\linewidth} 
+				\begin{algorithm}[H]
+	
+					\Procedure {union$(a', b' : 1...n)$} {
+						$\Matrix{a \\ b} := \Matrix{\text{find}(a') \\ \text{find}(b')}$ \;
+						\If{$a \neq b$} {
+							\LComment{union by rank} \;
+							\eIf{$rank[a] < rank[b]$} {
+								$parent[a] := b$\;
+							} {
+								$parent[b] := a$\;
+								\If{$rank[a] = rank[b]$} {
+									$rank[a]\pp$\;
+								}
+							}
+						}
+					}
+				\end{algorithm}
+			\end{column}
+			\begin{column}[T]{.4\linewidth} 
+				\vspace{5\bigskipamount}
+				\begin{figure}[b]
+					\centering
+					\includegraphics[width=\textwidth]{unionbyrank}
+					\caption{Union-by-rank}
+				\end{figure}
+			\end{column}
+		\end{columns}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Spannbäume – Kruskal}
+	\begin{exampleblock}{Kruskal -- Pseudocode}
+		\begin{algorithm}[H]
+			\Function {Kruskal$(G = (V, E))$} {
+				$forest := \KwNew \text{UnionFind}(n)$ \;
+				$T := \emptyset$\;
+				$\text{Sort}(E) \KwSty{ by } c$ \;
+				\ForEach{$e = \{u, v\} \in E$} {
+					\If{$forest.\text{find}(u) \neq forest.\text{find}(v)$} {
+						$T := T \cup \{e\}$\;
+						$forest.\text{union}(u, v)$\;
+					}
+				}
+				\KwRet{$T$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\input{kruskal-ex}
+
+\morescalingdelimiters
+%TODO
+
+\begin{frame}{Spannbäume – Kruskal}
+	\textbf{Laufzeit von Kruskal} 
+	\begin{itemize}
+		\item[] $O(m \log m)$  \quad fürs Sortieren von $E$ 
+		\pause
+		\item[$+$] $O\left(m \cdot \alpha_T(m, n)\right) $ \quad für $m \times \text{find}() + n \times \text{union}()$ laut VL \\
+		$\approx O(m \cdot 5) \quad ${\small (\textbf{Inv. Ackermannfunktion} $\alpha_T(\cdot,\cdot) \leq 5$ \ for all sane inputs)}
+		\pause
+		\item[$=$] $O(m \log m)$. \\
+		Bei Kantengewichten in $\Z_+$ sogar schneller möglich. 
+		%\item Satz aus Vorlesung: $m$-mal $find$ und $n$-mal $union$ läuft in $O(m \cdot \alpha_T(m, n))$, wobei $\alpha_T$ die \textbf{inverse Ackermannfunktion} ist \\
+		%\pause
+		%\impl Das \textbf{Sortieren} ist die \textbf{dominierende} Laufzeitkomponente
+		%\pause
+		%\item \textbf{Laufzeit} von Kruskal also $O(m \log m)$ (schneller bei \textbf{ganzzahligen} Kantengewichten) %Warum?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Spannbäume}
+	\FalseQuestionE{
+			Die Union-Find-Datenstruktur bei Kruskals Algorithmus \\ repräsentiert den bisher gefundenen MST.
+		}{
+		Bloß interne Hierarchie für die Knoten. MST-Kanten tauchen da drin gar nicht auf.
+	}
+	\FalseQuestionE{
+			Dijkstra ist zur Bestimmung eines MST bei gerichteten Graphen (mit nichtnegativen Kantengewichten) geeignet.
+		}{
+		Dijkstra bestimmt im Allgemeinen \textbf{keinen} \textbf{M}ST  {\small (und MST auf gerichteten Graphen nicht in dieser VL)}.
+	}
+	\TrueQuestionE{
+			Sowohl der Algorithmus von Jarník-Prim als auch Kruskals Algorithmus funktionieren auch bei negativen Kantengewichten.
+		}{\small (JP nach kleiner Anpassung)}
+\end{frame}
+
+\begin{frame}[t]{Spannbäume}
+	\FalseQuestionE{
+			Dijkstra funktioniert nicht, wenn negative Kantengewichte vorhanden sind.
+		}{
+		Dijkstra funktioniert nicht, wenn es negative \textbf{Zyklen} gibt \\ (\impl Endlosschleife). \\
+		Ansonsten bestimmt Dijkstra auch \textbf{mit} negativen Kantengewichten \textbf{korrekte kürzeste Pfade}, aber in deutlich \textbf{schlechterer Laufzeit}. \\ (Achtung, \textbf{nicht} in VL gezeigt!)
+	}
+	\FalseQuestionE{
+			Bellman-Ford bestimmt stets einen \textbf{beliebigen} Spannbaum.
+		}{ 
+		Nur wenn keine negativen Zyklen vorhanden sind!
+	}
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Aufgabe 2: Streaming MST} \\
+	Gegeben sei ein ungerichteter zusammenhängender Graph $G = (V, E)$ mit $n$ Knoten, $m$ Kanten und positiven Kantengewichten. Die Knoten sind lokal gespeichert, die Kanten sind hingegen zunächst \textbf{unbekannt} und können nur \textbf{stückweise} (und in zufälliger Reihenfolge) aus dem Netz angefordert und im Speicher gehalten werden, da \textbf{nur} $O(n)$ \textbf{Platz} zur Verfügung steht. Gebt einen Algorithmus an, der unter diesen Einschränkungen einen MST von $G$ bestimmt.
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Lösung zu Aufgabe 2} \\
+	\begin{itemize}
+		\item Verwende eine \textbf{Union-Find-Datenstruktur} (wie bei Kruskal). 
+		\item Falls die neu angeforderte Kante \textbf{zwei Teilbäume verbindet}, füge sie hinzu. 
+		\item Falls sie zwei Knoten \textbf{im selben} Teilbaum verbindet, füge sie provisorisch hinzu, schmeiße auf dem Pfad zwischen den Knoten die \textbf{schwerste Kante} raus. 
+		\item \textbf{Laufzeit} in $O(m \cdot n)$, da bei der Bestimmung des Pfades maximal $n-1$ Kanten abgelaufen werden
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Aufgabe 3: Streaming MST mit Dünger} \\
+	\hanging{ Wie bei Aufgabe 2: \newline
+		Gegeben sei ein ungerichteter zusammenhängender Graph $G = (V, E)$ mit $n$ Knoten, $m$ Kanten und positiven Kantengewichten. Die Knoten sind lokal gespeichert, die Kanten sind hingegen zunächst \textbf{unbekannt} und können nur \textbf{stückweise} (und in zufälliger Reihenfolge) aus dem Netz angefordert und im Speicher gehalten werden, da \textbf{nur} $O(n)$ \textbf{Platz} zur Verfügung steht. Gebt einen Algorithmus an, der unter diesen Einschränkungen einen MST von $G$ bestimmt.
+	} \\
+	Er darf \textbf{nur $O(m \log n)$ Rechenzeit benötigen}.
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Lösung zu Aufgabe 3} \\
+	Wir besorgen uns Kanten-Pakete mit jeweils $n$ Kanten. \\
+	Mit dem \textbf{ersten} Paket bestimmen wir (mit Kruskal) einen Minimum~Spanning~Forest (MSF) und entfernen alle anderen Kanten. \\
+	\textbf{Restliche} Pakete behandeln wir so: \\
+	\begin{itemize}
+		\item Füge die $n$ neuen Kanten zum Graphen hinzu
+		\item Bestimme auf diesem neuen Graphen mit (maximal) $2n-1$ Kanten einen MSF und entferne alle anderen Kanten
+	\end{itemize}
+	\impl \textbf{Laufzeit} in $O(m \log n)$, denn: \\
+	Jeder dieser ca. $\frac{m}{n}$ Schritte benötigt Zeit in $O(n \log n)$.
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Aufgabe 4: Ein Algorithmus mit Ecken und Kanten} \\
+	Erneut betrachten wir einen ungerichteten zusammenhängenden Graphen $G = (V, E)$ mit $V = \{1...n\}$ und Kantengewichten in $\{1, 3\}$. $G$~sei in Form eines Adjazenzfeldes gegeben. Gebt einen Algorithmus an, der in $O(m)$ einen MST von $G$ berechnet (und begründet das Laufzeitverhalten).
+\end{frame}
+
+\begin{frame}{Spannbäume}
+	\underline{Lösung zu Aufgabe 4} \\
+	Getweaktes \textbf{Jarník-Prim}: \\
+	\begin{itemize}
+		\item Komplette PriorityQueue wäre \textbf{overkill} \impl \textbf{stattdessen} zwei einfache Queues $Q_1$ und $Q_3$ \quad (eine für jedes Kantengewicht)
+		\item Merke zu jedem Knoten Pointer in die Queue (oder $\bot$)
+		\implitem $insert$, $deleteMin$ und $decreaseKey$ in $O(1)$ durch einfaches Pointer-Umhängen
+		\implitem \textbf{Laufzeit}: $O(n + m) = O(m)$ \\ (da für zusammenhängende Graphen $n \in O(m)$).
+	\end{itemize}
+	\forcenewline
+	(Eine clevere Alternative wäre, die Kanten mit \textbf{Bucketsort} zu sortieren und dann \textbf{Kruskal} draufloszulassen \impl Laufzeit: $O\left(m \cdot \alpha_T(m, n)\right) \stackrel{\text{realistisch}}{\approx} O(5 \cdot m) = O(m)$. {\small Aber Achtung, $\alpha_T$ ist \textbf{nicht} konstant, deshalb „$\approx$“!})
+\end{frame}
+
+
+
+\iffalse
+
+\begin{frame}{Graphen}
+	\underline{Aufgabe 5: } \\
+	Konstruiert einen gerichteten Graphen mit $n$ Knoten und negativen Kantengewichten (aber \textbf{ohne} negative Zyklen!) so, dass Dijkstra darauf eine Laufzeit in $\Theta(n^3\log n)$ erreicht.
+\end{frame}
+
+\fi
+
+%\begin{frame}{Graphen}
+%	\underline{Lösung zu Aufgabe 5} \\[0,125cm]
+%	Grade keine Lust, ne Grafik zu erstellen. Ich kanns auswendig durch die Gegend schmieren. Außerdem sollst Du auch mal knobeln dürfen :D
+%\end{frame}
+
+\end{document}

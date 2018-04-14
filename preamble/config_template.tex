@@ -1,0 +1,53 @@
+% ALGO TUT CONFIG FILE
+
+\newcommand{\myname}{Max Mustermann}
+\newcommand{\mynamebold}{\textbf{Max} Mustermann}
+\newcommand{\mymail}{max.mustermann@student.kit.edu}  % Consider using your named student Mail address to keep your u-Account private.
+\newcommand{\mytutnumber}{42}
+\newcommand{\mysocrativeroom}{???}
+
+\newcommand{\aboutMeFrame}{
+	\begin{frame}{tbd.}
+		\centering
+		\includegraphics[height=.3\frameheight]{../customdata/DJ-rofl.jpg} \\
+		\myname \\
+		\mailto{\mymail} \\ \vspace{.2\baselineskip}
+		Informatik, 6. Fachsemester (Bachelor). \\
+		\bigskip
+		In $\heartsuit$ with Haskell and \\ Functional Programming. :)
+	\end{frame}
+}
+
+\def\thisyear{2018}
+
+\def\mydate#1{
+	\ifnum#1=1\relax	  	  27. April \thisyear \
+	\else \ifnum#1=2\relax	  04. Mai \thisyear \
+	\else \ifnum#1=3\relax    11. Mai \thisyear \
+	\else \ifnum#1=4\relax    18. Mai \thisyear \
+	\else \ifnum#1=5\relax    25. Mai \thisyear \
+	\else \ifnum#1=6\relax    01. Juni \thisyear \
+	\else \ifnum#1=7\relax    08. Juni \thisyear \
+	\else \ifnum#1=8\relax    15. Juni \thisyear \
+	\else \ifnum#1=9\relax    22. Juni \thisyear \
+	\else \ifnum#1=10\relax   06. Juli \thisyear \
+	\else \ifnum#1=11\relax   13. Juli \thisyear \
+	\else \ifnum#1=12\relax   20. Juli \thisyear \
+	\else \textbf{Datum undefiniert!} 
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}	
+
+
+\def\mylasttimestext{Was letztes Mal geschah...}
+
+\colorlet{beamerlightred}{red!25}
+\colorlet{beamerlightgreen}{green!35}
+\colorlet{beamerlightyellow}{yellow!50}
+\colorlet{lightred}{red!30}
+\colorlet{lightgreen}{green!40}
+\colorlet{lightyellow}{yellow!50}
+\colorlet{fullred}{red!60}
+\colorlet{fullgreen}{green}
+
+\definecolor{myalertcolor}{rgb}{1,0.33,0.24}
+\setbeamercolor{alerted text}{fg=myalertcolor}

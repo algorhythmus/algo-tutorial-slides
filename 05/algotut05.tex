@@ -1,0 +1,358 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+\input{../preamble/tutpreamble}
+
+\date{02. Juni \thisyear}
+
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+% REFERENZIELLE INTEGRITÄT?
+
+\begin{frame}{Schwarzes Brett}
+	\begin{itemize}
+		\item \textbf{21.06.: Probeklausur!} (statt Übungstermin, statt Übungsblatt) \\
+		Wird nicht \textbf{gewertet}, aber von mir \textbf{korrigiert} \\
+		Stoff: max. bis VL[...21.06.]
+		\pause
+		\item Hashing mit verketteten Listen: insert $=$ push\textbf{Front} \\
+		(Elemente werden am \textbf{Anfang} der Liste eingefügt!)
+		\pause
+		\item Buzzwords: Hashing \gdw \textbf{erwartete} Laufzeit!
+	\end{itemize}
+\end{frame}
+
+\begin{headframe}[] %TODO
+	Sortieren
+\end{headframe}
+
+\begin{frame}{Sortieralgorithmen}
+	\textbf{Ein paar Definitionen} \\[0,125cm]
+	\begin{itemize}
+		\item Ein Algorithmus heißt \textbf{in-place} :\gdw Es wird nur $O(1)$ zusätzlicher Speicher verwendet
+		\pause
+		\item Ein Sortieralgorithmus heißt \textbf{stabil} :\gdw Elemente mit \textbf{exakt gleichem} Wert haben nach dem Sortieren die \textbf{gleiche Reihenfolge} zueinander wie davor
+	\end{itemize}
+\end{frame}
+	
+%[t] oder [c]
+\begin{frame}{Sortieren – Insertion-/SelectionSort}
+	\textbf{Insertion- und SelectionSort: Sortieren von Arrays} \\[0,125cm]
+	\begin{itemize}
+		\item \textbf{Idee}: Teile das Array in einen \textbf{sortierten} und einen \textbf{unsortierten} Abschnitt ein: \\
+		\vspace{.15\baselineskip}
+		\begin{tabularx}{\linewidth}{| p{.34\linewidth} | X |}
+			\hline
+			sortiert & unsortiert \\
+			\hline
+			\multicolumn{2}{l}{\hspace{.32\linewidth} \scalebox{1.3}[1]{$\Longrightarrow$}}
+		\end{tabularx}
+		\pause
+		\item Fülle schrittweise aus \textit{unsortiert} in \textit{sortiert} \\ 
+		\impl Am Ende \textbf{ganzes} Array sortiert
+		\pause
+		\item Wie kann so ein Schritt aussehen?
+		\pause
+		\begin{itemize}
+			\item \textbf{Einfügen} ($insert$) des nächsten unsortierten Elements an die korrekte Stelle im sortierten Bereich (\impl \emph{InsertionSort}) \\
+			\pause
+			oder
+			\item \textbf{Auswählen} ($select$) des Minimums aus dem unsortierten Bereich und Anhängen ans Ende des sortierten Bereiches (\impl \emph{SelectionSort})
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortieren – Insertion-/SelectionSort}
+	\begin{exampleblock}{InsertionSort}
+		\begin{algorithm}[H]
+			\Procedure{InsertionSort$(A: \KwArray[1..n] \KwOf Element)$}{
+				\For{$i := 2 \KwTo n$} {
+					\LComment{Füge $A[i]$ in den sortierten Bereich ein: } \;
+					$j := i$\;
+					\While{$j > 1 \KwAnd A[j-1] > A[j]$} {
+						$swap(A[j-1], A[j])$\;
+						$j\mm$\;
+					}
+				}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\item Worst-Case? \only<2>{\impl $\Theta(n^2)$ (umgekehrt sortiertes Array)}
+		\item Best-Case? \only<2>{\impl $\Theta(n)$ (bereits sortiertes Array)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortieren – Insertion-/SelectionSort}
+	\begin{exampleblock}{SelectionSort}
+		\begin{algorithm}[H]
+			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf Element)$}{
+				\For{$i := 1 \KwTo n$} {
+					$\|minIndex| := i$\;
+					\For{$j := i+1 \KwTo n$} {
+						\If{\DataSty{$A[j] < A[\|minIndex|]$}} {
+							$\|minIndex| := j$\;
+						}
+					}
+					\LComment{Das ausgewählte Element landet beim Index $i$:} \;
+					$swap(A[i], A[\|minIndex|])$\;
+				}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\item Worst-Case? \only<2>{\impl  $\Theta(n^2)$ (immer)}
+		\item Best-Case? \only<2>{\impl  $\Theta(n^2)$ (immer)}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Sortieren – Insertion-/SelectionSort}
+	\textbf{Das geht doch besser! Oder?}
+	\pause
+	\begin{itemize}
+		\item \textbf{Idee}: Bei \emph{InsertionSort} suchen wir die \textbf{Einfügestelle} im sortierten Teil \impl \textbf{binäre Suche} anwenden (\emph{BinaryInsertionSort})
+		\pause
+		\item Aber: \textbf{kein} (asymptotischer) \textbf{Vorteil} \impl   
+		Finden der Stelle zwar in $\Theta(\log n)$, aber trotzdem noch alles rechts davon verschieben \impl $\Theta(n)$
+		\pause
+		\item[\Pros] Immerhin: Weniger Vergleiche beim Finden \impl kann sich in \textit{manchen} Fällen trotzdem lohnen (falls Vergleiche \textit{sehr} teuer)
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Sortieren\only<1-3|handout:0>{ ...und mit Listen?}\only<4->{ – Mergesort}}
+	Bekannt: 
+	\begin{itemize}
+		\item \textbf{Zwei sortierte} verkettete Listen können in $O(n)$ zu \textbf{einer sortierten} verketteten Liste zusammengefügt werden (\emph{merge})
+		\pause
+		\item Listen der Länge 0 oder 1 sind schon \textbf{sortiert}
+		\pause
+		\item Listen können \textbf{zerteilt} werden
+		\pause
+		\implitem Also: Zerlege Listen rekursiv bis zum Basisfall und füge die Ergebnisse jeweils zusammen \impl \textbf{Mergesort}
+		\begin{algorithm}[H]
+			\Function{MergeSort$(L: \KwListOf Element): \KwListOf Element$}{
+				\lIf{$\abs{L} \leq 1$}{\Return{$L$}} 
+				\Else{
+					$\Matrix{\|first| \\ \|second|}
+					:=
+					\Matrix{
+						\text{„first half“} \KwOf L \\ 
+						\text{„second half“} \KwOf L
+					}$ \RComment{\textbf{very} roughly} \;
+					\begin{tabbing}
+						$\Return{ }\|merge|\big($\=$\|MergeSort|(\|first|),$ \\
+						\> $\|MergeSort|(\|second|)\big)$
+					\end{tabbing} 
+				}
+			}
+		\end{algorithm}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortieren – Mergesort}
+	\textbf{Schema aus der Vorlesung}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[height=6cm]{mergesort}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}{Sortieren – Mergesort}
+	\textbf{Laufzeit von Mergesort}
+	\pause
+	\begin{itemize}
+		\item Es ist $T(n) = \begin{cases}
+			1, & \text{falls } n \leq 1 \\
+			2 \cdot T(\fract n/2 ) + c \cdot n, & \text{falls } n > 1
+		\end{cases}$
+		\pause
+		\item \textbf{Master-Theorem}: \quad $T(n) \in \Theta(n \log n)$
+		\pause
+		\item Input ist ein \textbf{Array}? \impl  Schreibe Array in eine neue verkettete Liste, wende Mergesort an, kopiere Ergebnis zurück ins Array \\
+		(\impl D.~h., Mergesort für Arrays ist \textbf{nicht in-place})
+	\end{itemize}
+\end{frame}
+
+%TODO: Nicht vorwegnehmen.
+\begin{frame}[t]{Sortieren – untere Schranke}
+	\textbf{Vorlesung}: \\
+	\quad Vergleichsbasiertes Sortieren von $n$ Elementen dauert $\Omega(n \log n)$. \\
+	\pause
+	\forcenewline
+	\textbf{Warum?} \\
+	\forcenewline
+	\pause
+	\impl Ein \textbf{log}ischer Zusammenhang? \\[0,125cm]
+	\YesQuestion{Ist $\log(n!) \in \Theta(n\log n)$?} 
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	$\log(n!) \in O(n\log n)$, denn: 
+	\pause
+	\[\log(n!) = \log(1 \cdot 2 \cdot \cdots \cdot (n-1) \cdot n) \leq \log(n \cdot n \cdot \cdots \cdot n \cdot n) = \log(n^n) = n\log n \]
+	\pause
+	
+	$\log(n!) \in \Omega(n\log n)$, denn:
+	\pause
+	\begin{align*}
+		\log(n!) 
+		&= \log \Big( 
+		\underbrace{1 \cdot 2 \cdot \cdots \cdot ( 
+			\floor{\tfrac{n}{2}} - 1
+			)}_{\visible<5->{\geq 1 \cdots 1}}& \cdot \floor{\tfrac{n}{2}} \cdot & \underbrace{( 
+			\floor{\tfrac{n}{2}} + 1
+			) \cdot \cdots \cdot (n-1 ) \cdot n }_{\visible<5->{\geq \floor{\tfrac{n}{2}} \cdots \floor{\tfrac{n}{2}}}}
+		\Big) \\
+		\pause\pause
+		&\geq \log \big( \overbrace{1 \cdot 1 \cdot \cdots \cdot 1 \cdot 1}& \cdot \floor{\tfrac{n}{2}} \cdot & \overbrace{\floor{\tfrac{n}{2}} \cdot \cdots \cdot \floor{\tfrac{n}{2}} \cdot \floor{\tfrac{n}{2}} } \big) \\
+		\pause
+		& \omit\rlap{$ \geq \log\left(\floor{\frac{n}{2}}^{\floor{\frac{n}{2}}}\right) = \floor{\frac{n}{2}} \cdot \log(\floor{\frac{n}{2}}) $} \\ 
+		\pause
+		& \omit\rlap{$ \in \Theta\left(\frac{1}{2} \cdot n \cdot (\log n - \log 2 )\right) = \Theta(n \log n) $}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Vorbereitende Definitionen}
+	\pause
+	\begin{itemize}
+		\item \textbf{Binärbaum}: Ein Baum, bei dem jeder Knoten \textbf{maximal zwei} Kindknoten besitzt. 
+		\pause
+		\item \textbf{Wurzel}: Knoten eines Baumes, der keine Eltern hat.
+		\item \textbf{Blatt}: Knoten eines Baumes, der keine Kinder hat.
+		\pause
+		\item \textbf{Höhe} $h$ eines Binärbaums: Die \textbf{Länge} des längsten (wiederholungsfreien) Pfades von der \textbf{Wurzel} zu einem \textbf{Blatt} \\ {\small ($=$ Anzahl Kanten, über die man läuft)}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Behauptung}: Ein Binärbaum der Höhe $h$ hat \textbf{maximal} $2^h$  Blätter. \\
+	\pause
+	\textbf{Beweis} durch vollständige Induktion über $h$: \\
+	\pause
+	\hanging {\textbf{IA}. ($h = 0$):  \quad $T$ mit $h = 0$ hat nur einen Knoten: Wurzel $=$ Blatt. \newline $2^0 = 1$ \ \checkmark } \\
+	\pause
+	\hanging {\textbf{IV}.: Für ein festes $h \in \N_0$ gelte die Behauptung für alle Binärbäume der Höhe $h' \leq h$.} \\
+	\pause
+	\hanging {\textbf{IS}. ($h \rightsquigarrow h+1$): \quad Sei $T$ Binärbaum mit Höhe $h+1$ und Wurzel $w$. $w$ hat maximal 2 Kinder. Beide sind Wurzeln kleinerer Sub-Bäume $S_1, S_2$. Die $S_k$ haben max. Höhe $h$ $\stackrel{\text{IV}}{\impl}$ haben max. $2^h$ Blätter. \newline
+		\Impl $T$ hat insges. max. $2 \cdot 2^h = 2^{h+1}$ Blätter. \qed } \\
+	%Betrachte den Wurzelknoten des Binärbaumes der Höhe $h+1$. Dieser hat maximal zwei Kindknoten. Jeder dieser Kindknoten ist Wurzelknoten eines (Sub-)Baumes der maximalen Höhe $h$ und führt (nach IV.) somit jeweils maximal zu $2^h$ Blattknoten. \\
+	%Der gesamte Binärbaum hat also insgesamt maximal $2 \cdot 2^h = 2^{h+1}$ Blattknoten. 
+	\pause
+	\impl \textbf{Folgerung}: Ein Binärbaum mit $n$ Blättern muss \textit{mindestens} die Höhe $\log n$ haben.
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Der Sortierbaum -- Aufbau}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=11cm]{vergleichsbaum}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Der Sortierbaum -- Funktionsweise}
+	\pause
+	\begin{itemize}
+		\item Für jede Folgenlänge $n$ gibt es einen \textbf{eigenen} Sortierbaum.
+		\pause
+		\item Jeder \textbf{Knoten} im Baum repräsentiert den \textbf{Vergleich} zweier Elemente, dessen zwei mögliche Ergebnisse ($\leq$ oder $>$) zu versch. Kindern führen
+		\pause
+		\implitem Ganz unten: \textbf{Blätter} repräsentieren \textbf{endgültige sortierte Reihenfolge} der Elemente (die durch die vorherigen Vergleiche bekannt ist)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Der Sortierbaum -- Analyse}
+	\pause
+	\begin{itemize}
+		\item Betrachte minimalen Sortierbaum $T$ für eine Folge der Länge $n$.
+		\pause
+		\item Der Sortierbaum muss zu \textit{jeder möglichen Umsortierung} der Folge führen können \impl er \textbf{muss} $n!$ Blätter haben.
+		\pause
+		\implitem Höhe $h_T \geq \log(n!) \in \Theta(n \log n)$ 
+		\pause
+		\item Höhe $h_T \entspr$ Anzahl nötiger \textbf{Vergleiche} \entspr (Worst-Case-)\textbf{Laufzeit}
+		\Implitem Vergleichsbasierte Sortieralgorithmen können keinen besseren Worst-Case als $\Theta(n\log n)$ haben.
+		\pause
+		\implitem \textbf{untere asymptotische Schranke} für vergleichsbasiertes Sortieren, „schneller geht's nicht“. \quad\qedsymbol
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{The Sound of Sorting}
+	\url{http://panthema.net/2013/sound-of-sorting/}
+\end{frame}
+
+
+\begin{frame}{Sortieren}
+	\underline{Aufgabe 1: Spaghettisort} \\
+	Unterm Schrank der Vorratskammer findet ihr noch einen guten Batzen (unzubereiteter, trockener) Spaghetti. Leider sind diese im Laufe der Jahre etwas brüchig geworden und liegen daher nun in sehr vielen verschiedenen Längen vor. Um einzuschätzen, ob ihr die Spaghetti noch essen wollt oder nicht, möchtet ihr das Durcheinander in eine übersichtlichere Anordnung überführen. Überlegt euch ein Verfahren, wie ihr die Nudeln in linearer Zeit (in Bezug auf die Anzahl der Spaghetti) der Länge nach sortieren könnt.
+\end{frame}
+
+\begin{frame}{Sortieren}
+	\underline{Lösung von Aufgabe 1} \\
+	Die Spaghetti in der Hand auf dem Tisch aufrichten und „absacken“ lassen. Mit der anderen Hand von oben auf die Spaghetti herabfahren und so feststellen, welche Nudel zuerst piekst. Diese ist dann die Längste und wird links zu den bereits entfernten Spaghetti dazugelegt. Wiederholen, bis keine Spaghetti mehr unsortiert sind.
+\end{frame}
+
+
+\begin{frame}{Sortieren}
+	\underline{Aufgabe 2: Doktor Meta is back!} \\[0,125cm]
+	{	\small
+		Der ebenso geniale wie hochmoderne Superbösewicht Doktor Meta ist in Aufbruchstimmung! Erst neulich hat er eine klaffende Marktlücke erkannt, mit der er seinen Reichtum mehren und schließlich die Weltherrschaft an sich reißen wird: Den Verleih von \textbf{Turingmaschinen}!
+		
+		Zur Zeit besitzt Doktor Meta $k \in \N$ unterschiedliche Typen von TMen. Von jedem Typ $t \in \{1 ... k\}$ sind $c_t$ Stück vorhanden, die alle verliehen werden können. Seine Buchungsanfragen-TM ist jedoch von seinem größten Widersacher Turing-Man (halb Mensch, halb Turingmaschine) entwendet worden, um den Superbösewicht zu stoppen. 
+		
+		Somit liegen also $n$ Buchungen vor (bestehend aus \emph{Abholzeitpunkt}, \textit{Rückgabezeitpunkt} und \emph{Typ} der TM) und es muss möglichst schnell (und natürlich algorithmisch) entschieden werden, ob die vorliegenden Buchungen alle erfüllt werden können.	
+			
+		%Stets hat man ihn als realitätsfern belächelt, doch jetzt sieht Mister X seinen Triumph gekommen: Als Spezialist der Theoretischen Informatik hat er den Ruf der Zukunft vernommen und beschlossen, die nächste Stufe der Modernisierung einzuleiten. Schließlich hat er in seiner nicht endenden Genialität eine klaffende Marktlücke erkannt und direkt ein Monopol mit dem Verleih von Turingmaschinen (TM) aufgebaut. Gerade eröffnet er zwar erst seine erste Filiale, doch schon bald wird er expandieren, ein Imperium errichten und die Weltherrschaft erlangen!! Oder zumindest plant er das. \\
+		%Zur Zeit besitzt er $k \in \N$ unterschiedliche Arten von TMen. Von jedem Typ $t \in \{1 ... k\}$ sind $c_t$ TMen vorhanden, die alle verliehen werden können. Leider konnte die TM, die Mister X zur automatisierten Anfragebeantwortung einsetzt, ihr Entscheidungsproblem nicht lösen und hat daher sämtliche Anfragen mit „ja“ beantwortet. Nun liegen also $n$ Buchungen (bestehend aus Abholzeitpunkt, Rückgabezeitpunkt und Art der TM) vor und es muss möglichst schnell (und natürlich algorithmisch) entschieden werden, ob die vorliegenden Buchungen alle erfüllt werden können. \\
+		Entwerft einen Algorithmus, der dieses Problem in höchstens $O(n \log n + k)$  löst.
+		(Geht davon aus, dass eine TM sofort wieder verliehen werden kann, sobald sie zurückgegeben wurde.)
+	}
+\end{frame}
+
+\begin{frame}{Sortieren}
+	\underline{Lösung von Aufgabe 2} \\
+	\vspace{-.6\baselineskip} \textbf{Konvertiere} Buchungsliste $\rightsquigarrow$ Liste von \textbf{Ereignissen}: $\left(\stackedtight{\text{Zeitpunkt } \\ \text{Typ }t \\ dx}\right)$, \\ 
+	\vspace{-.8\baselineskip} wobei $dx = \tight{\caseslr{-1 & \text{für Ausleihe} \\ 1 & \text{für Rückgabe}}}$. \\
+	\impl Für jede Buchung werden \textbf{zwei} Ereignisse angelegt. \\
+	\textbf{Sortiere} Ereignisliste aufsteigend nach Zeitpunkt (falls gleiche Zeit \impl Rückgabe \textbf{vor} Ausleihe!) \\
+	\textbf{Initialisiere} $A: \KwArray A[1...k] \KwOf \Z$ \quad mit \quad  $A[t] := c_t \quad \forall t=1..k$. \\
+	\For{$e \KwIn \text{Ereignisse}$}{
+		$A[e.t] \pluseq e.dx$ \\
+		\If{$A[e.t] < 0$}{
+			\Return{\KwFalse} \RComment{unerfüllbar} \;
+		}
+	}
+	\Return{\KwTrue} \RComment{erfüllbar} \\
+	\textbf{Laufzeit}: Sortieren von $2n$ Ereignissen: $O(n \log n)$ (mit Mergesort), Initialisieren von $A$ in $O(k)$. Rest: $O(n)$ \Impl \textbf{insgesamt} $O(n \log n + k)$.
+	
+	
+	%Zunächst wird aus der Liste der Buchungen eine Liste von Ereignissen erzeugt. Ein Ereignis besteht aus einem Zeitpunkt, dem Typ $t$ der TM und einer Zahl $dx$, die bei Ausleihe $-1$ und bei Rückgabe $1$ ist, d.h. für jede Buchung werden genau zwei Ereignisse angelegt. Die Liste der Ereignisse wird dann aufsteigend nach Zeitpunkt sortiert, wobei bei Ereignissen mit gleichen Zeitpunkten Rückgaben vor Ausleihen sortiert werden müssen. \\
+	%Lege dann ein $\KwArray A[1...k] \KwOf \Z$ an, wobei $A[t] := c_t$ initialisiert wird. Iteriere danach über $e \in$ Ereignisliste und addiere $e.dx$ auf $A[e.t]$. Wird ein $A[t]$ zu einem beliebigen Zeitpunkt kleiner $0$, sind die Buchungen unerfüllbar, ansonsten schon. \\
+	%Das Sortieren von $2n$ Ereignissen liegt in $O(n\log n)$ (z.B. mit Mergesort), das Anlegen von $A$ in $O(k)$. Der Rest liegt in $O(n)$, also insgesamt $O(n\log n + k)$ Laufzeit.
+\end{frame}
+
+\iffalse
+ 
+\begin{frame}
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[xshift=-1cm,yshift=-4.4cm] at (current page.north) {\includegraphics[height=.89\paperheight]{xkcd_ineffective_sorts_2x}};
+	\end{tikzpicture}
+\end{frame}
+
+\fi 
+
+\end{document}

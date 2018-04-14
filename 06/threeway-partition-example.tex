@@ -1,0 +1,246 @@
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{9}{ c }{ }
+		\\ \hline
+		3 & 7 & 0 & 5 & 1 & 5 & 5 & 7 & 1
+		\\ \hline
+	\end{tabular}\\
+	\vspace{3\baselineskip}
+	\hyperlink{label:afterEx2}{Hier klicken, um das Beispiel zu überspringen.}
+\end{frame}
+
+
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{9}{ c }{ }
+		\\ \hline
+		3 & 7 & 0 & \cellcolor{yellow} 5 & 1 & 5 & 5 & 7 & 1
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{8}{ c| }{ } & p
+		\\ \hline
+		3 & 7 & 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{8}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{cyan!50} 3 & 7 & 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		$ < p$ & \multicolumn{7}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & 7 & 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		$ < p$ & \multicolumn{7}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{cyan!50} 7 & 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		$ < p$ & $ > p $ & \multicolumn{6}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptinggreen} 7 & 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		$ < p$ & $ > p $ & \multicolumn{6}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 0 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{2}{ |c| }{$ < p$} & $ > p $ & \multicolumn{5}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptinggreen} 7 & 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{2}{ |c| }{$ < p$} & $ > p $ & \multicolumn{5}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 1 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{3}{ |c| }{$ < p$} & $ > p $ & \multicolumn{4}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{3}{ |c| }{$ < p$} & $ > p $ & \multicolumn{4}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 1 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & $ > p $ & \multicolumn{3}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & $ > p $ & \multicolumn{3}{ c| }{ } & p
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 5 & 5 & 7 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & $ > p $ & \multicolumn{2}{ c| }{ } & \multicolumn{2}{ c| }{ $ = p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & 7 & 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & $ > p $ & \multicolumn{2}{ c| }{ } & \multicolumn{2}{ c| }{ $ = p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 7 & 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & \multicolumn{2}{ c| }{ $ > p $} &  & \multicolumn{2}{ c| }{ $ = p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{adaptinggreen} 7 & 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & \multicolumn{2}{ c| }{ $ > p $} &  & \multicolumn{2}{ c| }{ $ = p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{adaptinggreen} 7 & \cellcolor{cyan!50} 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}[t]{Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$}  &\multicolumn{2}{ c| }{ $ > p $} & \multicolumn{3}{ c| }{ $ = p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{adaptinggreen} 7 & \cellcolor{adaptinggreen} 7 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+
+
+\begin{frame}[t]{\hypertarget{label:afterEx2}{}Quicksort (mit Drei-Wege-Partitionierung)}
+	\textbf{Beispiel} \\
+	Partitioniere $A: \KwArray[0..n-1]$ mit Pivotwahl $p(A) := A[\floor{\fract n/3 }]$ {\small (mit $n := \abs{A}$)}
+	\\[0,5cm]
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | }
+		\multicolumn{4}{ |c| }{$ < p$} & \multicolumn{3}{ c| }{ $ = p $} & \multicolumn{2}{ c| }{ $ > p $}
+		\\ \hline
+		\cellcolor{adaptingred} 3 & \cellcolor{adaptingred} 0 & \cellcolor{adaptingred} 1 & \cellcolor{adaptingred} 1 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5 & \cellcolor{yellow} 5 & \cellcolor{adaptinggreen} 7 & \cellcolor{adaptinggreen} 7
+		\\ \hline
+	\end{tabular}
+\end{frame}

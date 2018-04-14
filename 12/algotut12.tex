@@ -1,0 +1,321 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{21. Juli \thisyear}
+
+\newcommand{\Knapsack}{\textsc{Knapsack}\xspace}
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+\begin{frame}{Schwarzes Brett + Klausurinfos!}
+	\begin{itemize}
+		\item {\Large \textbf{\{ \}} vs. \textbf{( )}} – Ungerichtete/gerichtete Kanten
+		\item \textbf{Klausur} findet statt am \textbf{04.09.2017} von \textbf{11–13~Uhr} \\
+		\item \textbf{Erlaubt}: Stifte, 4-Gänge-Menü, \textbf{Cheatsheet} (1 DIN-A4-Blatt beidseitig beliebig beschrieben) 
+		\item Klausur\textbf{anmeldung} bis 28.08.17. \\
+		Klausur\textbf{abmeldung} bis 28.08.17, danach nur \textbf{direkt} vor Klausur im HS!
+	\end{itemize}
+\end{frame}
+	
+\begin{headframe}[First World Problems]
+	Optimierungsprobleme
+\end{headframe}
+	
+\begin{frame}{Optimierungsprobleme}
+	\textbf{Mehr Effizienz} 
+	\begin{itemize}
+		\item Dijkstra: \textbf{Kürzeste} Pfade
+		\item Jarník-Prim bzw. Kruskal: \textbf{Minimale} Spannbäume
+		\item[...]
+		\implitem Alles \textbf{Optimierungsprobleme}
+		\pause
+		\item \textbf{Heute}: Optimierungsprobleme \textbf{allgemein} – und wie man sie \textbf{löst} \\
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimierungsprobleme – \Knapsack}
+	\textbf{Beispiel: Ich nehme meinen Rucksack und packe ein...} 
+	\begin{itemize}
+		\item \textbf{Rucksackproblem} (\Knapsack): \\
+		\textbf{Gegeben}: \\ 
+		\quad Rucksackplatz $M$, \\
+		\quad $n$ Gegenstände mit \textbf{Gewicht} $w_i$ und \textbf{Profit} $p_i$ \\
+		\textbf{Gesucht}: Teilmenge $X$ der Gegenstände, sodass \\
+		\quad $\sum\limits_{i \in X} p_i$ \textbf{maximal} wird, aber $\sum\limits_{i \in X} w_i \leq M$ bleibt
+		\item \textbf{Nicht alle} Gegenstände passen in den Rucksack
+	\end{itemize}
+	\forcenewline
+	\pause
+	Lösungsansätze?
+\end{frame}
+
+\begin{frame}{Optimierung – Greedy}
+	\textbf{Wir bereuen nichts: Greedy-Algorithmen} 
+	\begin{itemize}
+		\item Prinzip: Reine \textbf{Gier}, never step back! \\
+		Was \textbf{grad} am \textbf{Besten} scheint: \textbf{Direkt} nehmen!
+		\pause
+		\implitem Kann in \textbf{Sackgasse} führen 
+		\implitem Auf die \textbf{Spitze} geht's manchmal nur durchs \textbf{Tal}
+		\pause
+		\item Kann aber auch funktionieren: \\
+		Dijkstra, Jarník-Prim, Kruskal – alles \textbf{greedy} und läuft \yop
+	\end{itemize}
+	\pause
+	
+	Ein \textbf{Greedy-Algo} für \textbf{\Knapsack}:
+	\begin{itemize}
+		\item Schmeiße der Reihe nach Gegenstände mit \textbf{bestem} Profit-/Gewicht-\textbf{Verhältnis} $\frac{p_i}{w_i}$ rein, bis voll
+		\pause
+		\implitem Aber: \textbf{nicht optimal}, Bsp.: \ $M=10, \ (p_i, w_i) = (8, 6), (5, 5), (5, 5)$ \crash
+		\implitem Greedy-Algorithmus für \Knapsack \textbf{ungeeignet}, kann sich eine optimale Lösung \textbf{verbauen}\\
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimierung – DP}
+	\textbf{Rekursion rückwärts: Dynamic Programming (DP)} 
+	\begin{itemize}
+		\item \textbf{Teile-und-Herrsche}: \\
+		Löse großes Problem durch \textbf{Zerlegung} in Kleinere
+		\pause
+		\item \textbf{Dynamic Programming}: \\
+		Löse \textbf{Kleinere} zuerst, setze dann zu \textbf{Größeren} zusammen: \\
+		\pause
+		\quad Konstruiere optimale „\textbf{Minimallösungen}“ \~~> zu größeren \\ 
+		\quad Optimallösungen \textbf{erweitern} \~~> bis zum urspr. Problem.
+		\pause
+		\item Meistens \textbf{zweidimensional}: Tabelle mit \textbf{Rekursionsformel} ausfüllen. (siehe Beispiel)
+		\pause
+		\item Formal: DP ist anwendbar \gdw die optimale Lösung besteht aus optimalen Lösungen von \textbf{Teilproblemen}.
+		%\item D.h. konstruiere optimale „Minimallösungen“ und \textbf{erweitere} diese zu immer \textbf{größeren} Optimallösungen, bis Optimallösung des ursprünglichen Problems zusammensetzbar
+		%\pause
+		%\item Meistens \textbf{zweidimensional}: Optimal erreichbarer Wert abhängig von betrachtetem Gegenstand \textbf{und} Restbestand
+		%\pause
+		%\item Formal: DP ist anwendbar, wenn die optimale Lösung aus optimalen Lösungen von Teilproblemen besteht
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Optimierung – DP}
+	\vspace{-.5\baselineskip}
+	\textbf{Lösung von \Knapsack mit DP}  
+	\begin{itemize}
+		\item Lege zweidim. $\KwArray P[0..n, \ 0..M] \KwOf \R$ an: \\ 
+		\impl $P[i, C] = $ \textbf{optimaler Profit} für betrachtete Gegenstände $1...i$ \\ mit benutzter Kapazität $\leq C$ \\
+		\impl Rekursionsformel: \\ \vspace{-.7\baselineskip}
+		\qqquad \quad $P[i, C] = \max\left(\overbrace{P[i-1, C]}^\text{Nehmen $i$ nicht}, \ \underbrace{P[i-1, C - w_i] + p_i}_\text{Nehmen Gegenstand $i$ mit}\right)$
+		\pause 
+		\item 
+		\lFor{Items $i := 1 \KwTo n$}{\quad \lFor{Capacity $C := 1 \KwTo M$}{}} \vspace{-\baselineskip}
+		\quad $P[i, C] := \max\left(\textcolor{darkgreen}{P[i-1, C]}, \ \textcolor{blue}{P[i-1, C - w_i] + p_i}\right)$ \\
+		\quad $Taken[i, C] := \KwTrue \KwSty{ if} $ \textcolor{darkgreen}{links} $ < $ \textcolor{blue}{rechts}
+		\pause
+		\item Alternativer „Pseudo-Pseudocode“: \\
+		\lFor{Items $i := 1 \KwTo n$}{\quad \lFor{Capacity $C := 1 \KwTo M$}{}} 
+		\vspace{-\baselineskip}
+		\quad \lIf{Platz langt $\wedge$ $\text{Profit}(\text{\small Restbestand mit $i$}) > \text{Profit}(\text{\small Rest ohne $i$})$}{} 
+		\qquad 		$Taken[i, C] := \KwTrue$ \\
+		\quad		$P[i, C] := $ besserer Profit von beiden \quad (wird immer gesetzt)
+		  
+		
+		%\item Für alle Gegenstände $i$ von $1$ bis $n$ und Kapazität $C$ von $1$ bis $M$: \\
+		%Falls der Platz ausreicht, überprüfe, ob der Profit durch das Einfügen von $i$ samt optimaler Restplatzauffüllung größer ist als die optimale Restplatzauffüllung ohne $i$ (und passe $P$ an).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Optimierung – DP}
+	\vspace{-.5\baselineskip}
+	\textbf{Lösung von \Knapsack mit DP} 
+	\begin{itemize}
+		\implitem Erinnerung: \\ \vspace{-\baselineskip}
+		\quad $P[i, C] = \max\left(\overbrace{P[i-1, C]}^\text{Nehmen $i$ nicht}, \ \underbrace{P[i-1, C - w_i] + p_i}_\text{Nehmen Gegenstand $i$ mit}\right)$ 
+		\forcenewline
+		\forcenewline
+		\item Ausfüllen für $i = 0$: Keine Gegenstände \impl Kein Profit: $P[0, \_] := 0$
+		\pause
+		\item Ausfüllen für $i = 1$: Einfach (immer \textbf{rein}, sobald Platz \textbf{reicht})
+		\pause
+		\item[...] Rest mit Formel ausfüllen...
+		\implitem Am \textbf{Ende}: $P[n, M]$ gibt \textbf{maximalen} Profit an 
+		\pause
+		\item Item-Menge rekonstruieren: $Taken[i, C]$ \textbf{rückwärts} laufen ab $C := M$ \\
+		\lFor{$i := n \KwDownto 1$}{} 
+		\quad $NowReallyTaken[i] := Taken[i, C]$ \\
+		\quad \lIf{$Taken[i, C]$}{$ C \minuseq w_i$}
+		\item \textbf{Gesamt-Laufzeit}: $O(n \cdot M)$, aber \textbf{pseudo}polynomiell 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimierung – DP: Exkurs {\footnotesize (Nicht klausurrelevant)}}
+	\begin{exampleblock}{Ein haarspaltender Einwurf}
+		\begin{algorithm}[H]
+			\Function {InsanelyComplicated$(n : \N)$} {
+				$sum := 0$\;
+				\For{$i := 1 \KwTo n$} {
+					$sum\pp$\;
+				}
+				\KwRet{$sum$}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	Welche Laufzeit hat dieser Algorithmus?
+\end{frame}
+
+\begin{frame}{Optimierung – DP: Exkurs {\footnotesize (Nicht klausurrelevant)}}
+	\textbf{Laufzeit: Mehr Schein als Sein} 
+	\begin{itemize}
+		\item \textbf{Eigentlich} heißt „Laufzeit“: Laufzeit in Bezug auf Eingabe\textbf{größe} \\
+		{\small („\textit{wieviel} Elemente zum Durchlaufen“ o.~ä.)}
+		\pause
+		\item Eingabe keine Elemente, sondern ein \textbf{Wert} $n$? \\
+		 $n$ wird (meist binär) \textbf{kodiert} in Größe $a := \log n$ \\ 
+		 \impl $a$ ist \textbf{tatsächliche} Eingabegröße! \\
+		 \impl die eigentliche Laufzeit: $O(n) = O(2^a)$ \impl \textbf{exponentiell}
+		\pause
+		\item \textbf{Aber}: Laufzeit immerhin polynomiell in Bezug auf {\small (größten)} Eingabe\textbf{wert} $n$ \impl Bezeichnung: \textbf{Pseudo}polynomiell \\
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimierung – DP {\footnotesize (Nicht klausurrelevant)}}
+	\textbf{\Knapsack mit DP: Laufzeit} 
+	\begin{itemize}
+		\item DP-Algorithmus für \Knapsack: \textbf{Laufzeit} in $O(n \cdot M)$
+		\item $n$ Elemente sind „\textbf{echt da}“, aber $M$ ist „irgendein \textbf{Wert}“ \\
+		\impl Laufzeit auch \textbf{pseudopolynomiell}
+		\pause
+		\item \Knapsack ist \textbf{\NP-vollständig}, d.~h. für \Knapsack ist \textbf{kein echt polynomieller} Algo bekannt
+		\pause
+		\implitem So einer würde die \textbf{große ungelöste Frage} $\mathcal{P} = \NP$ klären \\ 
+		(und dem Finder 1~000~000~\$ einbringen \smiley).
+		\pause
+		\item Mehr dazu in TGI nächstes Semester...
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\textbf{(Integer) Linear Programming} \\
+	Lineares Programm (LP) \\ mit $n$ Variablen und $m$ Constraints ($=$ Beschränkungen):   % TODO Neuformatieren
+	\begin{itemize}
+		\pause
+		\item \textbf{Lösungsvektor} $x = (x_1, ..., x_n) \in \R_{\geq0}^n$ (wird \textbf{gesucht})
+		\pause
+		\item \textbf{Kosten}-/\textbf{Gewinnvektor} $c = (c_1, ..., c_n)\in \R^n$; \\ 
+		$f(x) = c \cdot x = \sum c_i  x_i $ soll minimiert/maximiert werden
+		\pause
+		\item $m$ \textbf{Constraints}, \quad für $j = 1...m$: \\ \vspace{.1\baselineskip}
+		\quad $a_j \cdot x \braced{\stackedtight{\leq \\ = \\ \geq}} b_j$ \quad mit $a_j = (a_{j1}, ..., a_{jn}) \in \R^n$, \ $b_j \in \R$  % und $\sim_i\ \in \big\lbrace\leq, =, \geq\big\rbrace$
+	\end{itemize}
+	\pause
+	Varianten:
+	\begin{itemize}
+		\item \textbf{Integer LP}: LP mit allen $x_i \in \N_0$ \\
+		(oft durch Constraints auch $x_i \in \{0, 1\}$)
+		\pause
+		\item \textbf{Mixed ILP}: LP, bei dem \textbf{einige} (aber nicht alle) $x_i$ $\in \N_0$ sind
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\textbf{Beispiel: \Knapsack als ILP} 
+	\begin{itemize} % TODO Neuformatieren
+		\item \textbf{Lösungsvektor} $x \in \{0, 1\}^n$: \\ 
+		\quad  $x_i = 1$ \gdw Gegenstand $i$ wird eingepackt
+		\pause 
+		\item Profitwerte $p_i$ bilden schon Profitvektor $p$: \\ \impl \textbf{Profitfunktion} $f(x) = p \cdot x$ soll \textbf{maximiert} werden.
+		\pause
+		\item \textbf{Constraints}: Nur einen, nämlich \\
+		 \quad $w \cdot x \leq M$ \quad mit $w = (w_1,..,w_n)$
+		\pause
+		\forcenewline
+		\forcenewline
+		\item Wie \textbf{lösen} wir das jetzt? \\
+		\impl Wir \textbf{gar nicht}, aber ein \textit{Black-Box-Solver} für ILPs schon \smiley
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\textbf{Warum dann überhaupt (M)ILPs?} 
+	\begin{itemize}
+		\item Es gibt viele \textbf{sehr effiziente} Löser für (M)ILPs \\
+		\impl \textbf{Relevantes Thema}
+		\pause
+		\item \textbf{Sehr viele Probleme} können als (M)ILPs formuliert werden
+		\pause
+		\item \textbf{Vorgeschmack} auf TGI (Reduktionen, \NP-Vollständigkeit)
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\textbf{Beispiel: \textsc{VertexCover}} \\
+	\textsc{VertexCover}: Haben ungerichteten, zusammenhängenden Graphen $G = (V, E)$, wollen \textbf{minimale} Teilmenge $C \subseteq V$, so dass $\forall \{u, v\} \in E: v \in C$   \hfill  \only<all:2>{\small (\textcolor[rgb]{0,.67,1}{\textbf{Blau}}: Ein mögliches Vertex-Cover $C$)}
+	
+	\begin{figure}[htp]
+		\centering
+		\only<all:1>{\includegraphics[height=5cm]{vertexcover1}}
+		\only<all:2>{\includegraphics[height=5cm]{vertexcover2}}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\textbf{\textsc{VertexCover} als ILP} 
+	\begin{itemize} %TODO Formatierung
+		\item \textbf{Lösungsvektor} $x \in \{0, 1\}^n$: \quad $x_i = 1$ \gdw Knoten $i \in C$ 
+		\pause
+		\item Kostenvektor $c = (1,..,1) \in \{1\}^n$, \\ 
+		\textbf{minimiere} $f(x) = c \cdot x = \sum x_i = |C|$
+		\pause
+		\item $m$ \textbf{Constraints}: \quad  $\forall \{u, v\} \in E \quad \text{ jeweils } \quad x_u + x_v \geq 1$
+	\end{itemize}
+\end{frame}
+
+\iffalse
+\begin{frame}<handout:0>{Optimierungsprobleme}
+	\textbf{Zusammenfassung: Was haben wir heute gelernt?} 
+	\begin{itemize}
+		\item Verschiedene Verfahren für das Lösen von Optimierungsproblemen: Greedy, DP, ILP
+		\pause
+		\item TGI wird bestimmt super
+		\pause
+		\item Gruppenarbeit ist \textbf{megatoll} und überhaupt das \textbf{AllerBUÄSTE} von der \textbf{ganzön Welt}, deshalb sollten wir \textbf{unbedingt} jetzt gleich eine solche machön!!!1!
+	\end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\underline{Aufgabe: } \\
+	{\scriptsize \input{aufgabentext}}
+\end{frame}
+
+\begin{frame}{Optimierungsprobleme – ILPs}
+	\underline{Lösung: } 
+	\begin{itemize}
+		\item \textbf{Lösungsvektor} $x \in \{0, 1\}^n$, \\ 
+		\quad $x_i = 1$ \gdw Urkundenmenge $U_i$ wird gekauft 
+		\item \textbf{Kostenvektor} $c = (c_1, ..., c_n) \in \R_{\geq0}^n$ \\
+		\quad Minimiere $f(x) = c \cdot x = \sum c_i x_i$
+		\item $k$ \textbf{Constraints}, \quad für $j = 1...k$: \\
+		\quad $\sum\limits_{i=1}^{n} U_{ij} \cdot x_i  \geq 1$ \quad mit $U_{ij} = \casesl{1, \ \text{Urkunde } j \in U_i \\ 0, \ \text{Urkunde } j \notin U_i}$
+	\end{itemize}
+	Das Problem heißt allgemein übrigens \textsc{SetCover}.
+\end{frame}
+
+\begin{frame}{Schönes Wochenende noch! \smiley}
+	\centering
+	\textbf{\textsc{Travelling Salesman Problem}} \\[.2\baselineskip]
+	\includegraphics[width=.9\textwidth]{xkcd}
+\end{frame}
+
+\end{document}

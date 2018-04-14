@@ -1,0 +1,456 @@
+%beamer
+
+%\PassOptionsToClass{handout}{beamer}
+
+\def\haslogo{}
+
+\input{../preamble/tutpreamble}
+
+\date{26. Mai \thisyear}
+
+\morescalingdelimiters
+
+\begin{document}
+	
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+\begin{headframe}[Probably useful]
+	Wahrscheinlichkeiten
+\end{headframe}
+	
+
+\begin{frame}{My little Wahrscheinlichkeitstheorie}
+	\begin{itemize}
+		\item (Elementarer) \textbf{Grundraum} $\Omega =$ Menge aller möglichen Ergebnisse
+		\item $A \subseteq \Omega$ heißt \textbf{Ereignis}, z.~B.
+		\begin{itemize}
+			\item \textit{Elementarereignis} $\{\omega\}, \quad  \omega \in \Omega$
+			\item \textit{Sicheres} Ereignis $\Omega$, \\ \textit{unmögliches} Ereignis $\emptyset$
+			\item Sei $\omega$ das Ergebnis eines konkreten Versuchs \\ 
+			\Impl $A$ „tritt ein“ \gdw $\omega \in A$
+		\end{itemize}
+		\item $p_\omega$ ist die \textbf{Wahrscheinlichkeit} von $\omega \in \Omega$, \\ es gilt $\sum\limits_{\omega \in \Omega} p_\omega = 1$.
+		\item \textbf{Gleichverteilung}: $p_\omega = \frac{1}{\abs{\Omega}} \quad \forall \omega \in \Omega$.	
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{My little Wahrscheinlichkeitstheorie}
+	\begin{itemize}
+		\item Eine \textbf{Zufallsvariable} (ZV) $X$ ist eine Abbildung, die jedem $\omega \in \Omega$ einen („beliebigen“) Wert in $\R$ zuweist, also $X: \Omega \functionto \R$
+		\item Seien $X, Y$ ZVen: \\ $X+Y$ ist wieder ZV, \quad $\lambda \cdot X$ auch ($\lambda \in \R$)
+		\pause
+		\item \textbf{Erwartungswert} $\E$ einer Zufallsvariablen $X$ (der „durchschnittlich eintretende“ Wert von $X$): $\E[X] := \sum\limits_{\omega \in \Omega} p_\omega X(\omega)$
+		\item Es gilt:
+		\begin{align*}
+			&\E[X+Y] = \E[X] + \E[Y], \\
+			&\E[\lambda X] = \lambda \E[X]
+		\end{align*}
+		\pause
+		\Impl Der Erwartungswert ist eine \textit{lineare} Abbildung!
+		%\item Für die Zufallsvariablen $X, Y$ gilt also: $\E[X+Y] = \sum\limits_{\omega \in \Omega} p_\omega (X(\omega)+Y(\omega)) = \sum\limits_{\omega \in \Omega} (p_\omega X(\omega) + p_\omega Y(\omega))$
+		%\\[0,25cm]
+		%$= \sum\limits_{\omega \in \Omega} p_\omega X(\omega) + \sum\limits_{\omega \in \Omega} p_\omega Y(\omega) = \E[X] + \E[Y]$
+		%\\[0,25cm]
+		%(ebenso gilt $\E[\lambda X] = \lambda \E[X]$) \impl Der Erwartungswert ist \textit{linear} („Linearität des Erwartungswertes“)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{My little Wahrscheinlichkeitstheorie}
+	\textbf{Beispiel 1} \\
+	\begin{itemize}
+		\item 6-seitiger, fairer \textbf{Würfel} wird 1x geworfen \\
+		$\impl \Omega := \{1,2,3,4,5,6\}$, \pause $p_\omega = \fract1/6 $ (gleichverteilt)
+		\item Def. ZV $X$: Augenzahl eines Wurfes \\ \pause
+		$\impl X(\omega) := \omega$
+		\item Erwartungswert $\E[X] =$ \pause $1 \cdot \fract1/6 + 2 \cdot \fract1/6 + 3  \cdot \fract1/6 + 4 \cdot \fract1/6 + 5 \cdot \fract1/6 + 6 \cdot \fract1/6 = 3.5$
+		\item Wahrscheinlichkeit, dass 2 oder 3 gewürfelt wird? \\ \pause
+		$\impl \P[X = 2 \vee X = 3] = p_2 + p_3 = \fract1/3 $
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{My little Wahrscheinlichkeitstheorie} 
+	\textbf{Beispiel 2} \\%[0,125cm]
+	\begin{itemize}
+		\item \textbf{Urne} mit Kugeln: 4 grüne, 1 rote. Einmal ziehen. \\ \pause
+		$\impl \Omega = \{z_g, z_r\}$ \quad (Ziehung grün, Ziehung rot) und \\ \pause
+		$ p_{z_g} = \frac{4}{5}$ und $p_{z_r} = \frac{1}{5}$.
+		\item \textbf{Spiel}:  Bei grün gewinnt man 2~€, bei rot 7~€. \quad ZV: \\ \pause
+		$G(z_g) := 2, \quad  G(z_r) := 7$.
+		\item Zu erwartender Gewinn? \\ \pause
+		$\impl \E[G] = \frac{4}{5} \cdot 2 + \frac{1}{5} \cdot 7 = \fract 15/5 = 3$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschub – Erwartete Laufzeit}
+	Ein Algorithmus mit tatsächlicher Laufzeit $T(n)$ hat \textbf{erwartete Laufzeit} in $O(g(n))$ :\gdw der Erwartungswert der Laufzeit liegt in $O(g(n))$.
+\end{frame}
+
+\iffalse
+\begin{frame}{Datenstrukturen}
+	\textbf{Freiheit für die Indizierung} \\[0,125cm]
+	\begin{itemize}
+		\pause
+		\item Bisher: Für Index $i$ in einer Datenstruktur der Größe $n$ gilt $ i \in \{0, ..., n-1\} \subset \N_0$
+		\pause
+		\item Nun: Kein Index mehr
+		\pause
+		\item Stattdessen: Jedes Element $e$ hat einen eindeutigen Wert $key(e)$ derart, dass $\forall e, e': key(e) = key(e') \Leftrightarrow e = e'$ \\ (setze künftig Elementvergleiche synonym zu Vergleich der $keys$, auch mit $<$ und $>$)
+		\pause
+		\item Der $key(e)$ dient zum Finden von $e$ in der Datenstruktur, hat jedoch alleine keinen Aussagegehalt darüber, wo in der Datenstruktur $e$ sein Dasein fristet
+	\end{itemize}
+\end{frame}
+\fi
+
+% Das ist falsch:
+\iffalse
+\begin{frame}{Was bisher geschah...}
+	\begin{tabular}{|p{.55\linewidth}|l|}
+		\hline
+		\textbf{Sei $C$ ein(e)...} & \textbf{mögliche Indizierung} \\
+		\hline
+		$\KwArray[a..b]\ \KwOf\ \text{Element}$ & $C[a],C[a+1],...,C[b]$ \\
+		\hline
+		$\KwListOf \text{Element}$ mit Länge $n$ & $C[0],C[1],..,C[n - 1]$ \\
+		\hline
+		\textit{Varianten davon} \newline {\small (Doppelt/Einfach verkettet, Unbounded, ...)} & \textit{simile} \\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Jetzt neu: Hashtables!}  %TODO Hashsets? key eindeutig... => Eher Konzept
+	\Impl Bei Hashtables: \textbf{freie Indizierung} \\ 
+	$Hashtable[key(e)] = e$ \quad (Element $e$) \\
+	Beispiele: \\
+	$Hashtable[\str{Name}] = \str{Marsupilami}$ \\
+	$Hashtable[42] = \str{Die Antwort auf alles}$ \\
+	$Hashtable[\str{Alter}] = 12\TM$ \\
+	\pause \forcenewline
+	\impl Jedes Element $e$ bekommt \textbf{eindeutigen} $key(e)$ zugeordnet \\
+	Im Beispiel: \\
+	$key(\str{Marsupilami}) = \str{Name}$ \quad etc.
+	\pause \\ \forcenewline
+	Es gilt
+	$\forall\; e, e': \quad key(e) \stackedtight{< \\ = \\ >} key(e') \gdw e \stackedtight{< \\ = \\ >} e'$ \\ (wie gesagt, $key$ \textbf{eindeutig})
+\end{frame}
+\fi
+
+\begin{headframe}[Das Genie beherrscht das Chaos]
+	Hashing
+\end{headframe}
+
+\begin{frame}{Hashtables: Übersicht}
+	\begin{itemize}
+			\item \textbf{ungeordnete} (!) Datenstruktur \\
+			\impl Kein Index mehr (z.B. $A[i]$) \quad {\small (Mit beliebigen Indizes erweiterbar!)}
+			\pause
+			\item \textbf{Operationen}: insert, remove, find
+			\forcenewline \pause
+			\item Unordnung: \textbf{Wie}? \\
+			\impl Jedes Element $e$ bekommt eindeutigen $key(e)$ zugeordnet \\ (Keys ab jetzt meistens \textit{ganze Zahlen})
+			\pause
+			\item Es gilt
+			$\forall\; e, e': \quad key(e) \ \stackedtight{< \\ = \\ >}\ key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\ (wie gesagt, $key$ \textbf{eindeutig})
+	\end{itemize} 
+\end{frame}
+
+
+
+\begin{frame}{Hashtables: Under the hood} 
+	\textbf{Aufbau} \\
+	\begin{itemize}
+		\item Als Datenablage ein \textbf{Array} $t$ mit Länge $m$
+		\pause
+		\item \textbf{Hashfunktion} $h: \Z \functionto \{0, ..., m-1\}$ \\
+		Soll Elemente „gleichmäßig“ aufs Array verteilen
+		\pause
+		\implitem Element $e$ landet in $t\left\lbrack h\left(key(e) \right)\right\rbrack$ \quad  (Invariante!) \\
+		{\small (Wie genau: später)}
+		\pause
+		\item[\Cons] Perfektes, injektives $h$: Schön wär's! \\
+		\impl \textbf{Kollisionen} wahrscheinlich (zwei Elemente an selbe Stelle)
+		\pause
+		\implitem Rettung: \textbf{universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
+		Wenn $n \in O(m)$ Elemente in die Hashtable eingefügt werden \impl erwartete $ \abs{\text{Kollisionen}} \in O(1)$ 
+		\pause
+		\item Typische univ. Hashfunktion: \\
+		$h_a(x) := (a \cdot x) \mod m \quad (0 < a < m)$ \quad ($m$ prim!)
+		
+		%\item Stattdessen: Verwende ein Array $t$ der Länge $|m|$ und eine $Hashfunktion\ h: \Z \functionto \{0, ..., m-1\}$, die die Elemente „gleichmäßig“ verteilt
+		%\pause
+		%\item (D.h. das Element $e$ landet beim Index $h(key(e))$, bzw. $t[h(key(e))] = e$ (Invariante))
+		%\pause
+		%\item Kollision ist wahrscheinlich $\Rightarrow$ verwende an jedem Slot eine (einfach) verkettete Liste, die die dort liegenden Elemente enthält (anhand ihres $keys$ sind diese Elemente weiterhin unterscheidbar)
+		%\pause
+		%\item Möglicher Worst-Case: Alle Elemente landen an einem Slot
+		%\pause
+		%\item Aber laut Satz aus Vorlesung: Wenn $n \in O(m)$ Elemente in das Array (das $Hashtable$) eingefügt werden, liegt die Anzahl kollidierender Elemente erwartungsgemäß in $O(1)$
+		%\pause
+		%\item Typische Hashfunktion: 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\begin{itemize}
+		\item Was tun bei Kollisionen?
+		\pause
+		\implitem Array-Slots von $t$ bestehen aus \textbf{einfach verketteten Listen} \pause
+		\item \textbf{Mehrere} Items zu \textbf{einem} Slot zugeordnet? \\
+		Alle rein in die Liste!
+	\end{itemize}
+	\visible<2->{\includegraphics[width=.6\textwidth]{hashing-linked-lists}}
+\end{frame}
+
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\textbf{Operation: $insert(e : Element)$} \\[0,125cm]
+	\begin{itemize}
+		\item Fügt das Element $e$ an den \textbf{Anfang} der Liste beim Array-Index $h(key(e))$ ein
+		\pause
+		\item Erwartete Laufzeit: $O(1)$
+		\item Worst-Case: $O(1)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\textbf{Operation: $remove(k : \Z)$} \\[0,125cm]
+	\begin{itemize}
+		\item Entfernt das Element $e$ mit $key(e) = k$ aus der Liste beim Array-Index $h(k)$ (und gibt $e$ zurück)
+		\pause
+		\item Erwartete Laufzeit: $O(1)$
+		\item Worst-Case: $O(n)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\textbf{Operation: $find(k : \Z)$} \\[0,125cm]
+	\begin{itemize}
+		\item Sucht das Element $e$ mit $key(e) = k$ aus der Liste beim Array-Index $h(k)$ und gibt $e$ zurück
+		\pause
+		\item Erwartete Laufzeit: $O(1)$
+		\item Worst-Case: $O(n)$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\underline{Aufgabe 1} \\
+	Gegeben sei eine Hashtabelle der Größe $m$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 
+	36, 78, 50, 1, 92, 15, 43, 99, 64 \quad  (hierbei gilt $key(e) := e$) \\
+	Dabei sei $m$ zunächst 5 und danach 7.
+\end{frame}
+
+\begin{frame}{Hashtables mit verketteten Listen}
+	\underline{Lösung von Aufgabe 1} \\[0,64cm]
+	$m = 5:$
+	\begin{tabular}{ | c | c | c | c | c | }
+		\hline
+		0 & 1 & 2 & 3 & 4
+		\\ \hline
+		$\langle 15, 50 \rangle$ & $\langle 1,36 \rangle$ & $\langle 92 \rangle$ & $\langle 43,78 \rangle$ & $\langle 64,99 \rangle$
+		\\ \hline
+	\end{tabular}
+	\\[0,64cm]
+	$m = 7:$
+	\begin{tabular}{ | c | c | c | c | c | c | c |}
+		\hline
+		0 & 1 & 2 & 3 & 4 & 5 & 6
+		\\ \hline
+		$\langle  \rangle$ & $\langle 64, 99, 43, 15, 92, 1, 50, 78, 36 \rangle$ & $\langle  \rangle$ & $\langle  \rangle$ & $\langle  \rangle$ & $\langle  \rangle$ & $\langle  \rangle$
+		\\ \hline
+	\end{tabular}
+	\\[0,5cm]
+	Achtung: Die Reihenfolge innerhalb der verketteten Liste entspricht jeweils der \textbf{umgekehrten} Einfügereihenfolge (da Elemente immer am \textbf{Anfang} der verketteten Liste hinzugefügt werden) 
+\end{frame}
+
+
+\begin{frame}{Hashtables mit linearer Suche}
+	\begin{itemize}
+		\item Verkettete Listen nicht \textit{cachefreundlich} \impl Geht es auch \textbf{ohne}?
+		\pause
+		\implitem Weg mit den Listen, stattdessen:
+		\pause 
+		\item \textbf{Einfügen}: \\ 
+		Slot \textbf{besetzt}? \impl lege Element beim \textbf{nächstbesten} freien Slot rechts davon ab\\
+		\pause
+		Array \textbf{voll}? \impl not nice \\ 
+		\impl Erweitere das Array um „\textbf{Pufferbereich}“ mit Größe $m'$ \\ (auf den die Hashfunktion nicht abbildet)
+		\pause
+		\item \textbf{Suche}: Starte Suche wo vermutet, weiterlaufen (und testen) bis $e$ gefunden (falls $\bot$ erreicht: Abbruch)
+		\pause
+		\item \textbf{Entfernen}: Suche das zu entfernende Element (wie oben), danach alle Elemente, die zu weit rechts liegen, nach links schieben (\impl Leerstellen schließen!)
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hashtables mit linearer Suche}
+	\underline{Aufgabe 2: Mehr Hashing} \\
+	Gegeben sei eine Hashtabelle der Größe $m = 8$ und Puffergröße $m' = 2$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 36, 78, 50, 1, 92, 15, 43, 99, 64 \quad (hierbei gilt $key(e) := e$) \\
+	Verwendet hierbei Hashing mit linearer Suche. \\ 
+	Was passiert, wenn im Anschluss die 43 wieder entfernt wird?
+\end{frame}
+
+\begin{frame}{Hashtables mit linearer Suche}
+	\underline{Lösung von Aufgabe 2} \\[.3\baselineskip]
+	\begin{tabular}{ l | c | c | c | c | c | c | c | c | c | c |}
+		& \multicolumn{8}{ c |}{\small m} & \multicolumn{2}{c}{\small m'}
+		\\ \hline
+		Index & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & --- & ---
+		\\ \hline
+		Inhalt & 64 & 1 & 50 & 43 & 36 & 92 & 78 & 15 & 99 &
+		\\ \hline
+	\end{tabular}
+	\\[0,5cm]
+	remove(43): \\
+	43 entfernt, stelle fest: 99 gehört eigentlich an Slot 3! \\
+	\impl verschiebe $99 \rightsquigarrow $ Slot 3. Also: \\[.3\baselineskip]
+	\begin{tabular}{ l | c | c | c | c | c | c | c | c | c | c |}
+		& \multicolumn{8}{ c |}{\small m} & \multicolumn{2}{c}{\small m'}
+		\\ \hline
+		Index & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & --- & ---
+		\\ \hline
+		Inhalt & 64 & 1 & 50 & \textbf{99} & 36 & 92 & 78 & 15 &  &
+		\\ \hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\textbf{Lineare Suche besser als Verkettete Listen?} \\[0,125cm]
+	\begin{itemize}
+		\pause
+		\item[\Pros] Cachefreundlich \\[0,25cm]
+		\pause
+		\item[\Cons] Beschränkte Größe (Unbounded Array geht auch, aber mehr Sonderfälle)
+		\pause
+		\item[\Cons] \emph{insert} im Worst-Case in $\Theta(n)$ \\
+		 Worst-Case wahrscheinlicher, weil potenziell mehr zu durchlaufen!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Aufgabe 3: Ein philosophischer Abend}
+	\\
+	Nach dem dritten Glas Vollmilch kommt ein Kommilitone auf die bahnbrechende Entdeckung, dass sich Hashing mit verketteten Listen hochgradig optimieren ließe, indem man die verketteten Listen stets sortiert halte. \\
+	$a)$ Wie ändert sich das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Lösung zu Aufgabe 3a)}
+	\\
+	\begin{itemize}
+		\item $insert$: \textbf{Worst-Case} ändert sich zu $\Theta(n)$, wenn ein Element ganz am Ende eingefügt werden muss (und somit die ganze verkettete Liste durchlaufen wird)
+		\item $remove$ und $find$: \textbf{Binäre Suche} wäre ne Idee, aber bringt nichts: \\
+		Index-Zugriff auf Listen nicht in $O(1)$ \impl binäre Suche nicht in $O(\log n)$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hashtables}
+	\underline{Aufgabe 3: Ein philosophischer Abend}
+	\\
+	Nachdem ihr einen gewissen Kommilitonen gefesselt und geknebelt auf dem Hinterhof zum Nachdenken abgelegt habt, diskutiert ihr, was passiert, wenn man die sortierten verketteten Listen durch sortierte unbeschränkte Arrays ersetzt.
+	\\
+	$b)$ Wie ändert sich nun das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Lösung zu Aufgabe 3b)}
+	\begin{itemize}
+		\item $insert$: Im Worst-Case immer noch $\Theta(n)$. Zwar kann die Einfügestelle mit binärer Suche in $\Theta( \log n)$ gefunden werden, doch alle Elemente rechts davon müssen um eins verschoben werden
+		\pause
+		\item $remove$: Auch weiterhin $\Theta(n)$. Binäre Suche hilft zwar beim Finden, aber alle Nachfolger müssen um eins nach links aufrücken
+		\pause
+		\item $find$: Binäre Suche bringt „endlich“ etwas \impl Laufzeit $\Theta( \log n)$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hashtables}
+	\underline{Aufgabe 3: Ein philosophischer Abend}
+	\\
+	Da außer euch zur späten Stunde keine anderen Kunden mehr vorhanden sind, gesellt sich der Milchbarkeeper zu euch und fragt, ob man da nicht noch was mit amortisierter Analyse machen kann.
+	\\
+	$c)$ Welches amortisierte Laufzeitverhalten lässt sich für $insert$, $remove$ und $find$ diagnostizieren (wenn man weiterhin sortierte unbeschränkte Arrays verwendet)?
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Lösung zu Aufgabe 3c)}
+	\begin{itemize}
+		\item $insert$: Betrachte eine Folge von $n$ Einfügeoperationen, deren Elemente streng monoton kleiner werden (Worst-Case). Die $k$-te Einfügeoperationen muss $(k-1)$ Elemente verschieben \\
+		\impl n Operationen haben die Laufzeit $\Theta(n^2)$, da lässt sich nichts amortisieren
+		\pause
+		\item $remove$: Zunächst ähnlich wie bei $insert$. \\
+		Aber: Zu jedem \emph{remove} in $O(n)$ gehört auch ein \emph{insert} in $O(n)$. Also: Wälze den Aufwand von $remove$ auf $insert$ ab \\ \impl $remove$ läuft amortisiert in $O(1)$. {\small (Anmerkung: Einen praktischen Nutzen hat diese Betrachtungsweise leider nicht wirklich.)}
+		\pause
+		\item 	$find$: Hat immer die Laufzeit $\Theta(\log n)$, daran ändert auch Amortisierung nichts.
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Hashtables}
+	\underline{Aufgabe 4: \emph{SparseArray}} \\
+	Nehmt an, dass \textbf{allocate} euch beliebig viel \emph{uninitialisierten} Speicher in konstanter Zeit liefert. Entwerft anhand dessen ein \emph{SparseArray} mit folgenden Eigenschaften: 
+	\begin{itemize}
+		\item Ein \emph{SparseArray} mit $n$ Slots braucht $O(n)$ Speicher
+		\item Die Erzeugung eines leeren Arrays mit $n$ Slots braucht $O(1)$ Zeit
+		\item Eine Operation $reset$, die das \emph{SparseArray} in $O(1)$ Zeit in leeren Zustand versetzt
+		\item Die Operationen $get(i)$ und $set(i, x)$, die Zugriff auf den Inhalt am entspr. Index in $O(1)$ gewährleisten. Falls dieser leer ist, soll $\bot$ zurückgeliefert werden.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Lösung zu Aufgabe 4}
+	\\
+	Konstruiere ein \emph{SparseArray} der Größe $n$ mihtilfe von drei Arrays: \\ 
+	$D$ (für die \textbf{Daten}), $Z$ (für \textbf{Zähler}) und $B$ (für \textbf{Beweise}). \\ 
+	Zudem initialisiere Counter $c := 0$. \\ 
+	\impl \textbf{Speicheraufwand} in $O(n)$, \textbf{Erzeugung} läuft in $O(1)$ weil Speicherallokation in $O(1)$. \\
+	Operationen: \\
+	\pause
+	\begin{columns}[c]
+		\column[T]{.3\textwidth}
+		\begin{algorithm}[H]
+			\Procedure{set$(i, x)$}{
+				$D[i] := x$ \;
+				$Z[i] := c$ \;
+				$B[c] := i$ \;
+				$c\pp$ 
+			}
+		\end{algorithm}
+		\column[T]{.64\textwidth}
+		\forcenewline
+			(Durch $Z$ und $B$ entsteht somit ein rückversichernder Zirkelbezug, und $c$ garantiert uns, bis zu welchem Index die Daten in $B$ valide sind, d.h., $B[0...c-1]$ enthält alle gültigen Indizes).
+	\end{columns}
+	
+	
+\end{frame}
+
+\begin{frame}{Hashtables}
+	\underline{Lösung zu Aufgabe 4}
+	\\
+	\begin{algorithm}[H]
+		\Function{get$(i)$}{
+			\eIf{$Z[i] < c \KwAnd B[Z[i]] = i$}{
+				\Return{$D[i]$}
+			}{
+				\LComment{garbage inside $D[i]$, so:} \;
+				\Return{$\bot$} 
+			}
+		}
+		\;
+		\pause
+		\;
+		\Procedure{reset}{
+			$c := 0$ \;
+			\LComment{Das markiert recht gemütlich den Inhalt aller Arrays als Unsinn}
+		}
+	\end{algorithm}
+\end{frame}
+
+	
+
+\end{document}

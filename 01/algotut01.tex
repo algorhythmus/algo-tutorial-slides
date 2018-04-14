@@ -1,0 +1,743 @@
+%beamer
+
+\input{../preamble/tutpreamble}
+
+\begin{document}
+
+	\starttut{1}
+	
+	\section{Orga-Kram}
+	\aboutMeFrame
+	
+	\begin{frame}{Kennenlernen 2.0}
+		\begin{tabular}{ | c | p{10.5cm} | }
+			\hline
+			1 & Programmieren ist noch ziemlich neu für mich. 
+			\\ \hline
+			2 & Vor dem Studium habe ich nicht viel mit Programmieren zu tun gehabt, komme aber gut damit zurecht.
+			\\ \hline
+			3 & Ich konnte schon vor dem Studium einigermaßen programmieren und kannte daher vieles aus der Vorlesung schon.
+			\\ \hline
+			4 & In der Programmieren-Vorlesung habe ich eigentlich nichts neues gelernt, da ich auch so schon gut programmieren konnte
+			\\ \hline
+			5 & Im Programmieren habe ich langjährige Erfahrung.
+			\\ \hline
+			$\bot$ & Nieder mit Pauschalantworten! Ich formuliere selbst!
+			\\ \hline
+		\end{tabular}
+	\end{frame}
+	
+	\mycomment{ % ??
+		\begin{frame}{Kennenlernen 2.0}  
+			\begin{tabular}{ | c | p{10.5cm} | }
+				\hline
+				1 & Ich habe mich noch nicht an eigenen Projekten versucht.
+				\\ \hline
+				2 & Ich habe ein paar kleine eigene Projekte geschrieben.
+				\\ \hline
+				3 & Ich habe bereits ein paar Projekte durchgeführt, die von Umfang her schon fast mit den Abschlussaufgaben vergleichbar waren.
+				\\ \hline
+				4 & Ich habe schon ein paar eigene größere Projekte realisiert.
+				\\ \hline
+				5 & Ich habe bereits einige ziemlich große Projekte umgesetzt.
+				\\ \hline
+				$\bot$ & Nieder mit Pauschalantworten! Ich formuliere selbst!
+				\\ \hline
+			\end{tabular}
+		\end{frame}
+	}
+	
+	
+\begin{frame}{Wozu das Tutorium?}
+	\begin{overlayarea}{\textwidth}{.60\textwidth}
+		\begin{itemize}
+			\item \textbf{Für Eure Fragen}
+			\pause
+			\item Zur Vorbereitung auf die Übungsblätter
+			\pause
+			\item ...und damit zur Vorbereitung auf die Klausur! :)
+			\pause
+			\item Wiederholung und Vertiefung klausurrelevanter Themen
+			\pause
+			\item Und vor allem: Spaß!
+		\end{itemize}
+		\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{empty.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay1.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay2.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay3.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay4.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay5.png}};
+			\end{tikzpicture}
+		}\only<+|handout:0>{
+			\begin{tikzpicture}[remember picture,overlay]
+			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay6.png}};
+			\end{tikzpicture}
+		}
+	\end{overlayarea}
+\end{frame}
+
+\begin{frame}{Orga-Kram – Übungsblätter}
+	\begin{itemize}
+		\item \textbf{Freiwillig}
+		\pause
+		\item \textbf{Ausgabe}: Mo nach der Vorlesung, 
+		\item \textbf{Abgabe}: Di nächster Woche, 12.45~Uhr (das sind 9~Tage Zeit) im Kasten im Untergeschoss des Infobaus
+		\pause
+		\item Abgabe \textbf{schwerstens empfohlen}, gibt nämlich einen Klausurbonus: \\
+		$\geq 25 \%$ der Gesamtpunkte $ \Rightarrow $ 1 Bonuspunkt \\
+		$\geq 50 \%$  der Gesamtpunkte $ \Rightarrow $ 2 Bonuspunkte \\
+		$\geq 75 \%$  der Gesamtpunkte $ \Rightarrow $ 3 Bonuspunkte \\
+		(Die Bonuspunkte helfen nicht beim Bestehen, verbessern aber die Note meistens um eine Stufe.)
+		\pause
+		\item Korrigierte Übungsblätter werden einige Male ins Tutorium mitgebracht; zu lange danach $\Rightarrow$ bei den Übungsleitern abholen
+		\pause
+		\item Abschreiben: Böhse™. Wird geahndet.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Orga-Kram – der Kummerkasten} % TODO: Still existent?
+	\begin{itemize}
+		%\item<+-> Offizielle Evaluation $1\times$ pro Semester: \textit{bisschen} zu wenig Feedback
+		\item<+-> Daher: Kasten \urlnamed{https://crypto.iti.kit.edu/index.php?id=799}{auf der Vorlesungshomepage (hier klicken!)} für all eure Meinungen und Anregungen (\textbf{anonym}!)
+		\item<+-> \textbf{Keine Stofffragen!} Anonym \impl Antwort/Rückfragen \textbf{nicht möglich!} (Besser: \ILIAS oder \textbf{hier stellen}!)
+		\item<+-> Gerne auch Feedback zu Tutorien, dann aber bitte mit \textbf{Nummer des Tutoriums} bzw. \textbf{Name des Tutors} (wie gesagt, da anonym!)
+					% TODO: Maybe anonymous feedback ILIAS inside tutorial folder?
+		\item<+-> Also: Etwas läuft furchtbar schief (oder vielleicht auch nur besonders gut?) \impl Meldet es \textbf{zeitnah}! (Kurz vor Ende der Vorlesungszeit ist meistens zu spät)
+	\end{itemize}
+\end{frame}
+
+
+\sectionheadframe{Pseudocode}
+
+\begin{frame}{Pseudocode}
+	\begin{itemize}
+		\item Anleitung, wie man etwas macht -- in einer Art „Programmiersprache“
+		\pause
+		\item[\Pros] Es gibt keine exakte Sprachdefinition
+		\pause
+		\item[\Cons] Es gibt keine exakte Sprachdefinition
+		\pause
+		\item Daher im Folgenden: Grobe \textit{Richtlinie} für Pseudocode (ohne Anspruch auf Vollständigkeit)
+		\pause
+		\item Das \textbf{Wichtigste}: Es sollte \textbf{klar} werden, was \textbf{gemeint} ist, d.h. Pseudocode soll vor allem \textbf{übersichtlich} und \textbf{verständlich} sein
+		\pause
+		\item Kommentare mit // (wie in Java), \#, o.ä.
+		\pause
+		\item Semikolon am Ende eines Befehls unnötig
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}  % TODO Perestroika
+	\begin{exampleblock}{Variablendeklaration und -initialisierung}
+		\begin{algorithm}[H]
+			$ Variablenname = Wert : Typ $ \\
+			$ a := 3 $ \\
+			$ b : \KwArray[\textit{Von}..\textit{Bis}] \KwOf Int $ \RComment{\entspr Erlaubte Indizes: $\text{Von}..\text{Bis}$} \\
+			$ c := \KwNew XYZ(Konstruktorparameter) $ \\
+			$ d = \str{leet} : String $ \\
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\pause
+		\item Typ kann weggelassen werden, wenn offensichtlich
+		\pause
+		\item Mögliche Typen sind zum Beispiel \\
+		\begin{itemize}
+			\pause
+			\item $\R$, $\N$, $\Z$ / Int(eger), Bool(ean), ...
+			\pause
+			\item $\KwArray$ (als im Speicher zusammenhängender „Datenblock“)
+			\pause
+			\item $String$
+			\pause
+			\item Weitere Datenstrukturen aus der VL (more to come!)
+			\pause
+			\item \textit{Element} ist Platzhalter für beliebigen Typ (so wie \textit{Object} in Java)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame} {Pseudocode}
+	\begin{exampleblock}{Besondere Werte}
+		\begin{itemize}
+			\item $+\infty, -\infty$
+			\item $\bot$ als Nullobjekt mit undefiniertem Wert
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame} {Pseudocode}
+	\begin{exampleblock}{Kontrollstrukturen}
+		\begin{columns}
+			\begin{column}{0.45\textwidth}
+				\begin{algorithm}[H]
+					\While{$x \neq y \KwAnd y \neq z$} {
+						\LComment{Anweisungen} \;
+					}  \; %\\[0,25cm]
+					\eIf{$z = 42$} {
+						\LComment{Andere Anweisungen} \;
+					} {
+						\LComment{Mehr andere Anweisungen} \;
+					} \; %\\[0,25cm]
+					\For{$i := 1 \KwTo n$} {
+						\LComment{Noch mehr Anweisungen} \;
+					}
+				\end{algorithm}
+			\end{column}
+			\begin{column}{0.45\textwidth}
+				\begin{algorithm}[H]
+					\Repeat{$x = y \KwOr y = z$}{
+						\LComment{fußgesteuert}
+					} \;
+					\;
+					\;   % Dear Lord, why not a table instead of manual spacing!?
+					\;
+					\vspace{-4pt}
+					\;
+					\;
+					\For{$i := 1  \KwTo  n  \KwStep  k$} {
+						\LComment{Mit Schrittweite!} \;
+					}
+			\end{algorithm}
+			\end{column}
+		\end{columns}
+		
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	\begin{itemize}
+		\large
+		\item Und viele mehr, z.B. \MyKwSty{do while}, \KwFor\ \KwEach, ...
+		\item Schlüsselworte wie \KwContinue, \KwBreak, \MyKwSty{switch} natürlich auch
+		\item Trennzeichen für Anweisungsblöcke:\\
+		\begin{itemize}
+			\item \MyKwSty{begin} -- \MyKwSty{end}
+			\item \{...\} \quad  (geschweifte Klammern)
+			\item Linien
+			\item Nur durch Einrückung (dann aber ordentlich!)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	\begin{exampleblock}{Mathe-Bequemlichkeit}
+		\LComment{$K$, $M$ Mengen} \\[0,125cm]
+		$select\ any\ x \in K$ \\[0,125cm]
+		$\KwFor \KwEach y \in M$ \\[0,125cm]
+		$(a, b) := (3, 5)$ // geordnetes Tupel/Array (konstante Anzahl Elemente) \\[0,125cm] % WTF!?
+		$(a, b) := (b, a)$ // bequemes Vertauschen \\[0,125cm]
+		$S := \{1, 2, 3\}$ // ungeordnete Menge \\[0,125cm]
+		$f := \langle1, 2, 3\rangle$ // geordnete Folge (Elemente können an- und abgehängt werden)
+	\end{exampleblock}
+	\begin{itemize}
+		\item Generell: Quantoren erlaubt, solange trivial ist, welcher programmatischen Funktion sie entsprechen \textit{und wie sie die Laufzeit beeinflussen}!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Pseudocode}
+	\begin{exampleblock}{Funktionen/Prozeduren}
+		\begin{algorithm}[H]
+			\DontPrintSemicolon
+			\Function{$/\ \KwProcedure\ \|name|(name_1 : \|Typ|_1, ...): \|Rückgabetyp|$}{
+				\LComment{Knorker Code} \;
+				\Return{$...$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\item Rückgabetyp wird weggelassen, wenn nichts zurückgegeben wird
+		\item Konvention: Kein Rückgabewert („\texttt{void}“) – \KwProcedure/\KwMethod, Rückgabe vorhanden: \KwFunction
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	Anmerkungen: \\
+	\begin{itemize}
+		\pause
+		\item \textbf{Selbsterklärende} Bezeichner, z.B. $print(\str{...})$ statt $System.out.println(\str{...})$
+		\pause
+		\item Komplexere Stellen bitte \textbf{kommentieren}, sonst versteht es keiner
+		\pause
+		\item Mehrere Funktionen (z.B. Hilfsfunktionen): Kenntlich machen, wo \textbf{Hauptfunktion}!
+		\pause
+		\item Im „Notfall“: An Java orientieren
+		\pause
+		\item Für mehr Pseudocode-Details siehe Buch vom Sanders
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	Bearbeitungshinweise: \\
+	\begin{itemize}
+		\pause
+		\item Falls die Aufgabenstellung euch die Wahl lässt, könnt ihr selbst entscheiden, ob \textbf{Pseudocode} oder \textbf{Fließtext}
+		\pause
+		\item Mehr als zwei Seiten Pseudocode \impl Vermutlich viel zu kompliziert oder falsch
+		\pause
+		\item Ist das Ergebnis für andere Personen \textbf{verständlich}?
+		\pause
+		\item Ist das Ergebnis \textbf{angenehm zu lesen}?
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	\underline{Aufgabe 1: Pseudocode schreiben} \\
+	Als Eingabe erhält der Algorithmus eine natürliche Zahl $n$. Es wird ein  Boolean-Array von $2..n$ angelegt und mit \KwFalse initialisiert. Dann wird eine Zahl $i$ von 2 bis zur abgerundeten Wurzel von $n$ iteriert. Falls im Schleifendurchlauf der $i$-te Boolean-Wert \KwFalse ist, wird eine weitere Zahl $j$ von $2i$ bis $n$ durchlaufen und dabei in Schritten der Größe $i$ inkrementiert. Darin wird jeweils der $j$-te Boolean-Wert auf \KwTrue gesetzt. \\
+	Am Ende iteriert der Algorithmus erneut eine Zahl $i$ von 2 bis $n$. Falls der $i$-te Boolean-Wert nicht \KwTrue ist, wird ausgegeben, dass der Wert von $i$ prima ist.
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 1}
+		\begin{algorithm}[H]
+			\KwInput{$n \in \N$} 
+			$werte = (\KwFalse,...,\KwFalse) : \KwArray[2..n] \KwOf \|Boolean|$\;
+			\For{$i := 2 \KwTo \floor{\sqrt{n}}$} {
+				\If{$\KwNot werte[i]$} {
+					\For{$j := 2i \KwTo n \KwStep i$} {
+						$werte[j] := \KwTrue$\;
+					}
+				}
+			}
+			\For{$i := 2 \KwTo n$} {
+				\If{$\KwNot werte[i]$} {
+					$print(i + \str{ ist prima!})$\;
+				}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Pseudocode}
+	\underline{Aufgabe 2: Mehr Pseudocode schreiben} \\
+	Als Eingabe erhaltet ihr $n$ Studenten, deren Matrikelnummer jeweils als Array gegeben ist. Diese Studenten sollt ihr in zwei Gruppen einteilen, in die eine Gruppe kommen die Studenten, deren Quersumme der Matrikelnummer gerade ist, und in die andere die anderen.
+	Als Ausgabe gibt euer Algorithmus die beiden Gruppen als geordnetes Paar zurück.
+\end{frame}
+
+\begin{frame}{Pseudocode}
+	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 2}
+		\begin{algorithm}[H]
+			\Function{$groupStudents(students : \KwArray [0...n-1] \KwOf \|Student|) : (\KwListOf \|Student|, \KwListOf \|Student|)$}{
+				$groups = (\llist{}, \llist{}) : \KwArrayOf \KwListOf \|Student|$\;
+				\ForEach{$student \in students$} {
+					$sum = 0 : \|Int|$\;
+					$nr := student.matrikelnummer$\;
+					\For{$i := 0 \KwTo \size{nr}-1$} {
+						$sum \pluseq nr[i]$\;
+					}
+					$groups[sum \KwMod 2].\|add|(student)$\;
+				}
+				\Return{$groups$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\sectionheadframe{Algorithmenanalyse}{...damit ihr nicht zu viel Spaß habt}
+
+\begin{frame}{Algorithmenanalyse}
+	Algorithmen in Pseudocode lesen und schreiben ist (leider) nicht das Höchste der Gefühle. Sondern:
+	\begin{itemize}
+		\pause
+		\item Auf welcher Vorgehensweise basiert der Algorithmus? \\
+		\pause
+		\impl Verschiedene \textbf{Kategorien} von Algorithmen
+		\pause
+		\item Tut der Algorithmus das, was er tun soll? \\
+		\pause
+		\impl \textbf{Invarianten}
+		\pause
+		\item Wie schnell ist der Algorithmus? \\
+		\pause
+		\impl \textbf{O-Kalkül}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{O-Kalkül} \\[0,125cm]
+	\begin{itemize}
+		\item Vernachlässigung konstanter Faktoren
+		\item Zuordnung, welches Laufzeit-Verhalten der Algorithmus für sehr große Eingaben aufweist
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Alte Bekannte} \\[0,125cm]
+	\begin{itemize}
+		\item $O(f(n)) = \{ g(n) \mid \exists\, c, n_0 > 0$, so dass \\
+		\hspace{1,85cm} $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$
+		\\[0,5cm]
+		\item $\Theta (f(n)) = \{ g(n) \mid \exists\, c_1, c_2, n_0 > 0$, so dass \\
+		\hspace{1,85cm} $ 0 \leq c_1 \cdot f(n) \leq g(n) \leq c_2 \cdot f(n) \quad \forall n \geq n_0 \}$
+		\\[0,5cm]
+		\item $\Omega (f(n)) = \{ g(n) \mid \exists\, c, n_0 > 0$, so dass \\
+		\hspace{1,85cm} $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Die Neuen} \\[0,125cm]
+	\begin{itemize}
+		\item $o(f(n)) = \{g(n) \mid \forall c > 0 \ \exists\, n_0 > 0$, so dass \\
+		\hspace{1,85cm} $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$
+		\\[0,5cm]
+		\item $\omega (f(n)) = \{g(n) \mid \forall c > 0 \ \exists\, n_0 > 0$, so dass\\
+		\hspace{1,85cm} $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Anschaulich:} \\[0,125cm]
+	{
+		
+		\renewcommand{\arraystretch}{2}%
+		\begin{tabular}{ | c | c | c | }
+			\hline
+			$     o (f(n))$ & $<$ & echt schwächer wachsende Funktionen
+			\\ \hline
+			$     O (f(n))$ & $\leq$ & schwächer oder gleich stark wachsende Funktionen
+			\\ \hline
+			$\Theta (f(n))$ & $=$ & genau gleich stark wachsende Funktionen
+			\\ \hline
+			$\Omega (f(n))$ & $\geq$ & stärker oder gleich stark wachsende Funktionen
+			\\ \hline
+			$\omega (f(n))$ & $>$ & echt stärker wachsende Funktionen
+			\\ \hline
+		\end{tabular}
+		\renewcommand{\arraystretch}{\stdarraystretch}
+	}
+\end{frame}
+
+
+\begin{frame}[t]{Algorithmenanalyse}
+	\FalseQuestion{$n \in \Theta(\sqrt{n})$}
+	
+	\TrueQuestion{$n^2 \in o(n^3)$}
+	
+	\TrueQuestion{$n^3 \in \Omega(n^2)$}
+	
+	\TrueQuestionE{$2^{n+1} \in \Theta(2^n)$}{(da $2^{n+1} = 2 \cdot 2^n$)}
+	
+	\FalseQuestionE{$f \approx g :\Leftrightarrow f \in O(g)$ definiert eine Äquivalenzrelation auf der Menge der Funktionen $\N \functionto \N$}{(Aber: Ersetzt man $O$ durch $\Theta$, so ist die Äquivalenzrelation gültig)}
+	
+	\TrueQuestion{$o(f(n)) = O(f(n)) \setminus \Theta(f(n))$}
+	
+	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n))$}
+	
+	\FalseQuestion{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n))$}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{O-Kalkül: Formeln} \\[0,125cm]
+	{
+		\renewcommand{\arraystretch}{1.7}%
+		\begin{center}
+			\begin{tabular}{ | c | c | >{\quad}c<{\quad} | }
+				\hline
+				$f(n) \in o      (g(n))$ & $\Gdw$ & \(\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = 0\) 
+				\\  \hline
+				$f(n) \in O      (g(n))$ & $\Gdw$ & \(0 \leq \limsup\limits_{n \to \infty} \frac{f(n)}{g(n)} = c < \infty\)
+				\\ \hline
+				$f(n) \in \Theta (g(n))$ & \cellcolor{adaptingred} {\textbf{!} $\bm{\impliedby}$ \textbf{!}} & \(0 < \lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = c < \infty\)
+				\\ \hline
+				$f(n) \in \Omega (g(n))$ & $\Gdw$ & \(0 < \liminf\limits_{n \to \infty} \frac{f(n)}{g(n)} = c \leq \infty\)
+				\\ \hline
+				$f(n) \in \omega (g(n))$ & $\Gdw$ & \(\limsup\limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty\)
+				\\ \hline
+			\end{tabular}
+			%\renewcommand{\arraystretch}{\stdarraystretch}
+		\end{center}
+	}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Lang ist's her: Logarithmus-Rechenregeln} \\[0,125cm]
+	\begin{itemize}
+		\item Unter Informatikern gilt üblicherweise $\log n := \log_2(n)$
+		\item $\log(a \cdot b) = \log a + \log b$
+		\item $\log(a^b) = b \cdot \log a$
+		\item $\log(\frac{a}{b}) = \log a - \log b$
+		\item $\log_a(a) =1$, \quad $\log_a(1) = 0$
+		\item $a^{\log_a(b)} = b$
+		\item $x^{a \cdot b} = \left(x^a\right)^b = \left(x^b\right)^a$, \quad $x^{a + b} = x^a \cdot x^b$
+		\item Beispiele:
+		\begin{itemize}
+			\item $\log(10 \cdot n) \in O(\log n)$
+			\item $n^n \in \Theta(2^{n \log n})$
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{exampleblock}{Ein mysteriöser Algorithmus}
+		\begin{algorithm}[H]
+			%\footnotesize
+			\Procedure{$\|foo|(a : \KwArrayOf \Z)$} {
+				$n := |a|$\;
+				$flag : \|Bool|$\;
+				\Repeat{$flag$} {
+					$flag := \KwTrue$\;
+					\For{$i := 0 \KwTo n-2$} {
+						\If{$a[i] > a[i+1]$} {
+							$\Matrix{a[i] \\ a[i+1]} := \Matrix{a[i+1] \\ a[i]}$ \; 
+							$flag := \KwFalse$\;
+						}
+					}
+				}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{itemize}
+		\item Das ist \textit{Bubblesort}, der ein Array aufsteigend sortiert
+		\pause
+		\item Best case?
+		\pause
+		\\ \impl $O(n)$, wenn das Array schon sortiert ist
+		\pause
+		\item Worst case?
+		\pause
+		\\ \impl $O(n^2)$, wenn das Array absteigend („falsch rum“) sortiert ist
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Korrektheitsbeweis} \\[0,125cm]
+	\pause
+	\begin{itemize}
+		\item Korrektheitsbeweis ist \textbf{zweiteilig}:
+		\pause
+		\begin{itemize}
+			\item 1. Teil -- \textbf{Funktionalität}: Mit Invariante beweisen, dass der Algorithmus ein \textbf{korrektes} Ergebnis erzeugt
+			\pause
+			\item 2. Teil -- \textbf{Terminierung}: Beweisen (ggf. anhand einer Invariante), dass der Algorithmus „irgendwann \textbf{fertig} wird“. Manchmal trivial, manchmal knifflig (und damit aufwendig)
+		\end{itemize}
+		\pause
+		\item \textbf{Aufgabenstellung beachten}: Wenn („nur“) eine Invariante angegeben/bewiesen werden soll \impl Terminierungsbeweis nicht nötig!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Invarianten} \\[0,125cm]
+	\pause
+	\begin{itemize}
+		\item Invariante finden: Manchmal offensichtlich, manchmal \textbf{Kreativität} gefragt
+		\pause
+		\item Beweisprinzip von Algorithmen durch Invarianten direkt analog zu \textbf{Induktion}:
+		\pause
+		\item „IA“: Invariante gilt bei \textbf{Beginn} des Algorithmus / der Schleife
+		\pause
+		\item „IV“: Die Invariante war beim Ende des \textbf{vorherigen} Ausführungsschrittes gültig
+		\pause
+		\item „IS“: Mithilfe der IV zeigen, dass die Invariante auch beim Ende des \textbf{aktuellen} Ausführungsschrittes gültig ist
+		\item \textbf{Achtung}: Invarianten müssen auch \textbf{nach Ende der Schleife} noch gelten!
+	\end{itemize}
+\end{frame}
+
+\iffalse
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{exampleblock}{Ein zauberhafter Algorithmus}
+		\begin{algorithm}[H]
+			\DontPrintSemicolon
+			\footnotesize
+			\KwIn{Aufsteigend sortiertes $int$-\KwArray $a$ mit $|a|>0$, Zahl $k \in \Z$}
+			\KwOut{$boolean$}
+			\Begin {
+				$m : int$\;
+				$(l, r) := (0, |a|-1)$\;
+				\While{$l \neq r$} {
+					$m := \lfloor(l+r)/2\rfloor$\;
+					\uIf{$k < a[m]$} {
+						$r := m$\;
+					}
+					\uElseIf{$k > a[m]$} {
+						$l := m$\;
+					}
+					\Else {
+						\Return{$true$}\;
+					}
+				}
+				\Return{$a[l] = k$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{itemize}
+		\item Es handelt sich um die binäre Suche, die sich die Sortiertheit des Arrays zunutze macht, um echt schneller als in O($n$) zu entscheiden, ob sich ein gesuchtes Element im Array befindet oder nicht
+		\pause
+		\item Binäre Suche läuft in O($log(n)$), da der Suchbereich bei jedem Schleifendurchlauf halbiert wird
+		\pause
+	\end{itemize}
+	\textbf{Wichtige Aspekte, wenn man die Korrektheit von binärer Suche beweisen will}
+	\begin{itemize}
+		\pause
+		\item Schleifeninvariante: Wenn das gesuchte Element im Array liegt, befindet es sich nicht außerhalb des Suchbereiches. (Am Anfang ist der Suchbereich des gesamte Array)
+		\pause
+		\item (Nicht immer gefordert:) Zeigen, dass die Schleife terminieren wird, also dass der Suchbereich in jedem Schleifendurchlauf $"$echt kleiner$"$ wird.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Halbwegs formale Beweisskizze} \\[0,125cm]
+	\pause
+	\begin{itemize}
+		\item Invariante: $\forall i \in \{0 ... n-1\} \setminus \{l ... r\}: a[i] \neq k$
+		\pause
+		\item IA: Invariante gilt offensichtlich $\forall i \in \emptyset$
+		\pause
+		\item IV: Invariante gilt für vorherigen Ausführungsschritt $(l_0, r_0)$
+		\pause
+		\item IS: Fallunterscheidung: Ist $k < a[m]$, so sind $a[m] ... a[r_0] > k$, insb. also $a[m] ... a[r_0] \neq k$ (Fall $k > a[m]$ analog).
+		\pause
+		\item Dass $ | \{l_0 ... m\} | $ (bzw. $ | \{m ... r_0\} | $) $ < | \{l_0 ... r_0\} | $, wird als ersichtlich angenommen
+		\pause
+		\item Am Ende ist mit $l = r =: s$ $k \neq a[i] \forall i \neq s$ und somit $k \in A \Leftrightarrow a[s] = k$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{exampleblock}{Ein herausgeforderter Algorithmus}
+		\begin{algorithm}[H]
+			\DontPrintSemicolon
+			\footnotesize
+			\KwIn{$int$-\KwArray $a$ mit $|a|>0$, Zahl $k \in \mathbb{Z}$}
+			\KwOut{$boolean$}
+			\Begin {
+				$n := |a|$\;
+				\For{$i\ \KwFrom\ 0\ \KwTo\ n-1$} {
+					\If{$a[i] = k$} {
+						\Return{$true$}\;
+					}
+				}
+				\Return{$false$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\item Was macht der Algorithmus?
+		\item Laufzeitverhalten?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{itemize}
+		\item Was hier vorliegt, ist die fabulöse lineare Suche, die in linearer Laufzeit $O(n)$ entscheidet, ob ein gesuchtes Element (hier $k$) in einer Datenstruktur enthalten ist.
+		\pause
+		\item Frage: Wie könnte 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Halbwegs formale Beweisskizze} \\[0,125cm]
+	\pause
+	\begin{itemize}
+		\item Invariante: $\forall j < i: a[i] \neq k$
+		\pause
+		\item IA: Invariante gilt offensichtlich $\forall i \in \emptyset$
+	\end{itemize}
+\end{frame}
+
+\fi
+
+\newcommand{\selsortinvariant}{A[1\ ... \ i-1] \KwIs \text{sorted} \KwAnd \max(A[1\ ...\ i-1]) \leq \min(A[i..n])}
+\begin{frame}{Beispiel SelectionSort}
+	\begin{exampleblock}{SelectionSort}
+		\begin{algorithm}[H]
+			\DontPrintSemicolon
+			\small
+			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf \|Element|)$}{
+				\For{$i := 1 \KwTo n$}{
+					\only<2>{$\KwInvariant \selsortinvariant $\;}
+					$minIndex  := i$ \;
+					\For{$j := i + 1 \KwTo n$}{
+						\If{$A[j] < A[minIndex]$}{
+							$minIndex := j$ \;	
+						} 
+					} 	
+					$\KwAssert A[minIndex] = \min(A[i..n])$ \;
+					$swap(A[i], A[minIndex])$ \;
+				}	
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{SelectionSort -- Beweis Invariante}
+	\begin{overlayarea}{\textwidth}{.60\textwidth}
+		\only<all:1-> {Definiere \quad $\max(()) := -\infty$ \quad und \quad $\min(()) := +\infty$. \\} 
+		\pause
+		Beweis Invariante: \\ 
+		$\quad\quad \selsortinvariant$ \only<handout:0>{\vspace{.5\baselineskip}}
+		
+		\only<2-3|handout:1>{\hanging\textbf{IA}. ($i=1$): \ $A[1..0] = ()$ ist sortiert und $-\infty = \max(A[1..0]) \leq \min(A[1..n])$. \\}
+		\pause
+		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
+		\pause
+		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i - 1 \~~> i$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
+		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $minIndex \in \{i,...,n\}$ \newline
+		\pause
+		$\impl A[i-1] \leq A[minIndex]$ \ und \ $A[minIndex] \leq A[i]$. \newline
+		\pause
+		$\impl A[minIndex]$ kann zur Fortsetzung der Sortierung problemlos nach $A[i]$ verschoben werden! \vspace{.5\baselineskip}
+		Tauschen von $A[i]$, $A[minIndex]$: \newline
+		$\impl A[1..i]$ ist sortiert, \newline
+		$A[i] = \max(A[1..i]) \leq \min(A[i+1 \ ... \ n]). \qed$ \newline \vspace{.5\baselineskip}
+		\pause
+		
+		\impl Nach dem $n$-ten Schleifendurchlauf gilt also: $A[1..n]$ ist sortiert.}
+	\end{overlayarea}
+\end{frame}
+
+\begin{frame}{SelectionSort -- Beweis Terminierung}
+	In diesem Fall trivial: 
+	\begin{itemize}
+		\item Schleifenvariable $i$ nach oben durch $n$ beschränkt
+		\item ...und wird in jedem Durchlauf inkrementiert (und sonst nicht verändert)
+		\implitem SelectionSort terminiert
+	\end{itemize}
+	\impl SelectionSort funktioniert! Yay! :D
+\end{frame}
+
+\slideThanks
+
+\end{document}

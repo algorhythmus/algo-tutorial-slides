@@ -1,0 +1,256 @@
+%beamer
+
+\input{../preamble/tutpreamble}
+
+\date{09. Juni \thisyear}
+
+\begin{document}
+	
+	% title page
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	
+
+\iffalse
+
+\begin{frame}{Zum letzten Übungsblatt}
+	\textbf{Achtung bei der Wahl von Datenstrukturen} \\[0,125cm]
+	\begin{itemize}
+		\pause
+		\item Aufgabenstellung spezifiziert nicht, ob eine Menge von Daten als Array oder Liste gegeben ist \impl Beides darf als Parametertyp gewählt werden
+		\pause
+		\item Aber: Wenn über die Daten iteriert wird, folgendes beachten:
+		\pause
+		\item Listen bieten Indexzugriff i.A. \textbf{nicht in konstanter Zeit}! D.h. wenn man „via Index“ über eine Liste iteriert, hat die Iteration eine Laufzeit von $\Theta(n^2)$
+		\pause
+		\item Daher: Iteration bei Arrays frei via Index oder \textit{for-each}, bei Listen \textbf{nur} \textit{for-each}, wenn die Laufzeit wichtig ist (bei Arrays und Listen kann davon ausgegangen werden, dass \textit{for-each} die Daten in linearer Reihenfolge durchläuft)
+	\end{itemize}
+\end{frame}
+
+\fi
+
+\begin{frame}{Quicksort}
+	\textbf{Eine erquickende Neuerung} \\[0,125cm]
+	\begin{itemize}
+		\item Erinnerung: Array sortierbar durch Einteilung in sortierten und unsortierten Bereich
+		\pause
+		\implitem \textbf{Idee: „Semi-Sortierung“} \\
+		Wähle beliebiges Pivotelement $p$ (in $O(1)$) und teile auf (in $O(n)$):
+		\begin{tabular}{|c|c|}
+			\hline
+			$\qquad \leq p \qquad$  & $\qquad > p \qquad$  \\
+			\hline
+		\end{tabular} \\
+		\forcenewline
+		Diese Teile dann rekursiv weitersortieren.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Quicksort – Beispiel}
+	Sortiere $A = (5,3,8,4,2,6,1): \KwArray[1..n] \KwOf \N$ mit Quicksort. Wähle als Pivot $p(A) := A[\ceil{\fract n/2 }]$. Zeichne dazu den Rekursionsbaum.
+	\visible<2->{
+		\begin{center}
+			\includegraphics[width=.5\textwidth]{qstree}
+		\end{center}	
+	}
+\end{frame}
+
+\begin{frame}{Quicksort (mit partition)}
+	\begin{itemize}
+		\item Wie effizient und platzsparend aufteilen? \\
+		\impl \textbf{partition}! $O(1)$ Platz und $O(n)$ Zeit  \\
+		(Siehe nächste Folien...)
+		\pause
+		\item \textbf{Laufzeit}: Master-Theorem nicht anwendbar, da Größe der rekursiven Aufrufe \textbf{nicht} in Voraus bekannt
+		\pause
+		\item Worst-Case $\Theta(n^2)$ möglich
+		\pause
+		\item Vorlesung sagt: \textbf{Erwartete} Laufzeit in $\Theta(n \log n)$
+	\end{itemize}
+\end{frame}
+
+\input{partition-example}
+
+\begin{frame}{Quicksort (mit partition)}
+	\textbf{Schema aus der Vorlesung}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[height=6cm]{quicksortpartition}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Quicksort (mit partition)}
+	Laufzeit, wenn alle Zahlen gleich sind? \\
+	\pause
+	\impl $\Theta(n^2)$ \\
+	\pause
+	\FalseQuestionE{Quicksort (mit partition) ist stabil.}{„Durcheinandermischen“ bei partition macht's kaputt.} 
+	\DependsQuestionE{Quicksort ist in-place.}{
+		\textbf{Rekursionsaufrufe} benötigen $\Theta( \log n)$ (vernachlässigbar) viel Platz (\impl Stack-Overhead). Abgesehen davon \textbf{kein} weiterer Verwaltungsaufwand.
+	}
+\end{frame}
+
+\begin{frame}{Quicksort (besseres partition)}
+	\textbf{Aller guten Dinge sind drei!} \\
+	\begin{itemize}
+		\item Worst-Case von eben: schlecht \frownie
+		\pause
+		\implitem Besser: \textbf{Drei-Wege-Partitionierung}!
+		\item Führe einen zusätzlichen Bereich $ = p$ ein: \\
+		\begin{tabular}{|c|c|c|}
+			\hline
+			$\qquad < p \qquad$ & \cellcolor{cyan!50} $\qquad = p \qquad$ & $\qquad > p \qquad$ \\
+			\hline
+		\end{tabular} 
+	\end{itemize}
+\end{frame}
+
+\input{threeway-partition-example}
+
+\begin{frame}{Quicksort (mit Drei-Wege-Partitionierung)}
+	Laufzeit, wenn alle Elemente gleich sind? \\
+	\pause
+	\impl $\Theta(n)$
+\end{frame}
+
+\begin{frame}{Quicksort}
+	\textbf{Auf Listen} \\
+	\begin{itemize}
+		\item Wie müsste man vorgehen, um Quicksort auf einfach verketteten Listen anzuwenden (ohne die Liste in ein Array umzuwandeln)? \\ 
+		\pause
+		\impl Wähle als Pivot $p := head.next$. \\ 
+		\textbf{partition}: Laufe durch die Liste und teile Elemente auf zwei Listen $\ell_\leq$ und $\ell_>$ auf. \\
+		Sortiere rekursiv $\ell_\leq$ und $\ell_>$ und verbinde sie anschließend.
+		%\impl Als $pivot$ das erste Element wählen (das seine Position am Anfang erstmal behält) und ähnlich wie bei Quicksort für Arrays mit Zeigern $p_0$, $p_1$ und $p_2$ die Liste ablaufen ( $(pivot, p_1]$ entspricht $< p$ und $(p_1, p_2]$ entspricht $\geq p$). $p_0$ dient als Vorgänger von $p_1$. Danach wird der $pivot$ mit $p_1$ vertauscht und die rekursiven Aufrufe mit Parameter $(p_1, p_0)$ und $(pivot.next, last)$ durchgeführt.
+		\item Wie leicht lässt sich hierbei ein Worst-Case erreichen? Womit könnte man das vermeiden? \\
+		\pause
+		\impl Wegen eingeschränkter Pivot-Wahl: \\
+		Schon fast sortiert \~~> Worst-Case \\
+		\impl Viele gleiche Elemente \~~> Drei-Wege-Partition! \\
+		\impl Generell: Auf verketteten Listen lieber \textbf{Mergesort}.
+		%\impl Das Verfahren leidet unter der eingeschränkten pivot-Wahl und erreicht bei nahezu sortierten Listen und bei Listen mit vielen gleichartigen Elementen ein Worst-Case-ähnliches Verhalten. Dies lässt sich durch das Sortieren mit Mergesort vermeiden.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Quicksort}
+	\textbf{...nicht-rekursiv?} \\
+	\begin{itemize}
+		\item Wie könnte eine iterative Implementierung von Quicksort aussehen? \\
+		\pause
+		\impl Speichere „Rekursionsparameter“ als Tupel $(\ell, r)$ auf einem \textbf{Stack}, welcher mit einer „großen Schleife“ abgearbeitet wird (\emph{faked recursion})
+		\item Was wären mögliche Vorteile/Nachteile? \\ 
+		\pause
+		\Pros Rekursive Aufrufe werden durch einen platzsparenderen Ersatz gespeichert \\
+		\Cons Implementierungsaufwand \impl \textbf{Fehleranfälligkeit}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Quicksort}
+	\textbf{... vs. InsertionSort} \\
+	\begin{itemize}
+		\item Bei „ausreichend kleinen“ Bereichen wird üblicherweise statt einem Rekursionsaufruf \emph{InsertionSort} verwendet. Warum? 
+		\pause 
+		\implitem \Pros Quicksort gut auf \textbf{größeren} Arrays: Vertauschen einzelner Elemente \textbf{billiger} als ganze Bereiche verschieben \\
+		\Cons Quicksort bürokratisch ($O(n^2)$) auf \textbf{kleineren} Arrays: Zu viel Vertauschen $+$ Rekursionsoverhead. 
+		\pause
+		\implitem \emph{InsertionSort} auf kleinen Arrays linear: „Kurze“ Strecken zum Einsortieren.
+		%Quicksort glänzt auf größeren Arrays, da das Vertauschen von Elementen in konstanter Zeit das Verschieben von Bereichen in linearer Zeit ersetzt. Je kleiner das Array, desto eher nähert Quicksort sich $\Theta(n^2)$ an (durch „ineffiziente“ Vertauschungen und Rekursionsoverhead). $InsertionSort$ hingegen hat auf kleinen Arrays lineare Laufzeit, da die Distanz von einem Element zu seiner sortierten Position verhältnismäßig klein ist.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[t]{Sortieralgorithmen -- Showdown}
+	\vspace{-.6\baselineskip}
+	\begin{tabular}{ p{.14\textwidth} | p{.35\textwidth} | p{.4\textwidth} } % c ~ p{5cm}
+		& Mergesort & Quicksort \\ 
+		\hhline{=|=|=}
+		In-place? &\only<2->{\YesCellE{\small Nur auf verketteten Listen*}}& \only<2->{\YesCell*}\\ 
+		\hline
+		Ablauf & \only<3->{Zuerst Rekursion, danach linearer Aufwand**} & \only<3->{Zuerst linearer Aufwand, danach Rekursion} \\ 
+		\hline
+		Stabil? & \only<4->{\YesCellE{Möglich}} & \only<4->{\NoCellE{\textbf{Mit Partition}: Nein \newline
+				\colorbox{adaptinggreen}{\small (nicht in-place: Möglich)} }} \\ 
+		\hline
+		Laufzeit & \only<5->{\textbf{garantiert} in $\Theta(n \log n)$} & \only<5->{\textbf{erwartet} in $\Theta(n \log n)$ \newline
+			Worst-Case $\Theta(n^2)$ }\\ 
+		\hline
+		Cache-...  & \only<6->{\NoCellE{unfreundlich}} & \only<6->{\YesCellE{freundlich}} \\ 
+		\hline
+		& \only<7->{Hat einen sprechenden Namen} & \only<7->{Heißt Quicksort, muss also gut sein} \\
+		\hline
+	\end{tabular}
+	\\[0,1cm]
+	\visible<2->{* abgesehen vom Verwaltungsoverhead durch Rekursion \\ } 
+	\visible<3->{** abgesehen von Listenzertrennung in linearer Zeit \\ \quad (zur Mitte muss gelaufen werden)}
+\end{frame}
+
+\begin{frame}{Bucketsort}
+	\textbf{Alles im Eimer?} \\
+	\begin{itemize}
+		\item $n$ Elemente \textbf{beschränkter} Größe (also $\in \{a, ..., b\} $)
+		\pause
+		\item Lege an $buckets: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad \only<4->{($k := \abs{buckets}$)}
+		\item Schmeiße jedes Element $e$ in seinen Eimer: $buckets[e].pushBack(e)$ (hinten anhängen)
+		\pause
+		\item Am \textbf{Ende}: „Eimer“ zusammenhängen
+		\implitem Array sortiert. 
+		\pause
+		\item \textbf{Laufzeit}: $O(n+k)$
+		\item \textbf{Aufpassen} bei großen/unbeschränkten $k$!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Bucketsort}
+	\textbf{Generisches Bucketsort} \\
+	\begin{itemize}
+		\item Eimer nicht unbedingt \textbf{Listen}
+		\item Eimer nicht unbedingt nur für \textbf{eine Größe} \\
+		\impl \textbf{Intervalle} möglich \\
+		\impl In diesem Fall: Buckets müssen am Ende noch \textbf{sortiert} werden! 
+		(Z.~B. mit \emph{InsertionSort}) \\
+		\impl Dafür empfehlenswert: Elemente \textbf{gleichverteilt} auf Buckets
+		\implitem Bucketsort ist \textbf{kein} Sortieralgorithmus für sich, sondern eine \textbf{Familie} von Sortieralgorithmen. 
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Bucketsort}
+	\underline{Aufgabe:} \\
+	Sortiert folgende Liste mit Bucketsort: \\ $\llist{36, 78, 50, 1, 92, 15, 43, 99, 64}$. \\ 
+	Verwendet dabei 5 Buckets in den Intervallen: \\
+	0 bis 19, 20 bis 39, 40 bis 59, 60 bis 79 und 80 bis 99.
+	%Zum Sortieren innerhalb der Eimer wird \emph{InsertionSort} verwendet .
+\end{frame}
+
+\begin{frame}{Bucketsort}
+	\underline{Lösung:} \\[0,25cm]
+	\begin{tabular}{ | c | c | c | c | c | }
+		0–19 & 20–39 & 40–59 & 60–79 & 80–99
+		\\ \hline
+		$\llist{ 1, 15 }$ & $\llist{ 36 }$ & $\llist{ 50, 43 }$ & $\llist{ 78, 64 }$ & $\llist{ 92, 99 }$
+		\\ \hline
+	\end{tabular}
+	\\[0,25cm]
+	\impl $\llist{1, 15, 36, 43, 50, 64, 78, 92, 99}$
+\end{frame}
+
+\begin{frame}{„Nerd's Heaven“}
+	\pause\pause 
+	\textbf{Rumänische Volkstänze FTW!} \\
+	\begin{itemize}
+		\item InsertionSort: \\
+		\url{https://www.youtube.com/watch?v=ROalU379l3U} 
+		\item SelectionSort: \\
+		\url{https://www.youtube.com/watch?v=Ns4TPTC8whw} 
+		\item Mergesort: \\
+		\url{https://www.youtube.com/watch?v=XaqR3G\_NVoo} 
+		\item Quicksort: \\
+		\url{https://www.youtube.com/watch?v=ywWBy6J5gz8} 
+	\end{itemize}
+	
+\end{frame}
+
+
+\end{document}

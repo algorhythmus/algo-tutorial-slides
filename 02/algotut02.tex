@@ -1,0 +1,409 @@
+%beamer
+
+%TODO: Mastertheorem auf Aufgabenfolien dazu! Selsort-Invbsp. doch dranbringen!
+
+\def\haslogo{1}
+
+\input{../preamble/tutpreamble}
+
+\date{12. Mai \thisyear}
+
+\begin{document}
+	
+% title page
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% presentation
+
+\iffalse
+
+\begin{frame}{Zum letzten Übungsblatt (Nr. 1)}
+	\textbf{Aufgabe 4} \\[0,125cm]
+	\begin{itemize}
+		\item Man hat ein Array $A$ von (beliebigen) Elementen und möchte zu jedem Element $"$Zusatzinformationen$"$ anlegen (hier: Ein $bool(ean)$ pro Zahl, ob diese zusammengesetzt ist oder nicht)
+		\item Wenn man beim Abrufen der Zusatzinformation eines Elementes $e$ auch den Index $i$ von $e$ in $A$ hat (wie es hier der Fall ist, da über den Inhalt von $A$ iteriert wird), bietet es sich an, diese Zusatzinformationen in einem Array $B$ der Größe $|A|$ zu speichern, also $Zusatzinformation(A[i]) = B[i]$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Zum letzten Übungsblatt (Nr. 1)}
+	\textbf{Aufgabe 4} \\[0,125cm]
+	\begin{itemize}
+		\item In Bezug auf die Aufgabe im Übungsblatt also: \\
+		\footnotesize
+		\begin{exampleblock}{ }
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				$function\ decideIfZusammengesetzt(M : Sorted\ Array\ of \Z) : Array\ of\ bool(ean)$\;
+				\Begin{
+					$B[|M|] : Array\ of\ bool(ean)$\;
+					\For{$i\ \KwFrom\ 0\ \KwTo\ |M|-1$} {
+						//Entscheide, ob $M[i]$ zusammengesetzt ist\;
+						\uIf{$M[i]\ ist\ zusammengesetzt$} {
+							$B[i] := true$\;
+						}
+						\Else {
+							$B[i] := false$\;	
+						}
+					}
+					\KwRet{$B$}\;
+				}
+			\end{algorithm}
+		\end{exampleblock}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Zum letzten Übungsblatt (Nr. 1)}
+	\textbf{O-Kalkül} \\[0,25cm]
+	\begin{itemize}
+		\item Aufgabe 1 war sehr mathematisch, dafür können die bewiesenen Zusammenhänge künftig als gegeben betrachtet werden (falls die Aufgabenstellung keinen erneuten Beweis verlangt)
+		\item Zur Angabe von Laufzeiten
+		\begin{itemize}
+			\item Falls eine obere Schranke gefordert wird $\Rightarrow O(f(n))$ (potenziell $"$zu große$"$ Schranke) ausreichend
+			\item Falls eine scharfe asymptotische Grenze gefordert wird $\Rightarrow \Theta(f(n))$ benötigt
+			\item Falls die Laufzeit eines (spezifischen) Algorithmus angegeben bzw. bestimmt werden soll $\Rightarrow \Theta(f(n))$ gefordert
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\fi
+
+\begin{frame}{Zum letzten Blatt (\#1)}
+	\begin{itemize}
+		\item \textbf{Aussage} + \textbf{Begründung} irgendwie deutlich machen
+		\item \textbf{Form}: Definieren, was ihr benutzt (Wo kommen $f$ und $g$ her??)
+		\pause
+		\item Induktion: Hübsche Rechnung. \textbf{Und was heißt das jetzt?} (Zusammenhang Rechnung $\Leftrightarrow$ Code-Geschehen nicht vergessen!)
+		\item Induktion mittels $a \rightsquigarrow a + 1$ gefährlich: Wo wird a erhöht? \\ ($c$ genauso: Wird in der \textit{Mitte} erhöht!) \\
+		$\impl$ Besser: Schleifendurchläufe \textbf{nummerieren} ($i$) und Variablen auch ($a_i, b_i,...$)!
+	\end{itemize} 
+\end{frame}
+
+\begin{frame}{Zum letzten Blatt (\#1)}
+	\begin{exampleblock}{Aufgabe 2 c)}
+		\begin{algorithm}[H]
+			\Function{f$(n, m : \N): (\N_0, \N_0)$}{
+				$a = 0 : \N_0$ \;
+				$b = m : \N_0$ \;
+				$c = 1 : \N_0$ \;
+				\While{$m - c \cdot n \geq 0$}{
+					\only<2>{\KwInvariant $m = a \cdot n + b$ \;}
+					$a := c$ \;
+					$c := c+1$ \;
+					$b := m - a \cdot n$ \;
+				}
+				\Return{$(a,b)$}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Lösung Aufgabe 2 c)}
+	Bezeichne $i$ die Nummer des aktuellen Schleifendurchlaufs und $a_i, b_i, c_i$ den Wert von a, b, c zu Beginn von Schleifendurchlauf $i$. \\
+	\pause
+	\hanging \textbf{IA}. ($i=1$): \quad $a_1 \cdot n + b_1 = 0 \cdot n + m = m. \quad \checkmark$ \\
+	\pause
+	\hanging \textbf{IV}.: Die Invariante galt zu Beginn von Schleifendurchlauf $i$. \\
+	\pause
+	\hanging {\textbf{IS}. ($i \rightsquigarrow i + 1$): Es gilt zu Beginn von Schleifendurchlauf $i+1$: \newline
+		$a_{i+1} = c_i$, \newline
+		$b_{i+1} = m - a_{i+1} \cdot n$. \newline
+		\hspace*{-0.4cm}$\Impl a_{i+1} \cdot n + b_{i+1} = c_i \cdot n + \left(m - c_i \cdot n\right) = m. \qed$
+	}
+\end{frame}
+
+\begin{headframe}[...denn Zeit ist Geld]
+	Laufzeiten
+\end{headframe}
+
+\begin{frame}{Laufzeitabschätzung}
+	\begin{exampleblock}{Laufzeit?}
+		\begin{algorithm}[H]
+			\Function{doing$(n: \N): \N$}{
+				$k := 0$\;
+				$\ell := 0$\;
+				\For{$i := 1 \KwTo n$} {
+					$\ell\pp$\;
+					\If{$i > n - 4$} {
+						\For{$j := 1 \KwTo n$} {
+							$k\pp$\;
+						}
+					}
+				}
+				\KwRet{$k+\ell$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Laufzeitabschätzung}
+	\begin{itemize}
+		\item Erster Gedanke: \\ 
+		\textbf{Äußere} Schleife: $n$ Durchläufe, \\ 
+		\textbf{Innere} Schleife: $n$ Durchläufe \\ 
+		\only<1|handout:0>{$\impl \Theta(n \cdot n) = \Theta(n^2)$}
+		\only<2>{$\xcancel{\impl \Theta(n \cdot n) = \Theta(n^2)}$}
+		\pause
+		\item \textbf{Aber}: Innere Schleife wird nur \textbf{max. 4x} erreicht \\ (nämlich für $i \in \{n-3, n-2, n-1, n\}$) \\
+		$\impl \Theta(n + 4n) = \Theta(n)$
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Laufzeitabschätzung}
+	\begin{exampleblock}{Laufzeit?}
+		\begin{algorithm}[H]
+			\Function{boing$(n: \N): \N$}{
+				$k := 0$\;
+				$\ell := 0$\;
+				\For{$i := 1\ \KwTo\ n$} {
+					$\ell\pp$\;
+					\For{$j := i\ \KwTo\ n$} {
+						$k\pp$\;
+					}
+				}
+				\KwRet{$k+\ell$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Laufzeitabschätzung}
+	\begin{itemize}
+		\item Erster Gedanke: Äußere Schleife macht $n$-mal „irgendwas“ $\impl n \cdot (???)$ \\
+		(Klammer? Wie schreiben wir das auf? Nicht $n$-mal dasselbe, sondern \textbf{von $i$ abhängig}!) 
+		\pause
+		\item Rettung: Anzahl innere Schleifendurchläufe \textbf{einzeln} für jedes $i = 1,\dots,n$ \textbf{aufsummieren}!
+		\pause
+		\item Für ein festes $i$ wird innere Schleife $(n-i+1)$-mal durchlaufen
+		\pause
+		\item[$\Rightarrow$] Gesamtanzahl der inneren Schleifendurchläufe:
+		\begin{gather*}
+			\sum\limits_{i=1}^n (n-i+1)\ =\ 
+			\sum\limits_{i=1}^n n - \sum\limits_{i=1}^n i + \sum\limits_{i=1}^n 1\ =\ 
+			n^2 - \sum\limits_{i=1}^n i + n      \\ \pause
+			= n^2 - \frac{n \cdot (n+1)}{2} + n\ =\ 
+			n^2 - \frac{n^2}{2} + n - \frac{n}{2}\ =\ 
+			\frac{n^2 + n}{2} \in \Theta(n^2).
+		\end{gather*}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Laufzeitabschätzung}
+	\begin{exampleblock}{Laufzeit?}
+		\begin{algorithm}[H]
+			\Function{going$(n: \N): \N$}{
+				$k := 0$\;
+				$\ell := 0$\;
+				\For{$i := 1 \KwTo n$} {
+					$\ell\pp$\;
+					\If{$i > n - 4$} {
+						\For{$j := i \KwTo n$} {
+							$k\pp$\;
+						}
+					}
+				}
+				\KwRet{$k+\ell$}\;
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Laufzeitabschätzung}
+	Die innere Schleife wird weiterhin (siehe Funktion \emph{doing}) \textbf{nur max. vier Mal} erreicht (für $i \in \{n-3, n-2, n-1, n\}$). \\ \pause
+	\impl Die innere Schleife wird erst vier-, dann drei-, dann zwei- und dann einmal durchlaufen \\ 
+	$\impl \Theta(n + 4+3+2+1) = \Theta(n)$
+\end{frame}
+
+\begin{frame}{Laufzeitabschätzung}
+	\textbf{Hinweise für Aufgaben} \\[0,25cm]
+	\begin{itemize}
+		\pause
+		\item „Obere Schranke“ gefordert \\ 
+		$\impl O(f(n))$ (potenziell „zu große“ Schranke) ausreichend
+		\pause
+		\item „\textbf{Scharfe} asymptotische Schranke“ gefordert \\ $\impl \Theta(f(n))$ benötigt
+		\pause
+		\item Laufzeit eines Algorithmus soll angegeben bzw. bestimmt werden \\ \impl Offiziell $\Theta(f(n))$ erwünscht \\ (in VL oder Musterlösungen aber oft auch $O(f(n))$)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Das Master-Theorem (einfache Form)}
+	$a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \mathbb{N}$ sei 
+	\[
+	T(n) = 
+	\begin{cases}
+	a,  & \text{für } n = 1 \\
+	\textcolor{darkgreen}{d} \cdot T(\lceil \frac{n}{\textcolor{blue}{b}} \rceil) + cn, & \text{für } n > 1
+	\end{cases}.
+	\]
+	Dann gilt:
+	\[
+	T(n) \in 
+	\begin{cases}
+	\Theta(n),                                                        & \textcolor{darkgreen}{d} < \textcolor{blue}{b} \\
+	\Theta(n \log n),                                                 & \textcolor{darkgreen}{d} = \textcolor{blue}{b} \\
+	\Theta(n^{\log _{\textcolor{blue}{b}} \textcolor{darkgreen}{d}}), & \textcolor{darkgreen}{d} > \textcolor{blue}{b}
+	\end{cases}.
+	\]
+\end{frame}
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 8^k, k \in \N_0$: \\[.5\baselineskip]
+	$A(n) = $
+	\begin{math}
+		\begin{cases}
+		42,                           & \text{für } n = 1 \\
+		8 \cdot A(\frac{n}{8}) + 5n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[.5\baselineskip]
+	\pause
+	$\Impl A(n) \in \Theta(n\log n)$
+\end{frame}
+
+% add solutions to all
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 4^k, k \in \N_0$: \\[.5\baselineskip]
+	$B(n) = $
+	\begin{math}
+		\begin{cases}
+		1337,                              & \text{für } n = 1 \\
+		2 \cdot B(\frac{n}{4}) + 100000n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[.5\baselineskip]
+	\pause
+	$\Impl B(n) \in \Theta(n)$
+\end{frame}
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 2^k, k \in \N_0$: \\[0,25cm]
+	$C(n) = $
+	\begin{math}
+		\begin{cases}
+		69,                           & \text{für } n = 1 \\
+		4 \cdot C(\frac{n}{2}) + 3n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[0,5cm]
+	\pause
+	$\Impl C(n) \in \Theta(n^{\log _{2}4}) = \Theta(n^2)$
+\end{frame}
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 13^k, k \in \mathbb{N}_0$: \\[0,25cm]
+	$D(n) = $
+	\begin{math}
+		\begin{cases}
+		8,                              & \text{für } n = 1 \\
+		11 \cdot D(\frac{n}{13}) + 6n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[0,5cm]
+	\pause
+	$\Impl D(n) \in \Theta(n)$
+\end{frame}
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 3^k, k \in \mathbb{N}_0$: \\[0,25cm]
+	$E(n) = $ 
+	\begin{math}
+		\begin{cases}
+		255,                            & \text{für } n = 1 \\
+		27 \cdot E(\frac{n}{3}) + 3n,   & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[0,5cm]
+	\pause
+	$\Impl E(n) \in \Theta(n^{\log _{3}27}) = \Theta(n^3)$
+\end{frame}
+
+
+\begin{frame}{Beispiele Master-Theorem}
+	$n = 35767^k, k \in \mathbb{N}_0$: \\[0,25cm]
+	$F(n) = $
+	\begin{math}
+		\begin{cases}
+		21,                                   & \text{für } n = 1 \\
+		35767 \cdot F(\frac{n}{35767}) + 5n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[0,5cm]
+	\pause
+	$\Impl F(n) \in \Theta(n\log n)$
+\end{frame}
+
+
+\begin{frame}{Aufgaben Master-Theorem}
+	\underline{Aufgabe 1: Master-Theorem} \\
+	Die Laufzeit eines Algorithmus A wird beschrieben durch \\[0,5cm]
+	\begin{math}
+		U(n) = 
+		\begin{cases}
+		1,                           			   & \text{für } n = 1 \\
+		7 \cdot U(\ceil{\frac{n}{2}}) + n,  & \text{für } n > 1
+		\end{cases} 
+	\end{math} \\[0,5cm]
+	Ein weiterer Algorithmus B hat die Laufzeit \\[0,5cm]
+	\begin{math}
+		V(n) = 
+		\begin{cases}
+		1,                            				& \text{für } n = 1 \\
+		a \cdot V(\ceil{\frac{n}{4}}) + 5n,  & \text{für } n > 1
+		\end{cases}
+	\end{math} \\[0,5cm]
+	Was ist der größte Wert $a \in \N$, so dass B asymptotisch schneller als A ist?
+\end{frame}
+
+\begin{frame}{Aufgaben Master-Theorem}
+	\underline{Lösung zu Aufgabe 1} \\
+	\begin{itemize}
+		\item Master-Theorem: Algorithmus A hat Laufzeit $\Theta(n^{\log _{2}7})$, wächst also stärker als $n^2$
+		\pause
+		\item Fall $a \leq 4$ also uninteressant $\impl a > 4$, d.h. Algorithmus B läuft in $\Theta(n^{\log _{4}a})$ \\
+		\pause 
+		\item Also: 
+		\begin{align*}
+		&\log_{4}a < \log_{2}7 \gdw \frac{\log a}{\log 4} < \frac{\log 7}{\log 2} \gdw \log a < \log 7 \cdot \underbrace{\log 4}_{= 2}  \\ \pause
+		\gdw &a < 2^{(\log 7) \cdot 2} = \left(2^{\log 7}\right)^{2} = 7^2 = 49 \Impl a = 48.
+		\end{align*}
+		(mittels \ $\log_x y = \frac{\log y}{\log x}$ \ und \ $\log z = \log_2 z$)
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Aufgaben Master-Theorem}
+	\underline{Aufgabe 2: Master-Theorem} \\
+	Gegeben sei folgende Rekurrenz für $n = 4^k, k \in \N_0$ \\[0,5cm]
+	\begin{math}
+	T(n) = 
+	\begin{cases}
+	2,                       & \text{für } n = 1 \\
+	2 \cdot T(\frac{n}{4}),  & \text{für } n > 1
+	\end{cases}
+	\end{math} \\[0,5cm]
+	Findet eine Funktion $f : \N \functionto \R^+$ und Konstanten $c_1, c_2$, so dass $c_1 \cdot f(n) \leq T(n) \leq c_2 \cdot f(n)$ und beweist euren Fund.
+\end{frame}
+
+\begin{frame}{Aufgaben Master-Theorem}
+	\underline{Lösung zu Aufgabe 2} \\[.5\baselineskip]
+	\hanging{\textbf{Behauptung} (Magie! \smiley): \quad $c_1 := 1$, $c_2 := 3$\ und\ $f(n) := \sqrt{n}$ 
+	\newline erfüllen die Bedingung $\ \forall n = 4^k, k \in \N_0$} \\ \pause
+	\textbf{Beweis} durch vollständige Induktion über $k$: \\ 
+	\hanging{\textbf{IA}. $(k = 0 \impl n = 4^0 = 1$): \newline $1\cdot \sqrt{1} = 1 \leq T(1) = 2 \leq 3\cdot \sqrt{1} = 3$} \\ \pause
+	\hanging{\textbf{IV}.: Für ein beliebiges, aber festes $k \in \N_0$\; $(n = 4^k)$ gelte \newline  $1 \cdot \sqrt{4^k} \leq T(n) \leq 3 \cdot \sqrt{4^k}$  \quad $\left(\gdw 1 \cdot \sqrt{n} \leq T(n) \leq 3 \cdot \sqrt{n}\right)$} \\ \pause
+	\hanging{\textbf{IS}. ($k \rightsquigarrow k+1$): Es gilt: \vspace{-.5\baselineskip}
+		\begin{gather*}
+			T\left(4^{k+1}\right) \stackrel{Def.}{=} 2 \cdot T\left(\frac{4^{k+1}}{4}\right) = 2 \cdot T(n) \\ \pause
+			2 \cdot T(n) \stackrel{IV}{\geq} 2 \cdot 1 \cdot \sqrt{n} = \sqrt{4} \cdot \sqrt{n} = \sqrt{4n} = \sqrt{{4^{k+1}}} \\ \pause
+			2 \cdot T(n) \stackrel{IV}{\leq} 2 \cdot 3 \cdot \sqrt{n} = 3 \cdot \sqrt{4} \cdot \sqrt{n} = 3 \cdot \sqrt{4n} = 3 \cdot \sqrt{{4^{k+1}}}.\ \qed 
+		\end{gather*}
+	}
+\end{frame}
+	
+	
+\end{document}
