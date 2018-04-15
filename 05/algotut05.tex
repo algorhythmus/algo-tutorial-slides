@@ -2,19 +2,11 @@
 
 %\PassOptionsToClass{handout}{beamer}
 
-\def\haslogo{}
 \input{../preamble/tutpreamble}
-
-\date{02. Juni \thisyear}
-
 
 \begin{document}
 	
-	
-	% title page
-	\begin{frame}
-		\titlepage
-	\end{frame}
+\starttut{5}
 	
 % REFERENZIELLE INTEGRITÄT?
 
@@ -31,7 +23,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{headframe}[] %TODO
+\begin{headframe}[Des Informatikers liebstes Hobby] %TODO
 	Sortieren
 \end{headframe}
 
@@ -131,7 +123,7 @@
 
 
 \begin{frame}{Sortieren\only<1-3|handout:0>{ ...und mit Listen?}\only<4->{ – Mergesort}}
-	Bekannt: 
+	Bekannt:   %[t] and \vspace doesnt seem to work here... :(
 	\begin{itemize}
 		\item \textbf{Zwei sortierte} verkettete Listen können in $O(n)$ zu \textbf{einer sortierten} verketteten Liste zusammengefügt werden (\emph{merge})
 		\pause

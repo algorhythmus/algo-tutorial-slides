@@ -2,22 +2,13 @@
 
 %\PassOptionsToClass{handout}{beamer}
 
-\def\haslogo{}
-
 \input{../preamble/tutpreamble}
 
 % parent[] und d[] nachrüsten! S. Hinweis algotut10
 
-\date{30. Juni \thisyear}
-
-
 \begin{document}
 	
-	
-	% title page
-	\begin{frame}
-		\titlepage
-	\end{frame}
+\starttut{9}
 	
 \begin{headframe}[Der Plural, nicht der Kohlenstoff]
 	Graphen
@@ -401,7 +392,7 @@
 	\underline{Lösung zu Aufgabe 5} \\
 	Angenommen, jeder Knoten hat Eingangsgrad $\geq 1$. ($=$ Gegenteil.) \\ 
 	Nehme irgendeinen Knoten $v$. Auf diesen zeigt also garantiert ne \textbf{Kante}. Laufe sie \textbf{rückwärts} $\rightsquigarrow$ neuer Knoten. \textbf{Wiederhole} beliebig oft (das geht dank Annahme!). \\
-	Also geht das öfter, als $G$ Knoten hat \impl Irgendwann ein Knoten 2x besucht \impl Wir laufen im Kreis \impl \lightning\ $G$ kreisfrei. 
+	Also geht das öfter, als $G$ Knoten hat \impl Irgendwann ein Knoten 2x besucht \impl Wir laufen im Kreis \impl \crash $G$ kreisfrei. 
 \end{frame}
 
 \begin{frame}{Schönes Wochenende! \smiley}

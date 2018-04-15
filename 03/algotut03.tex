@@ -4,21 +4,14 @@
 
 \input{../preamble/tutpreamble}
 
-\date{19. Mai \thisyear}
-
-
 \begin{document}
 	
+\starttut{3}
 	
-	% title page
-	\begin{frame}
-		\titlepage
-	\end{frame}
-	
-%TODO headframe? Datenstrukturen? Folgen?
+%TODO sectionheadframe? Datenstrukturen? Folgen?
 	
 \begin{frame}{Datenstrukturen – dynamisch viele Elemente}
-	Arrays = toll, aber ...
+	Arrays $=$ toll, aber ...
 		\pause
 		\begin{itemize}
 			\item[\Cons] nur begrenzt groß
@@ -54,7 +47,7 @@
 		\pause
 		\item Möglichkeit: Nullpointer \\
 		\pause
-		\hanging \Cons \ Viele Sonderfälle und die Invariante geht \textcolor{red}{\textbf{kaputt}} \frownie
+		\hanging \Cons \ Viele Sonderfälle und die Invariante geht \bfalert{kaputt} \frownie
 		\pause
 		\item Praktischer: Zyklische Verknüpfung
 		\pause
@@ -270,7 +263,7 @@
 	\begin{itemize}
 		\item[\Cons] List[i] nicht in $O(1)$, sondern linear
 		\pause
-		\item[\Cons] List.$size$ in $O(1)$ \gdw \textit{Inter-List-Splice}: \\
+		\item[\Cons] List.$size$ in $O(1)$ \; und gleichzeitig \; \textit{Inter-List-Splice}: \\
 		Autsch
 		\pause
 		\item[\Cons] Cache-Freundlichkeit sieht anders aus

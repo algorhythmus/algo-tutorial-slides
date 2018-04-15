@@ -48,6 +48,12 @@
 
 \newcommand{\mycomment}[1]{}
 
+%%%% CONFIG
+
+\input{../preamble/config.tex}
+
+%%%% CONFIG END
+
 %\renewcommand{\SS}{\iffontchar\font"1E9E \symbol{"1E9E}\else SS\fi} % SHAME ON YOU, LATEX!
 \newcommand{\TM}{\text{$\mbox{}^\text{\tiny TM}$}}
 \newcommand{\pluseq}{\mathrel{+}=}
@@ -194,10 +200,10 @@
 
 \only<handout:0>{\colorlet{adaptinglightred}{beamerlightred}}
 \only<handout:0>{\colorlet{adaptinglightgreen}{beamerlightgreen}}
-\only<handout:0>{\colorlet{adaptinglightred}{beamerlightred}}
+\only<handout:0>{\colorlet{adaptinglightyellow}{beamerlightyellow}}
 \only<beamer:0>{\colorlet{adaptinglightred}{lightred}}
 \only<beamer:0>{\colorlet{adaptinglightgreen}{lightgreen}}
-\only<beamer:0>{\colorlet{adaptinglightred}{lightred}}
+\only<beamer:0>{\colorlet{adaptinglightyellow}{lightyellow}}
 \only<handout:0>{\colorlet{adaptingred}{lightred}}
 \only<beamer:0>{\colorlet{adaptingred}{fullred}}
 \only<handout:0>{\colorlet{adaptinggreen}{lightgreen}}
@@ -468,11 +474,7 @@
 
 % the presentation starts here
 
-%%%% CONFIG
 
-\input{../preamble/config.tex}
-
-%%%% CONFIG END
 
 %% Titel einfügen
 \newcommand{\titleframe}{\frame{\titlepage}}
