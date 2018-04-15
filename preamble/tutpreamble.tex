@@ -443,11 +443,11 @@
 % (picture proportions: 63 : 20 for standard, 169 : 40 for wide
 % *.eps format if you use latex+dvips+ps2pdf, 
 % *.jpg/*.png/*.pdf if you use pdflatex)
-\IfFileExists{images/logo.png}{
-	\TitleImage[width=\titleimagewd]{images/logo}
+\IfFileExists{./logo.png}{
+	\TitleImage[width=\titleimagewd]{./logo}
 }{}
-\IfFileExists{images/logo.jpg}{
-	\TitleImage[width=\titleimagewd]{images/logo}
+\IfFileExists{./logo.jpg}{
+	\TitleImage[width=\titleimagewd]{./logo}
 }{}
 
 %% TITLE LOGO
@@ -514,12 +514,14 @@
 \edef\nextyear{\the\numexpr\thisyear+1\relax} 
 
 \title[Algorithmen-Tutorium \mytutnumber, Woche \theweeknum]{Algorithmen I \\[-2pt] Tutorium \mytutnumber}
-\subtitle{Woche \theweeknum}
+\subtitle{Woche \theweeknum\ |\xspace\mydate{\theweeknum}}
 
 
 \author[\myname]{{\mynamebold \; (\mailto{\mymail})}}
 
 \institute{Institut für Theoretische Informatik}
+
+\date{\mydate{\theweeknum}\ }
 
 % Bibliography
 % not needed here:
