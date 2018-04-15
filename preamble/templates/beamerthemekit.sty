@@ -80,7 +80,7 @@ KIT -- University of the State of Baden-Wuerttemberg and\\National Laboratory of
 % title image
 
 \begin{textblock*}{\paperwidth}(1mm,48.5mm)
-\begin{overpic}[width=126mm,height=40mm]{../preamble/logos/\@titleimage}
+\begin{overpic}[width=126mm,height=40mm]{images/\@titleimage}
 \put(-6,-3){
 	%mask curve for lower left corner of title image
 	\begin{pgfpicture}{0mm}{0mm}{3mm}{3mm}
@@ -187,18 +187,19 @@ KIT -- University of the State of Baden-Wuerttemberg and\\National Laboratory of
 	}
 	%\begin{beamercolorbox}[wd=0.05\paperwidth,ht=2.2mm,dp=2mm,left,leftskip=1em]{date in head/foot}%
 	\hspace{1em}%
+	\makebox[.08\textwidth][l]%
 	{%
 		\usebeamerfont{date in head/foot}%
 		\textbf{\insertframenumber{}}%
 	}%
 	%\end{beamercolorbox}% 
-	\hspace{.05\textwidth}%
+	%\hspace{.05\textwidth}%
 	%\begin{beamercolorbox}[wd=0.18\textwidth,ht=2.2mm,dp=2mm,center]{title in head/foot}%
+	\makebox[.16\textwidth][l]%
 	{%
 		\usebeamerfont{title in head/foot}%
 		\insertshortdate
 	}%
-	\hspace{.05\textwidth}%
 	%\end{beamercolorbox}%
 	%\begin{beamercolorbox}[wd=0.7\textwidth,ht=2.2mm,dp=2mm,left]{author in head/foot}%
 	{%
