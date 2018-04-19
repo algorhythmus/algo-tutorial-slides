@@ -59,10 +59,10 @@
 			\item Beispiele, Aufgaben (da kommt \textbf{ihr} ins Spiel! \smiley)
 			\item \textbf{Eure Fragen} klären!    
 			\pause
-			\item \textbf{Kein} Ersatz für die VL. \\
-			Was zeitlich hier nicht mehr reinpasst, kann trotzdem wichtig sein!
 			\item Den Stoff etwas weniger formal behandeln \\ 
 			\impl \thassedaniel{Formelles}{Formal-Kram} kann trotzdem wichtig sein! 
+			\item \textbf{Kein} Ersatz für die VL. \\
+			Was zeitlich hier nicht mehr reinpasst, kann trotzdem wichtig sein!
 			\item Wenn ich / meine Folien Blödsinn reden: \\
 			Schreien! / Mail an mich! \impl Sonst kann ich's nicht fixen... \frownie \\
 			Verbindlich \textbf{nur} Inhalt aus der VL/Übung! 
@@ -150,7 +150,7 @@
 	\pause
 	Content:
 	\begin{itemize}
-		\item VL-Folien, Skript, Ü-Blätter...: im \ILIAS.
+		\item VL-Folien, Ü-Blätter...: im \ILIAS.
 		%\item Archiv: \url{http://gbi.ira.uka.de} \\
 		%Weitere Altklausuren, Alte ÜBs, Lösungen...
 	\end{itemize}
@@ -208,8 +208,8 @@
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Arrays}
 		\begin{algorithm}[H]
-			Schema: \quad $ blupp : \KwArray[\textit{Von}..\textit{Bis}] \KwOf T $ \\
-			Heißt: \quad $blupp$ ist ein $T$-\KwArray. Der erste Index ist \textit{Von}, der letzte ist \textit{Bis}. \\ 
+			Schema: \quad $ arr : \KwArray[\textit{Von}..\textit{Bis}] \KwOf T $ \\
+			Heißt: \quad $arr$ ist ein $T$-\KwArray. Der erste Index ist \textit{Von}, der letzte ist \textit{Bis}. \\ 
 			\forcenewline
 			\pause
 			Bsp.: \\ 
@@ -286,7 +286,7 @@
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Mathe-Bequemlichkeit}
 		$\KwSty{select any } x \in M$ \\[0,125cm]
-		$\KwFor \KwEach x \in M \KwSty{ do}$ \\[0,125cm]
+		$\KwSty{foreach } x \in M \KwSty{ do}$ \\[0,125cm]
 		$(a, b) := (3, 5)$ \quad // Tupel FTW! \smiley \\[0,125cm] 
 		$(a, b) := (b, a)$ \quad // bequemes Vertauschen \\[0,125cm]
 		$M := \{1, 2, 3\}$ \quad // ungeordnete Menge \\[0,125cm] %TODO: Sollen wir das überhaupt erwähnen?
@@ -430,7 +430,7 @@
 
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{Alte Bekannte} \\
+	\textbf{Alte Bekannte} \\ \vspace{-.7\baselineskip}
 	\begin{tabbing}
 		$O(f(n)) := \{ g(n) \mid $ \= $\exists\, c, n_0 > 0\text{ mit }$ \\
 					\> $0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$ \\
@@ -439,19 +439,16 @@
 		$\Omega(f(n)) := \{ g(n) \mid $ \> $\exists\, c, n_0 > 0\text{ mit }$ \\
 					\> $0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$ 
 	\end{tabbing} 
-\end{frame}
-
-
-\begin{frame}{Algorithmenanalyse}
-	\textbf{Die Neuen} \\
+	\pause
+	\smallskip
+	\textbf{Die Neuen} \\ \vspace{-.7\baselineskip}
 	\begin{tabbing}
 		$o(f(n)) := \{g(n) \mid $ \= $\forall c > 0 \ \exists\, n_0 > 0$ mit \\
-				\> $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$ \\
+		\> $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$ \\
 		$\omega (f(n)) := \{g(n) \mid $ \= $ \forall c > 0 \ \exists\, n_0 > 0$ mit \\
-				\> $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
+		\> $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
 	\end{tabbing}
 \end{frame}
-
 
 \begin{frame}{Algorithmenanalyse}
 	\textbf{Anschaulich:} \\[0,125cm]
@@ -487,11 +484,11 @@
 	
 	\FalseQuestionE{$f \approx g :\Leftrightarrow f \in O(g)$ definiert eine Äquivalenzrelation auf der Menge der Funktionen $\N^\N$.}{(Aber: Ersetzt man $O$ durch $\Theta$, passt die Äquivalenzrelation.)}
 	
-	\TrueQuestion{$o(f(n)) = O(f(n)) \setminus \Theta(f(n)).$}
+	\TrueQuestion{$o(f) = O(f) \setminus \Theta(f).$}
 	
 	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$}
 	
-	\FalseQuestion{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n)).$}
+	\FalseQuestionE{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n)).$}{(\crash für $c = 1$.)}
 \end{frame}
 
 
@@ -730,7 +727,7 @@
 						} 
 					} 	
 					$\KwAssert A[\|minIndex|] = \min(A[i..n])$ \;
-					$swap(A[i], A[\|minIndex|])$ \;
+					$\|swap|(A[i], A[\|minIndex|])$ \;
 				}	
 			}
 		\end{algorithm}
