@@ -2,6 +2,8 @@
 
 \input{../preamble/tutpreamble}
 
+\morescalingdelimiters
+
 \begin{document}
 
 	\starttut{1}
@@ -48,82 +50,119 @@
 	}
 	
 	
-\begin{frame}{Wozu das Tutorium?}
+\begin{frame}{Was machen wir hier?}  %TODO
 	\begin{overlayarea}{\textwidth}{.60\textwidth}
 		\begin{itemize}
-			\item \textbf{Für Eure Fragen}
+			\item Tut-Folien bekommt ihr im \ILIAS. Keine Panik.  
 			\pause
-			\item Zur Vorbereitung auf die Übungsblätter
+			\item Inhalte der VL verstehen und anwenden
+			\item Beispiele, Aufgaben (da kommt \textbf{ihr} ins Spiel! \smiley)
+			\item \textbf{Eure Fragen} klären!    
 			\pause
-			\item ...und damit zur Vorbereitung auf die Klausur! :)
-			\pause
-			\item Wiederholung und Vertiefung klausurrelevanter Themen
-			\pause
-			\item Und vor allem: Spaß!
+			\item \textbf{Kein} Ersatz für die VL. \\
+			Was zeitlich hier nicht mehr reinpasst, kann trotzdem wichtig sein!
+			\item Den Stoff etwas weniger formal behandeln \\ 
+			\impl \thassedaniel{Formelles}{Formal-Kram} kann trotzdem wichtig sein! 
+			\item Wenn ich / meine Folien Blödsinn reden: \\
+			Schreien! / Mail an mich! \impl Sonst kann ich's nicht fixen... \frownie \\
+			Verbindlich \textbf{nur} Inhalt aus der VL/Übung! 
+			%\item Zur Vorbereitung auf die Übungsblätter
+			%\item ...und damit zur Vorbereitung auf die Klausur! :)
+			%\item Wiederholung und Vertiefung klausurrelevanter Themen
+			
+			%Ganz nett letztes Jahr, aber passt in die neue Aufzählung nicht rein:
+			%\item Und vor allem: Spaß! :D
 		\end{itemize}
-		\only<+|handout:0>{
-			\begin{tikzpicture}[remember picture,overlay]
-			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{empty.png}};
-			\end{tikzpicture}
-		}\only<+|handout:0>{
+		\mycomment{
+			\only<+|handout:0>{
+				\begin{tikzpicture}[remember picture,overlay]
+				\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{empty.png}};
+				\end{tikzpicture}
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay1.png}};
 			\end{tikzpicture}
-		}\only<+|handout:0>{
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay2.png}};
 			\end{tikzpicture}
-		}\only<+|handout:0>{
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay3.png}};
 			\end{tikzpicture}
-		}\only<+|handout:0>{
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay4.png}};
 			\end{tikzpicture}
-		}\only<+|handout:0>{
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay5.png}};
 			\end{tikzpicture}
-		}\only<+|handout:0>{
+			}\only<+|handout:0>{
 			\begin{tikzpicture}[remember picture,overlay]
 			\node[xshift=0cm,yshift=0cm] at (current page.center) {\includegraphics[width=12.8cm]{overlay6.png}};
 			\end{tikzpicture}
+			}
 		}
+		
 	\end{overlayarea}
 \end{frame}
 
-\begin{frame}{Orga-Kram – Übungsblätter}
+\begin{frame}{Orga-Kram – Übungsblätter}  %TODO
 	\begin{itemize}
 		\item \textbf{Freiwillig}
+		\item \textbf{Ausgabe}: Mi \\
+			  \textbf{Abgabe}: Mi nächster Woche, XX.XX~Uhr (das sind 7~Tage Zeit) im Kasten im Untergeschoss des Infobaus
 		\pause
-		\item \textbf{Ausgabe}: Mo nach der Vorlesung, 
-		\item \textbf{Abgabe}: Di nächster Woche, 12.45~Uhr (das sind 9~Tage Zeit) im Kasten im Untergeschoss des Infobaus
-		\pause
-		\item Abgabe \textbf{schwerstens empfohlen}, gibt nämlich einen Klausurbonus: \\
+		\item Abgabe \textbf{schwerstens empfohlen}, gibt nämlich einen \textbf{Klausurbonus}: \\
 		$\geq 25 \%$ der Gesamtpunkte $ \Rightarrow $ 1 Bonuspunkt \\
 		$\geq 50 \%$  der Gesamtpunkte $ \Rightarrow $ 2 Bonuspunkte \\
 		$\geq 75 \%$  der Gesamtpunkte $ \Rightarrow $ 3 Bonuspunkte \\
-		(Die Bonuspunkte helfen nicht beim Bestehen, verbessern aber die Note meistens um eine Stufe.)
+		(Die Bonuspunkte helfen nicht beim Bestehen!)
 		\pause
-		\item Korrigierte Übungsblätter werden einige Male ins Tutorium mitgebracht; zu lange danach $\Rightarrow$ bei den Übungsleitern abholen
+		\item Nicht abgeholte Blätter landen irgendwann irgendwo beim Übungsleiter 
 		\pause
 		\item Abschreiben: Böhse™. Wird geahndet.
+		\pause
+		\item \textbf{Aber}: Abgabe \textbf{zu zweit} erlaubt (und erwünscht! \smiley)
 	\end{itemize}
+\end{frame} 
+
+\begin{frame}{Orga-Kram – Klausur}
+	\begin{center}
+		\textbf{Klausur} ist am \textbf{04. September 2018} um \textbf{8 Uhr}. \\
+		\smallskip
+		Details tba.
+	\end{center}
 \end{frame}
 
-
-\begin{frame}{Orga-Kram – der Kummerkasten} % TODO: Still existent?
+\begin{frame}{Fragen? Hilfe?}
+	Fragen:
 	\begin{itemize}
-		%\item<+-> Offizielle Evaluation $1\times$ pro Semester: \textit{bisschen} zu wenig Feedback
-		\item<+-> Daher: Kasten \urlnamed{https://crypto.iti.kit.edu/index.php?id=799}{auf der Vorlesungshomepage (hier klicken!)} für all eure Meinungen und Anregungen (\textbf{anonym}!)
-		\item<+-> \textbf{Keine Stofffragen!} Anonym \impl Antwort/Rückfragen \textbf{nicht möglich!} (Besser: \ILIAS oder \textbf{hier stellen}!)
-		\item<+-> Gerne auch Feedback zu Tutorien, dann aber bitte mit \textbf{Nummer des Tutoriums} bzw. \textbf{Name des Tutors} (wie gesagt, da anonym!)
-					% TODO: Maybe anonymous feedback ILIAS inside tutorial folder?
-		\item<+-> Also: Etwas läuft furchtbar schief (oder vielleicht auch nur besonders gut?) \impl Meldet es \textbf{zeitnah}! (Kurz vor Ende der Vorlesungszeit ist meistens zu spät)
+		\item \textbf{Hier} im Tut!
+		\item Ins \ILIAS. (Dann haben alle was davon. \smiley) \\
+		%Im ILIAS hat's sogar einen Sprechstunden-Chat! :D
+		\pause
+		\item Organisatorischer Spezialkram? \impl an  Iser / Sinz  (\mailto{markus.iser@kit.edu} / \mailto{carsten.sinz@kit.edu} ) \\
+		Bei Orga-Problemen aber \textbf{Name} und \textbf{Matrikelnummer}  mitangeben! \\
+		\item Tut-spezifisches an \textbf{mich} (\mailto{\mymail})
+	\end{itemize}
+	\pause
+	Content:
+	\begin{itemize}
+		\item VL-Folien, Skript, Ü-Blätter...: im \ILIAS.
+		%\item Archiv: \url{http://gbi.ira.uka.de} \\
+		%Weitere Altklausuren, Alte ÜBs, Lösungen...
+	\end{itemize}
+	\pause
+	Feedback:
+	\begin{itemize}
+		\item Zur VL? \impl Gerne anonym in Zettelform in die Algo-I-Abgabekästen \\
+		\textbf{Keine} Stofffragen! (Antwort unmöglich...)
+		\item Zum Tut? \impl Per Mail oder persönlich an mich. \smiley \\
+			Zu schnell/langsam/leicht/schwer/viel/wenig/...? \impl \textbf{direkt} sagen!
 	\end{itemize}
 \end{frame}
-
 
 \sectionheadframe{Pseudocode}
 
@@ -132,60 +171,62 @@
 		\item Anleitung, wie man etwas macht -- in einer Art „Programmiersprache“
 		\pause
 		\item[\Pros] Es gibt keine exakte Sprachdefinition
-		\pause
 		\item[\Cons] Es gibt keine exakte Sprachdefinition
 		\pause
 		\item Daher im Folgenden: Grobe \textit{Richtlinie} für Pseudocode (ohne Anspruch auf Vollständigkeit)
-		\pause
 		\item Das \textbf{Wichtigste}: Es sollte \textbf{klar} werden, was \textbf{gemeint} ist, d.h. Pseudocode soll vor allem \textbf{übersichtlich} und \textbf{verständlich} sein
 		\pause
 		\item Kommentare mit // (wie in Java), \#, o.ä.
-		\pause
 		\item Semikolon am Ende eines Befehls unnötig
 	\end{itemize}
 \end{frame}
 
-
-\begin{frame}{Pseudocode}  % TODO Perestroika
+\begin{frame}{Pseudocode} 
 	\begin{exampleblock}{Variablendeklaration und -initialisierung}
 		\begin{algorithm}[H]
-			$ Variablenname = Wert : Typ $ \\
-			$ a := 3 $ \\
-			$ b : \KwArray[\textit{Von}..\textit{Bis}] \KwOf Int $ \RComment{\entspr Erlaubte Indizes: $\text{Von}..\text{Bis}$} \\
-			$ c := \KwNew XYZ(Konstruktorparameter) $ \\
-			$ d = \str{leet} : String $ \\
+			Schema: \quad $ Variablenname = Wert : \|Typ| $ \\
+			\pause
+			Bsp.: \\
+			 \quad $ var_1 = 42 : \|Int| $ \\
+			 \quad $ var_2 = \str{algorilla} : \|String| $ \\
+			 \quad $ var_3 := 1337  $ \qquad \LComment{Typ weglassbar, falls offensichtlich} \\
+			 \quad $ var_4 : \R $ \qquad \LComment{Ohne Initialisierung (\textbf{aufpassen!})} \\
+			 \quad $ bla := \KwNew \|XYZ|(\textit{Konstruktorparameter...}) $ \\
 		\end{algorithm}
 	\end{exampleblock}
+	\pause
+	Mögliche Typen: \\
 	\begin{itemize}
-		\pause
-		\item Typ kann weggelassen werden, wenn offensichtlich
-		\pause
-		\item Mögliche Typen sind zum Beispiel \\
-		\begin{itemize}
-			\pause
-			\item $\R$, $\N$, $\Z$ / Int(eger), Bool(ean), ...
-			\pause
-			\item $\KwArray$ (als im Speicher zusammenhängender „Datenblock“)
-			\pause
-			\item $String$
-			\pause
-			\item Weitere Datenstrukturen aus der VL (more to come!)
-			\pause
-			\item \textit{Element} ist Platzhalter für beliebigen Typ (so wie \textit{Object} in Java)
-		\end{itemize}
+		\item $\R$, $\N$, $\Z$ / Int(eger), $\BB$ / Bool(ean), String...
+		\item \textit{Element} als Platzhalter für beliebigen Typ (so wie \textit{Object} in Java) 
+		\item Weitere Datenstrukturen aus der VL (more to come!)
+		\item $\KwArray$ (als im Speicher zusammenhängender „Datenblock“)
 	\end{itemize}
 \end{frame}
 
 
-\begin{frame} {Pseudocode}
+\begin{frame}{Pseudocode}
+	\begin{exampleblock}{Arrays}
+		\begin{algorithm}[H]
+			Schema: \quad $ blupp : \KwArray[\textit{Von}..\textit{Bis}] \KwOf T $ \\
+			Heißt: \quad $blupp$ ist ein $T$-\KwArray. Der erste Index ist \textit{Von}, der letzte ist \textit{Bis}. \\ 
+			\forcenewline
+			\pause
+			Bsp.: \\ 
+			\quad $A = (1,2,3): \KwArray[42..44] \KwOf \Z$ \\
+			\quad \impl Dann ist $A[42] = 1, \; A[44] = 3. \quad A[0] \text{ ist \alert{undefiniert}!}$ \\ 
+			\pause
+			\quad $B: \KwArray[1..n] \KwOf \|Bool|$ \qquad \LComment{Uninitialisiert; Zugriff mit $B[1]$ bis $B[n]$}
+		\end{algorithm}
+	\end{exampleblock}
+	\pause
 	\begin{exampleblock}{Besondere Werte}
 		\begin{itemize}
 			\item $+\infty, -\infty$
-			\item $\bot$ als Nullobjekt mit undefiniertem Wert
+			\item $\bot$ für „undefiniert“, „bottom“
 		\end{itemize}
 	\end{exampleblock}
 \end{frame}
-
 
 \begin{frame} {Pseudocode}
 	\begin{exampleblock}{Kontrollstrukturen}
@@ -242,20 +283,16 @@
 	\end{itemize}
 \end{frame}
 
-
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Mathe-Bequemlichkeit}
-		\LComment{$K$, $M$ Mengen} \\[0,125cm]
-		$select\ any\ x \in K$ \\[0,125cm]
-		$\KwFor \KwEach y \in M$ \\[0,125cm]
-		$(a, b) := (3, 5)$ // geordnetes Tupel/Array (konstante Anzahl Elemente) \\[0,125cm] % WTF!?
-		$(a, b) := (b, a)$ // bequemes Vertauschen \\[0,125cm]
-		$S := \{1, 2, 3\}$ // ungeordnete Menge \\[0,125cm]
-		$f := \langle1, 2, 3\rangle$ // geordnete Folge (Elemente können an- und abgehängt werden)
+		$\KwSty{select any } x \in M$ \\[0,125cm]
+		$\KwFor \KwEach x \in M \KwSty{ do}$ \\[0,125cm]
+		$(a, b) := (3, 5)$ \quad // Tupel FTW! \smiley \\[0,125cm] 
+		$(a, b) := (b, a)$ \quad // bequemes Vertauschen \\[0,125cm]
+		$M := \{1, 2, 3\}$ \quad // ungeordnete Menge \\[0,125cm] %TODO: Sollen wir das überhaupt erwähnen?
+		$S := \langle1, 2, 3\rangle$ \quad // geordnete Folge (Elemente können an- und abgehängt werden) %TODO: Sollen wir das überhaupt erwähnen?
 	\end{exampleblock}
-	\begin{itemize}
-		\item Generell: Quantoren erlaubt, solange trivial ist, welcher programmatischen Funktion sie entsprechen \textit{und wie sie die Laufzeit beeinflussen}!
-	\end{itemize}
+	\bfalert{ABER}: Die Laufzeitkosten und Funktionsweise \textbf{jeder einzelnen Zeile} müssen bekannt sein! \\
 \end{frame}
 
 \begin{frame}{Pseudocode}
@@ -279,7 +316,7 @@
 	Anmerkungen: \\
 	\begin{itemize}
 		\pause
-		\item \textbf{Selbsterklärende} Bezeichner, z.B. $print(\str{...})$ statt $System.out.println(\str{...})$
+		\item \textbf{Selbsterklärende} Bezeichner, z.B. $\|print|(\str{...})$ statt $System.out.\|println|(\str{...})$
 		\pause
 		\item Komplexere Stellen bitte \textbf{kommentieren}, sonst versteht es keiner
 		\pause
@@ -313,6 +350,7 @@
 	Am Ende iteriert der Algorithmus erneut eine Zahl $i$ von 2 bis $n$. Falls der $i$-te Boolean-Wert nicht \KwTrue ist, wird ausgegeben, dass der Wert von $i$ prima ist.
 \end{frame}
 
+%\delimitershortfall=1pt
 
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 1}
@@ -328,7 +366,7 @@
 			}
 			\For{$i := 2 \KwTo n$} {
 				\If{$\KwNot werte[i]$} {
-					$print(i + \str{ ist prima!})$\;
+					$\|print|(i + \str{ ist prima!})$\;
 				}
 			}
 		\end{algorithm}
@@ -345,12 +383,12 @@
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 2}
 		\begin{algorithm}[H]
-			\Function{$groupStudents(students : \KwArray [0...n-1] \KwOf \|Student|) : (\KwListOf \|Student|, \KwListOf \|Student|)$}{
+			\Function{$\|groupStudents|(students : \KwArray [1..n] \KwOf \|Student|) : (\KwListOf \|Student|, \KwListOf \|Student|)$}{
 				$groups = (\llist{}, \llist{}) : \KwArrayOf \KwListOf \|Student|$\;
 				\ForEach{$student \in students$} {
 					$sum = 0 : \|Int|$\;
 					$nr := student.matrikelnummer$\;
-					\For{$i := 0 \KwTo \size{nr}-1$} {
+					\For{$i := 1 \KwTo \size{nr}$} {
 						$sum \pluseq nr[i]$\;
 					}
 					$groups[sum \KwMod 2].\|add|(student)$\;
@@ -383,7 +421,7 @@
 
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{O-Kalkül} \\[0,125cm]
+	\textbf{O-Kalkül} \\
 	\begin{itemize}
 		\item Vernachlässigung konstanter Faktoren
 		\item Zuordnung, welches Laufzeit-Verhalten der Algorithmus für sehr große Eingaben aufweist
@@ -392,29 +430,26 @@
 
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{Alte Bekannte} \\[0,125cm]
-	\begin{itemize}
-		\item $O(f(n)) = \{ g(n) \mid \exists\, c, n_0 > 0$, so dass \\
-		\hspace{1,85cm} $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$
-		\\[0,5cm]
-		\item $\Theta (f(n)) = \{ g(n) \mid \exists\, c_1, c_2, n_0 > 0$, so dass \\
-		\hspace{1,85cm} $ 0 \leq c_1 \cdot f(n) \leq g(n) \leq c_2 \cdot f(n) \quad \forall n \geq n_0 \}$
-		\\[0,5cm]
-		\item $\Omega (f(n)) = \{ g(n) \mid \exists\, c, n_0 > 0$, so dass \\
-		\hspace{1,85cm} $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
-	\end{itemize}
+	\textbf{Alte Bekannte} \\
+	\begin{tabbing}
+		$O(f(n)) := \{ g(n) \mid $ \= $\exists\, c, n_0 > 0\text{ mit }$ \\
+					\> $0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$ \\
+		$\Theta(f(n)) := \{ g(n) \mid $ \> $ \exists\, c, c', n_0 > 0\text{ mit }$ \\
+					\> $0 \leq c \cdot f(n) \leq g(n) \leq c' \cdot f(n) \quad \forall n \geq n_0 \}$ \\
+		$\Omega(f(n)) := \{ g(n) \mid $ \> $\exists\, c, n_0 > 0\text{ mit }$ \\
+					\> $0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$ 
+	\end{tabbing} 
 \end{frame}
 
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{Die Neuen} \\[0,125cm]
-	\begin{itemize}
-		\item $o(f(n)) = \{g(n) \mid \forall c > 0 \ \exists\, n_0 > 0$, so dass \\
-		\hspace{1,85cm} $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$
-		\\[0,5cm]
-		\item $\omega (f(n)) = \{g(n) \mid \forall c > 0 \ \exists\, n_0 > 0$, so dass\\
-		\hspace{1,85cm} $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
-	\end{itemize}
+	\textbf{Die Neuen} \\
+	\begin{tabbing}
+		$o(f(n)) := \{g(n) \mid $ \= $\forall c > 0 \ \exists\, n_0 > 0$ mit \\
+				\> $ 0 \leq g(n) \leq c \cdot f(n) \quad \forall n \geq n_0 \}$ \\
+		$\omega (f(n)) := \{g(n) \mid $ \= $ \forall c > 0 \ \exists\, n_0 > 0$ mit \\
+				\> $ 0 \leq c \cdot f(n) \leq g(n) \quad \forall n \geq n_0 \}$
+	\end{tabbing}
 \end{frame}
 
 
@@ -442,21 +477,21 @@
 
 
 \begin{frame}[t]{Algorithmenanalyse}
-	\FalseQuestion{$n \in \Theta(\sqrt{n})$}
+	\FalseQuestion{$n \in \Theta(\sqrt{n}).$}
 	
-	\TrueQuestion{$n^2 \in o(n^3)$}
+	\TrueQuestion{$n^2 \in o(n^3).$}
 	
-	\TrueQuestion{$n^3 \in \Omega(n^2)$}
+	\TrueQuestion{$n^3 \in \Omega(n^2).$}
 	
-	\TrueQuestionE{$2^{n+1} \in \Theta(2^n)$}{(da $2^{n+1} = 2 \cdot 2^n$)}
+	\TrueQuestionE{$2^{n+1} \in \Theta(2^n).$}{(da $2^{n+1} = 2 \cdot 2^n.$)}
 	
-	\FalseQuestionE{$f \approx g :\Leftrightarrow f \in O(g)$ definiert eine Äquivalenzrelation auf der Menge der Funktionen $\N \functionto \N$}{(Aber: Ersetzt man $O$ durch $\Theta$, so ist die Äquivalenzrelation gültig)}
+	\FalseQuestionE{$f \approx g :\Leftrightarrow f \in O(g)$ definiert eine Äquivalenzrelation auf der Menge der Funktionen $\N^\N$.}{(Aber: Ersetzt man $O$ durch $\Theta$, passt die Äquivalenzrelation.)}
 	
-	\TrueQuestion{$o(f(n)) = O(f(n)) \setminus \Theta(f(n))$}
+	\TrueQuestion{$o(f(n)) = O(f(n)) \setminus \Theta(f(n)).$}
 	
-	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n))$}
+	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$}
 	
-	\FalseQuestion{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n))$}
+	\FalseQuestion{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n)).$}
 \end{frame}
 
 
@@ -486,7 +521,7 @@
 \begin{frame}{Algorithmenanalyse}
 	\textbf{Lang ist's her: Logarithmus-Rechenregeln} \\[0,125cm]
 	\begin{itemize}
-		\item Unter Informatikern gilt üblicherweise $\log n := \log_2(n)$
+		\item Für den Informatiker ist $\log n := \log_2(n)$
 		\item $\log(a \cdot b) = \log a + \log b$
 		\item $\log(a^b) = b \cdot \log a$
 		\item $\log(\frac{a}{b}) = \log a - \log b$
@@ -538,10 +573,10 @@
 \end{frame}
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{Korrektheitsbeweis} \\[0,125cm]
+	\textbf{Korrektheitsbeweise} \\
 	\pause
 	\begin{itemize}
-		\item Korrektheitsbeweis ist \textbf{zweiteilig}:
+		\item Korrektheitsbeweise sind \textbf{zweiteilig}:
 		\pause
 		\begin{itemize}
 			\item 1. Teil -- \textbf{Funktionalität}: Mit Invariante beweisen, dass der Algorithmus ein \textbf{korrektes} Ergebnis erzeugt
@@ -554,23 +589,23 @@
 \end{frame}
 
 \begin{frame}{Algorithmenanalyse}
-	\textbf{Invarianten} \\[0,125cm]
+	\textbf{Invarianten} \\
 	\pause
 	\begin{itemize}
 		\item Invariante finden: Manchmal offensichtlich, manchmal \textbf{Kreativität} gefragt
 		\pause
-		\item Beweisprinzip von Algorithmen durch Invarianten direkt analog zu \textbf{Induktion}:
+		\item Korrektheitsbeweise über Invarianten gehen im Prinzip wie \textbf{Induktion}:
 		\pause
 		\item „IA“: Invariante gilt bei \textbf{Beginn} des Algorithmus / der Schleife
 		\pause
-		\item „IV“: Die Invariante war beim Ende des \textbf{vorherigen} Ausführungsschrittes gültig
+		\item „IV“: Die Invariante war beim Ende des \textbf{vorherigen} Schleifendurchlaufs gültig
 		\pause
-		\item „IS“: Mithilfe der IV zeigen, dass die Invariante auch beim Ende des \textbf{aktuellen} Ausführungsschrittes gültig ist
+		\item „IS“: Mithilfe der IV zeigen, dass die Invariante auch beim Ende des \textbf{aktuellen} Schleifendurchlaufs gültig ist
 		\item \textbf{Achtung}: Invarianten müssen auch \textbf{nach Ende der Schleife} noch gelten!
 	\end{itemize}
 \end{frame}
 
-\iffalse
+\iffalse  % old CH stuff
 
 \begin{frame}{Algorithmenanalyse}
 	\begin{exampleblock}{Ein zauberhafter Algorithmus}
@@ -688,14 +723,14 @@
 			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf \|Element|)$}{
 				\For{$i := 1 \KwTo n$}{
 					\only<2>{$\KwInvariant \selsortinvariant $\;}
-					$minIndex  := i$ \;
+					$\|minIndex| := i$ \;
 					\For{$j := i + 1 \KwTo n$}{
-						\If{$A[j] < A[minIndex]$}{
-							$minIndex := j$ \;	
+						\If{$A[j] < A[\|minIndex|]$}{
+							$\|minIndex| := j$ \;	
 						} 
 					} 	
-					$\KwAssert A[minIndex] = \min(A[i..n])$ \;
-					$swap(A[i], A[minIndex])$ \;
+					$\KwAssert A[\|minIndex|] = \min(A[i..n])$ \;
+					$swap(A[i], A[\|minIndex|])$ \;
 				}	
 			}
 		\end{algorithm}
@@ -714,12 +749,12 @@
 		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
 		\pause
 		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i - 1 \~~> i$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
-		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $minIndex \in \{i,...,n\}$ \newline
+		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $\|minIndex| \in \{i,...,n\}$ \newline
 		\pause
-		$\impl A[i-1] \leq A[minIndex]$ \ und \ $A[minIndex] \leq A[i]$. \newline
+		$\impl A[i-1] \leq A[\|minIndex|]$ \ und \ $A[\|minIndex|] \leq A[i]$. \newline
 		\pause
-		$\impl A[minIndex]$ kann zur Fortsetzung der Sortierung problemlos nach $A[i]$ verschoben werden! \vspace{.5\baselineskip}
-		Tauschen von $A[i]$, $A[minIndex]$: \newline
+		$\impl A[\|minIndex|]$ kann zur Fortsetzung der Sortierung problemlos nach $A[i]$ verschoben werden! \vspace{.5\baselineskip}
+		Tauschen von $A[i]$, $A[\|minIndex|]$: \newline
 		$\impl A[1..i]$ ist sortiert, \newline
 		$A[i] = \max(A[1..i]) \leq \min(A[i+1 \ ... \ n]). \qed$ \newline \vspace{.5\baselineskip}
 		\pause
@@ -737,6 +772,8 @@
 	\end{itemize}
 	\impl SelectionSort funktioniert! Yay! :D
 \end{frame}
+
+%TODO xkcd.... lastslide...
 
 \slideThanks
 

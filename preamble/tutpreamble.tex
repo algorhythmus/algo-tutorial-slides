@@ -18,6 +18,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage{../preamble/templates/beamerthemekit}
+
 \usepackage[vlined]{algorithm2e}  %possible: noend, noline, ...
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -86,7 +88,7 @@
 \newcommand*{\from}{\colon}
 
 \newcommand{\morescalingdelimiters}{   % for proper \left( \right) typography
-	\delimitershortfall=-1pt  % formerly: 0pt  
+	\delimitershortfall=0pt  % formerly: 0pt  
 	\delimiterfactor=1
 }
 % todo later
@@ -438,7 +440,7 @@
 % use 'beamerthemekit' for standard 4:3 ratio
 % for widescreen slides (16:9), use 'beamerthemekitwide'
 
-\usepackage{../preamble/templates/beamerthemekit}
+
 % \usepackage{../preamble/templates/beamerthemekitwide}
 
 %% TITLE PICTURE
@@ -486,8 +488,13 @@
 }
 \setbeamertemplate{navigation symbols}{}
 
+\newif\ifprinttableofcontents \printtableofcontentstrue
+\def\notableofcontents{\printtableofcontentsfalse}
+\let\notoc\notableofcontents
+
 %% Alles starten mit \starttut{X}
-\newcommand{\starttut}[1]{\setcounter{weeknum}{#1}\titleframe\frame{\frametitle{Inhalt}\tableofcontents} 
+\newcommand{\starttut}[1]{\setcounter{weeknum}{#1}\titleframe
+	\ifprinttableofcontents\frame{\frametitle{Inhalt}\tableofcontents}\fi
 	\mycomment{
 		\AtBeginSection[]{%
 			\begin{frame}{Wo sind wir gerade?}
@@ -540,7 +547,7 @@
 
 \ifnum\thisyear=2018 \else \errmessage{Old ILIAS link inside preamble. Please update.} \fi
 
-\newcommand{\ILIAS}{\urlnamed{http://tagesschau.de}{ILIAS}\xspace} %TODO
+\newcommand{\ILIAS}{\urlnamed{https://ilias.studium.kit.edu/ilias.php?ref_id=808428&cmdClass=ilrepositorygui&cmdNode=k8&baseClass=ilrepositorygui}{ILIAS}\xspace} 
 
 \newcommand{\Socrative}{\only<handout:0>{socrative.com $\qquad \?> $ Student login \\ Raumname:  \mysocrativeroom\\ \medskip}}
 
