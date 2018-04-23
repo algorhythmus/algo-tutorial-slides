@@ -1,5 +1,6 @@
 % \newboolean{handoutmode}
 % \setboolean{handoutmode}{false}
+\newcommand{\handoutmode}{}
 
 %% LaTeX-Beamer template for KIT design
 %% by Erik Burger, Christian Hammer
@@ -12,8 +13,11 @@
 %%
 %% Problems, bugs and comments to
 %% burger@kit.edu
-
+\ifdefined \handoutmode
+\documentclass[18pt, handout]{beamer}
+\else
 \documentclass[18pt]{beamer}
+\fi
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
