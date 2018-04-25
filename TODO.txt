@@ -1,2 +1,3 @@
 Incorporate Ore's Theorem Hamiltonian Cycle?
 Other stuff
+02: Binäre Suche als "Warnbeispiel" für nicht alles mit MT möglich

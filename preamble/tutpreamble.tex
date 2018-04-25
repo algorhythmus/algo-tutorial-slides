@@ -516,6 +516,27 @@
 	\end{headframe}
 }
 
+\newcommand{\lastframetitled}[6]{
+	\frame[plain]{\frametitle{#6}
+		\vspace{-#2pt}
+		\begin{figure}[H]
+			\centering
+			\LARGE \textbf{\textsc{#5}} \\
+			\vspace{.2\baselineskip}
+			\includegraphics[width=#1]{#3}
+			\vspace{-12pt}
+			\caption{ \texttt{\url{#4}} }
+		\end{figure} 
+	}
+}
+
+% #1 number
+% #3 vspace (positive)
+% #2 title 
+\newcommand{\xkcdframe}[3]{
+	\lastframetitled{.96\textwidth}{#3}{xkcd_#1}{http://xkcd.com/#1}{}{#2}
+}
+
 \newif\ifisWS \isWSfalse
 
 \def\semesterWS{\isWStrue}

@@ -298,12 +298,12 @@
 
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Mathe-Bequemlichkeit}
+		$M := \{1, 2, 3\}$ \quad // ungeordnete Menge \\[0,125cm]
+		$S := \langle1, 2, 3\rangle$ \quad // geordnete Folge (Elemente können an- und abgehängt werden)\\[0,125cm]
 		$\KwSty{select any } x \in M$ \\[0,125cm]
 		$\KwSty{foreach } x \in M \KwSty{ do}$ \\[0,125cm]
 		$(a, b) := (3, 5)$ \quad // Tupel FTW! \smiley \\[0,125cm] 
-		$(a, b) := (b, a)$ \quad // bequemes Vertauschen \\[0,125cm]
-		$M := \{1, 2, 3\}$ \quad // ungeordnete Menge \\[0,125cm] %TODO: Sollen wir das überhaupt erwähnen?
-		$S := \langle1, 2, 3\rangle$ \quad // geordnete Folge (Elemente können an- und abgehängt werden) %TODO: Sollen wir das überhaupt erwähnen?
+		$(a, b) := (b, a)$ \quad // bequemes Vertauschen
 	\end{exampleblock}
 	\bfalert{ABER}: Die Laufzeitkosten und Funktionsweise \textbf{jeder einzelnen Zeile} müssen bekannt sein! \\
 \end{frame}
@@ -372,7 +372,7 @@
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Lösungsvorschlag zu Aufgabe 1}
 		\begin{algorithm}[H]
-			\KwInput{$n \in \N$} 
+			\Procedure{$ \|prima|(n : \N): \|void|$}{
 			$werte = (\KwFalse,...,\KwFalse) : \KwArray[2..n] \KwOf \BB $\;
 			\For{$i := 2 \KwTo \floor{\sqrt{n}}$} {
 				\If{$\KwNot werte[i]$} {
@@ -386,6 +386,7 @@
 					$\|print|(i + \str{ ist prima!})$\;
 				}
 			}
+		}
 		\end{algorithm}
 	\end{exampleblock}
 \end{frame}
@@ -423,6 +424,7 @@
 
 \begin{frame}{Algorithmenanalyse}
 	Algorithmen in Pseudocode lesen und schreiben ist (leider) nicht das Höchste der Gefühle. Sondern:
+	\pause
 	\begin{itemize}[<+->]
 		\item Wie schnell ist der Algorithmus? \\
 			\impl \textbf{O-Kalkül}
@@ -502,9 +504,9 @@
 	
 	\TrueQuestion{$o(f) = O(f) \setminus \Theta(f).$}
 	
-	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$}
+	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N_+: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$} % f muss nach N_+ gehen, da es mit 0 als Funktionswert kaputt geht!
 	
-	\FalseQuestionE{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n)).$}{(\crash für $c = 1$.)}
+	\FalseQuestionE{$\forall c \in \N, \ f: \N \functionto \N_+: \quad (f(n))^c \in \omega(f(n)).$}{(\crash für $c = 1$.)}
 \end{frame}
 
 
@@ -760,7 +762,7 @@
 		
 		\only<2-3|handout:1>{\hanging\textbf{IA}. ($i=1$): \ $A[1..0] = ()$ ist sortiert und $-\infty = \max(A[1..0]) \leq \min(A[1..n])$. \\}
 		\pause
-		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
+		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante gilt zu Beginn des Durchlaufs $i$. \\}
 		\pause
 		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i \~~> i + 1$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
 		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $\|minIndex| \in \{i,...,n\}$ \newline
@@ -787,7 +789,11 @@
 	\impl SelectionSort funktioniert! Yay! :D
 \end{frame}
 
-%TODO xkcd.... lastslide...
+\begin{frame}{Max}
+Inhalt...
+\end{frame}
+
+\xkcdframe{1667}{Danke für die Aufmerksamkeit! \smiley}{0}
 
 \slideThanks
 
