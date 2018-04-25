@@ -8,7 +8,7 @@
 
 	\starttut{1}
 	
-	\section{Orga-Kram}
+	\section{\thassedaniel{Organisatorisches}{Orga-Kram}}
 	\aboutMeFrame
 	
 	\begin{frame}{Kennenlernen 2.0}
@@ -108,7 +108,7 @@
 	\end{overlayarea}
 \end{frame}
 
-\begin{frame}{Orga-Kram – Übungsblätter}  %TODO
+\begin{frame}{\daniel{Orga-Kram – }Übungsblätter}  %TODO
 	\begin{itemize}
 		\item \textbf{Freiwillig}
 		\item \textbf{Ausgabe}: Mi \\
@@ -128,7 +128,7 @@
 	\end{itemize}
 \end{frame} 
 
-\begin{frame}{Orga-Kram – Klausur}
+\begin{frame}{\daniel{Orga-Kram – }Klausur}
 	\begin{center}
 		\textbf{Klausur} ist am \textbf{04. September 2018} um \textbf{8 Uhr}. \\
 		\smallskip
@@ -151,8 +151,6 @@
 	Content:
 	\begin{itemize}
 		\item VL-Folien, Ü-Blätter...: im \ILIAS.
-		%\item Archiv: \url{http://gbi.ira.uka.de} \\
-		%Weitere Altklausuren, Alte ÜBs, Lösungen...
 	\end{itemize}
 	\pause
 	Feedback:
@@ -162,6 +160,21 @@
 		\item Zum Tut? \impl Per Mail oder persönlich an mich. \smiley \\
 			Zu schnell/langsam/leicht/schwer/viel/wenig/...? \impl \textbf{direkt} sagen!
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Literatur}
+	\begin{itemize}
+		\item Es gibt ein Buch zur Vorlesung\dots
+		\item \dots das ihr aber nicht kaufen müsst! \\
+			Kostenloser Download über Springer Link, Gedruckte Exemplare in der Bib
+		\item Andere Bücher auch empfehlenswert: Cormen, Sedgewick, \dots
+		\item Coursera: Design and Analysis of Algorithms
+	\end{itemize}
+
+	\thasse{\bigskip
+	\begin{itemize}
+		\item Empfehlung für Mathematische Grundlagen: 3Blue1Brown
+	\end{itemize}}
 \end{frame}
 
 \sectionheadframe{Pseudocode}
@@ -307,7 +320,7 @@
 	\end{exampleblock}
 	\begin{itemize}
 		\item Rückgabetyp wird weggelassen, wenn nichts zurückgegeben wird
-		\item Konvention: Kein Rückgabewert („\texttt{void}“) – \KwProcedure/\KwMethod, Rückgabe vorhanden: \KwFunction
+		\item Konvention: Kein Rückgabewert („\texttt{void}“) – \KwProcedure/\KwMethod, Rückgabe vorhanden – \KwFunction
 	\end{itemize}
 \end{frame}
 
@@ -331,32 +344,36 @@
 
 \begin{frame}{Pseudocode}
 	Bearbeitungshinweise: \\
-	\begin{itemize}
-		\pause
+	\begin{itemize}[<+->]
 		\item Falls die Aufgabenstellung euch die Wahl lässt, könnt ihr selbst entscheiden, ob \textbf{Pseudocode} oder \textbf{Fließtext}
-		\pause
 		\item Mehr als zwei Seiten Pseudocode \impl Vermutlich viel zu kompliziert oder falsch
-		\pause
+		\item Bitte keine \enquote{magischen} Funktionen verwenden!
 		\item Ist das Ergebnis für andere Personen \textbf{verständlich}?
-		\pause
 		\item Ist das Ergebnis \textbf{angenehm zu lesen}?
 	\end{itemize}
 \end{frame}
 
 
 \begin{frame}{Pseudocode}
-	\underline{Aufgabe 1: Pseudocode schreiben} \\
-	Als Eingabe erhält der Algorithmus eine natürliche Zahl $n$. Es wird ein  Boolean-Array von $2..n$ angelegt und mit \KwFalse initialisiert. Dann wird eine Zahl $i$ von 2 bis zur abgerundeten Wurzel von $n$ iteriert. Falls im Schleifendurchlauf der $i$-te Boolean-Wert \KwFalse ist, wird eine weitere Zahl $j$ von $2i$ bis $n$ durchlaufen und dabei in Schritten der Größe $i$ inkrementiert. Darin wird jeweils der $j$-te Boolean-Wert auf \KwTrue gesetzt. \\
+	\textbf{Aufgabe 1: Pseudocode schreiben} \\
+	\medskip
+	
+	Als Eingabe erhält der Algorithmus eine natürliche Zahl $n$.\\ 
+	Es wird ein  Boolean-Array von $2..n$ angelegt und mit \KwFalse initialisiert.\\ 
+	\smallskip
+	Dann wird eine Zahl $i$ von 2 bis zur abgerundeten Wurzel von $n$ iteriert.\\
+	Falls im Schleifendurchlauf der $i$-te Boolean-Wert \KwFalse ist, wird eine weitere Zahl $j$ von $2i$ bis $n$ durchlaufen und dabei in Schritten der Größe $i$ inkrementiert. Darin wird jeweils der $j$-te Boolean-Wert auf \KwTrue gesetzt. \\
+	\smallskip
 	Am Ende iteriert der Algorithmus erneut eine Zahl $i$ von 2 bis $n$. Falls der $i$-te Boolean-Wert nicht \KwTrue ist, wird ausgegeben, dass der Wert von $i$ prima ist.
 \end{frame}
 
 %\delimitershortfall=1pt
 
 \begin{frame}{Pseudocode}
-	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 1}
+	\begin{exampleblock}{Lösungsvorschlag zu Aufgabe 1}
 		\begin{algorithm}[H]
 			\KwInput{$n \in \N$} 
-			$werte = (\KwFalse,...,\KwFalse) : \KwArray[2..n] \KwOf \|Boolean|$\;
+			$werte = (\KwFalse,...,\KwFalse) : \KwArray[2..n] \KwOf \BB $\;
 			\For{$i := 2 \KwTo \floor{\sqrt{n}}$} {
 				\If{$\KwNot werte[i]$} {
 					\For{$j := 2i \KwTo n \KwStep i$} {
@@ -375,13 +392,16 @@
 
 
 \begin{frame}{Pseudocode}
-	\underline{Aufgabe 2: Mehr Pseudocode schreiben} \\
-	Als Eingabe erhaltet ihr $n$ Studenten, deren Matrikelnummer jeweils als Array gegeben ist. Diese Studenten sollt ihr in zwei Gruppen einteilen, in die eine Gruppe kommen die Studenten, deren Quersumme der Matrikelnummer gerade ist, und in die andere die anderen.
-	Als Ausgabe gibt euer Algorithmus die beiden Gruppen als geordnetes Paar zurück.
+	\textbf{Aufgabe 2: Mehr Pseudocode schreiben} \\
+	\medskip
+	
+	Als Eingabe erhaltet ihr $n$ Studenten, deren Matrikelnummer jeweils als Array von Ziffern gegeben ist.\\
+	Diese Studenten sollt ihr in zwei Gruppen einteilen: Eine Gruppe mit den Studenten, bei denen die  Quersumme der Matrikelnummer gerade ist, und eine Gruppe für alle anderen.\\
+	Das Ergebnis wird als geordnetes Paar von Listen zurückgegeben.
 \end{frame}
 
 \begin{frame}{Pseudocode}
-	\begin{exampleblock}{(Mögliche) Lösung von Aufgabe 2}
+	\begin{exampleblock}{Lösungsvorschlag zu Aufgabe 2}
 		\begin{algorithm}[H]
 			\Function{$\|groupStudents|(students : \KwArray [1..n] \KwOf \|Student|) : (\KwListOf \|Student|, \KwListOf \|Student|)$}{
 				$groups = (\llist{}, \llist{}) : \KwArrayOf \KwListOf \|Student|$\;
@@ -403,19 +423,13 @@
 
 \begin{frame}{Algorithmenanalyse}
 	Algorithmen in Pseudocode lesen und schreiben ist (leider) nicht das Höchste der Gefühle. Sondern:
-	\begin{itemize}
-		\pause
-		\item Auf welcher Vorgehensweise basiert der Algorithmus? \\
-		\pause
-		\impl Verschiedene \textbf{Kategorien} von Algorithmen
-		\pause
-		\item Tut der Algorithmus das, was er tun soll? \\
-		\pause
-		\impl \textbf{Invarianten}
-		\pause
+	\begin{itemize}[<+->]
 		\item Wie schnell ist der Algorithmus? \\
-		\pause
-		\impl \textbf{O-Kalkül}
+			\impl \textbf{O-Kalkül}
+		\item Auf welcher Vorgehensweise basiert der Algorithmus? \\
+			\impl Verschiedene \textbf{Kategorien} von Algorithmen
+		\item Tut der Algorithmus das, was er tun soll? \\
+			\impl \textbf{Invarianten}
 	\end{itemize}
 \end{frame}
 
@@ -423,8 +437,10 @@
 \begin{frame}{Algorithmenanalyse}
 	\textbf{O-Kalkül} \\
 	\begin{itemize}
+		\item Betrachtung des asymptotischen Verhaltens
 		\item Vernachlässigung konstanter Faktoren
 		\item Zuordnung, welches Laufzeit-Verhalten der Algorithmus für sehr große Eingaben aufweist
+		\item Rechenregeln: Siehe GBI, \dots
 	\end{itemize}
 \end{frame}
 
@@ -517,18 +533,19 @@
 
 \begin{frame}{Algorithmenanalyse}
 	\textbf{Lang ist's her: Logarithmus-Rechenregeln} \\[0,125cm]
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item Für den Informatiker ist $\log n := \log_2(n)$
-		\item $\log(a \cdot b) = \log a + \log b$
-		\item $\log(a^b) = b \cdot \log a$
-		\item $\log(\frac{a}{b}) = \log a - \log b$
-		\item $\log_a(a) =1$, \quad $\log_a(1) = 0$
 		\item $a^{\log_a(b)} = b$
+		\item $\log_a(a) =1$, \quad $\log_a(1) = 0$
+		\item $\log(a \cdot b) = \log a + \log b$, \quad $\log(\frac{a}{b}) = \log a - \log b$
+		\item $\log(a^b) = b \cdot \log a$
+		\item $a^{\log n} = n^{\log a}$
 		\item $x^{a \cdot b} = \left(x^a\right)^b = \left(x^b\right)^a$, \quad $x^{a + b} = x^a \cdot x^b$
 		\item Beispiele:
 		\begin{itemize}
 			\item $\log(10 \cdot n) \in O(\log n)$
 			\item $n^n \in \Theta(2^{n \log n})$
+			\item $\log_a n \in \Theta(\log_b n) $
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -745,7 +762,7 @@
 		\pause
 		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
 		\pause
-		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i - 1 \~~> i$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
+		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i \~~> i + 1$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
 		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $\|minIndex| \in \{i,...,n\}$ \newline
 		\pause
 		$\impl A[i-1] \leq A[\|minIndex|]$ \ und \ $A[\|minIndex|] \leq A[i]$. \newline
