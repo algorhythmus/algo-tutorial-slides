@@ -1,3 +1,5 @@
 Incorporate Ore's Theorem Hamiltonian Cycle?
 Other stuff
+
+\urlnamed Params flip
 02: Binäre Suche als "Warnbeispiel" für nicht alles mit MT möglich

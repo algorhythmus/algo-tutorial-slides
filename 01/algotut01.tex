@@ -20,7 +20,7 @@
 			\\ \hline
 			3 & Ich konnte schon vor dem Studium einigermaßen programmieren und kannte daher vieles aus der Vorlesung schon.
 			\\ \hline
-			4 & In der Programmieren-Vorlesung habe ich eigentlich nichts neues gelernt, da ich auch so schon gut programmieren konnte
+			4 & In der Programmieren-Vorlesung habe ich eigentlich nichts neues gelernt, da ich auch so schon ganz gut programmieren konnte
 			\\ \hline
 			5 & Im Programmieren habe ich langjährige Erfahrung.
 			\\ \hline
@@ -112,7 +112,7 @@
 	\begin{itemize}
 		\item \textbf{Freiwillig}
 		\item \textbf{Ausgabe}: Mi \\
-			  \textbf{Abgabe}: Mi nächster Woche, XX.XX~Uhr (das sind 7~Tage Zeit) im Kasten im Untergeschoss des Infobaus
+			  \textbf{Abgabe}: Mi nächster Woche, 13~Uhr (das sind 7~Tage Zeit) im Kasten im Untergeschoss des Infobaus
 		\pause
 		\item Abgabe \textbf{schwerstens empfohlen}, gibt nämlich einen \textbf{Klausurbonus}: \\
 		$\geq 25 \%$ der Gesamtpunkte $ \Rightarrow $ 1 Bonuspunkt \\
@@ -162,20 +162,22 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Literatur}
-	\begin{itemize}
-		\item Es gibt ein Buch zur Vorlesung\dots
-		\item \dots das ihr aber nicht kaufen müsst! \\
-			Kostenloser Download über Springer Link, Gedruckte Exemplare in der Bib
-		\item Andere Bücher auch empfehlenswert: Cormen, Sedgewick, \dots
-		\item Coursera: Design and Analysis of Algorithms
-	\end{itemize}
+\thasse{
+  \begin{frame}{Literatur}
+    \begin{itemize}
+      \item Es gibt ein Buch zur Vorlesung\dots
+      \item \dots das ihr aber nicht kaufen müsst! \\
+        Kostenloser Download über Springer Link, Gedruckte Exemplare in der Bib
+      \item Andere Bücher auch empfehlenswert: Cormen, Sedgewick, \dots
+      \item Coursera: Design and Analysis of Algorithms
+    \end{itemize}
 
-	\thasse{\bigskip
-	\begin{itemize}
-		\item Empfehlung für Mathematische Grundlagen: 3Blue1Brown
-	\end{itemize}}
-\end{frame}
+    \thasse{\bigskip
+    \begin{itemize}
+      \item Empfehlung für Mathematische Grundlagen: 3Blue1Brown
+    \end{itemize}}
+  \end{frame}
+}
 
 \sectionheadframe{Pseudocode}
 
@@ -183,8 +185,8 @@
 	\begin{itemize}
 		\item Anleitung, wie man etwas macht -- in einer Art „Programmiersprache“
 		\pause
-		\item[\Pros] Es gibt keine exakte Sprachdefinition
-		\item[\Cons] Es gibt keine exakte Sprachdefinition
+		\item[\Pros\symbitemnegoffset] Es gibt keine exakte Sprachdefinition
+		\item[\Cons\symbitemnegoffset] Es gibt keine exakte Sprachdefinition
 		\pause
 		\item Daher im Folgenden: Grobe \textit{Richtlinie} für Pseudocode (ohne Anspruch auf Vollständigkeit)
 		\item Das \textbf{Wichtigste}: Es sollte \textbf{klar} werden, was \textbf{gemeint} ist, d.h. Pseudocode soll vor allem \textbf{übersichtlich} und \textbf{verständlich} sein
@@ -298,20 +300,20 @@
 
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Mathe-Bequemlichkeit}
-		$M := \{1, 2, 3\}$ \quad // ungeordnete Menge \\[0,125cm]
-		$S := \langle1, 2, 3\rangle$ \quad // geordnete Folge (Elemente können an- und abgehängt werden)\\[0,125cm]
-		$\KwSty{select any } x \in M$ \\[0,125cm]
-		$\KwSty{foreach } x \in M \KwSty{ do}$ \\[0,125cm]
-		$(a, b) := (3, 5)$ \quad // Tupel FTW! \smiley \\[0,125cm] 
-		$(a, b) := (b, a)$ \quad // bequemes Vertauschen
+		$M := \{1, 2, 3\}$ \RComment{ungeordnete Menge} \\
+		$S := \langle1, 2, 3\rangle$ \RComment{geordnete Folge (Elemente können an- und abgehängt werden)} \\
+		$\KwSty{select any } x \in M$ \\
+		$\KwSty{foreach } x \in M \KwSty{ do}$ \\
+		$(a, b) := (3, 5)$ \RComment{Tupel FTW! \smiley} \\
+		$(a, b) := (b, a)$ \RComment{bequemes Vertauschen}
 	\end{exampleblock}
 	\bfalert{ABER}: Die Laufzeitkosten und Funktionsweise \textbf{jeder einzelnen Zeile} müssen bekannt sein! \\
+	(Heißt: Keine \enquote{magischen} Funktionen verwenden!)
 \end{frame}
 
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Funktionen/Prozeduren}
 		\begin{algorithm}[H]
-			\DontPrintSemicolon
 			\Function{$/\ \KwProcedure\ \|name|(name_1 : \|Typ|_1, ...): \|Rückgabetyp|$}{
 				\LComment{Knorker Code} \;
 				\Return{$...$}\;
@@ -320,7 +322,9 @@
 	\end{exampleblock}
 	\begin{itemize}
 		\item Rückgabetyp wird weggelassen, wenn nichts zurückgegeben wird
-		\item Konvention: Kein Rückgabewert („\texttt{void}“) – \KwProcedure/\KwMethod, Rückgabe vorhanden – \KwFunction
+		\item Konvention: \\ 
+			\quad Kein Rückgabewert („\texttt{void}“) \impl \KwProcedure/\KwMethod, \\
+			\quad Rückgabe vorhanden \impl \KwFunction
 	\end{itemize}
 \end{frame}
 
@@ -347,7 +351,6 @@
 	\begin{itemize}[<+->]
 		\item Falls die Aufgabenstellung euch die Wahl lässt, könnt ihr selbst entscheiden, ob \textbf{Pseudocode} oder \textbf{Fließtext}
 		\item Mehr als zwei Seiten Pseudocode \impl Vermutlich viel zu kompliziert oder falsch
-		\item Bitte keine \enquote{magischen} Funktionen verwenden!
 		\item Ist das Ergebnis für andere Personen \textbf{verständlich}?
 		\item Ist das Ergebnis \textbf{angenehm zu lesen}?
 	\end{itemize}
@@ -357,9 +360,9 @@
 \begin{frame}{Pseudocode}
 	\textbf{Aufgabe 1: Pseudocode schreiben} \\
 	\medskip
-	
-	Als Eingabe erhält der Algorithmus eine natürliche Zahl $n$.\\ 
-	Es wird ein  Boolean-Array von $2..n$ angelegt und mit \KwFalse initialisiert.\\ 
+
+	Als Eingabe erhält der Algorithmus eine natürliche Zahl $n$.\\
+	Es wird ein  Boolean-Array von $2..n$ angelegt und mit \KwFalse initialisiert.\\
 	\smallskip
 	Dann wird eine Zahl $i$ von 2 bis zur abgerundeten Wurzel von $n$ iteriert.\\
 	Falls im Schleifendurchlauf der $i$-te Boolean-Wert \KwFalse ist, wird eine weitere Zahl $j$ von $2i$ bis $n$ durchlaufen und dabei in Schritten der Größe $i$ inkrementiert. Darin wird jeweils der $j$-te Boolean-Wert auf \KwTrue gesetzt. \\
@@ -370,9 +373,9 @@
 %\delimitershortfall=1pt
 
 \begin{frame}{Pseudocode}
-	\begin{exampleblock}{Lösungsvorschlag zu Aufgabe 1}
+	\begin{exampleblock}{\thassedaniel{Lösungsvorschlag zu}{(Mögliche) Lösung von} Aufgabe 1}
 		\begin{algorithm}[H]
-			\Procedure{$ \|prima|(n : \N): \|void|$}{
+			\Procedure{$\|foo|(n : \N)$}{
 			$werte = (\KwFalse,...,\KwFalse) : \KwArray[2..n] \KwOf \BB $\;
 			\For{$i := 2 \KwTo \floor{\sqrt{n}}$} {
 				\If{$\KwNot werte[i]$} {
@@ -395,14 +398,14 @@
 \begin{frame}{Pseudocode}
 	\textbf{Aufgabe 2: Mehr Pseudocode schreiben} \\
 	\medskip
-	
+
 	Als Eingabe erhaltet ihr $n$ Studenten, deren Matrikelnummer jeweils als Array von Ziffern gegeben ist.\\
 	Diese Studenten sollt ihr in zwei Gruppen einteilen: Eine Gruppe mit den Studenten, bei denen die  Quersumme der Matrikelnummer gerade ist, und eine Gruppe für alle anderen.\\
 	Das Ergebnis wird als geordnetes Paar von Listen zurückgegeben.
 \end{frame}
 
 \begin{frame}{Pseudocode}
-	\begin{exampleblock}{Lösungsvorschlag zu Aufgabe 2}
+	\begin{exampleblock}{\thassedaniel{Lösungsvorschlag zu}{(Mögliche) Lösung von} Aufgabe 2}
 		\begin{algorithm}[H]
 			\Function{$\|groupStudents|(students : \KwArray [1..n] \KwOf \|Student|) : (\KwListOf \|Student|, \KwListOf \|Student|)$}{
 				$groups = (\llist{}, \llist{}) : \KwArrayOf \KwListOf \|Student|$\;
@@ -504,9 +507,9 @@
 	
 	\TrueQuestion{$o(f) = O(f) \setminus \Theta(f).$}
 	
-	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f: \N \functionto \N_+: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$} % f muss nach N_+ gehen, da es mit 0 als Funktionswert kaputt geht!
+	\TrueQuestion{$\forall c_1, c_2 \in \N, \ f \from \N \functionto \N: \quad c_1 \cdot f(n) + c_2 \in O(f(n)).$}  % \N enthält std.mäßig NICHT die null!
 	
-	\FalseQuestionE{$\forall c \in \N, \ f: \N \functionto \N_+: \quad (f(n))^c \in \omega(f(n)).$}{(\crash für $c = 1$.)}
+	\FalseQuestionE{$\forall c \in \N, \ f: \N \functionto \N: \quad (f(n))^c \in \omega(f(n)).$}{(\crash für $c = 1$.)}
 \end{frame}
 
 
@@ -557,7 +560,7 @@
 		\begin{algorithm}[H]
 			%\footnotesize
 			\Procedure{$\|foo|(a : \KwArrayOf \Z)$} {
-				$n := |a|$\;
+				$n := \size{a}$\;
 				$flag : \|Bool|$\;
 				\Repeat{$flag$} {
 					$flag := \KwTrue$\;
