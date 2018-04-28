@@ -176,12 +176,12 @@
 		\pause
 		\item Für ein festes $i$ wird innere Schleife $(n-i+1)$-mal durchlaufen
 		\pause
-		\item[$\Rightarrow$] Gesamtanzahl der inneren Schleifendurchläufe:
+		\impl Gesamtanzahl der inneren Schleifendurchläufe:
 		\begin{align*}
-			&\hphantom{= .} \sum\limits_{i=1}^n (n-i+1) =
+			&\sum\limits_{i=1}^n (n-i+1) =
 			\sum\limits_{i=1}^n n - \sum\limits_{i=1}^n i + \sum\limits_{i=1}^n 1 = 
 			n^2 - \sum\limits_{i=1}^n i + n      \\ \pause
-			&= n^2 - \frac{n \cdot (n+1)}{2} + n =
+			\hphantom{.} = \hphantom{.}&n^2 - \frac{n \cdot (n+1)}{2} + n =
 			n^2 - \frac{n^2}{2} + n - \frac{n}{2} =
 			\frac{n^2 + n}{2} \in \Theta(n^2).
 		\end{align*}
@@ -556,5 +556,8 @@
 	}
 \end{frame}
 	
+% TODO xkcd
+
+\slideThanks
 	
 \end{document}
