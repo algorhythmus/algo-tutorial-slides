@@ -31,6 +31,7 @@
 \usepackage{graphicx}
 %\usepackage{hyperref}
 \usepackage[export]{adjustbox}
+\usepackage{wrapfig}
 \usepackage{colortbl}
 \usepackage{tikz}
 \usetikzlibrary{matrix}
@@ -487,6 +488,10 @@
 \newcommand{\titleframe}{\frame{\titlepage}}
 
 \newcounter{weeknum}
+
+\newcounter{tasknum}
+\newcommand{\taskheading}[1]{\addtocounter{tasknum}{1}\textbf{Aufgabe \thetasknum: #1} \\}
+\newcommand{\solutionheading}{\textbf{Lösung zu Aufgabe \thetasknum} \\}
 
 \setbeamertemplate{section in toc}{
 	\gray{\inserttocsection} \par	
