@@ -219,6 +219,8 @@
 
 \colorlet{checkgreen}{green!80}
 \colorlet{crashred}{fullred}
+\colorprovide{myalertcolor}{red}
+\colorlet{alertcolor}{myalertcolor}
 
 \definecolor{kwblue}{rgb}{0.3,0.3,1}
 \definecolor{strcolor}{RGB}{48,115,38}
@@ -525,7 +527,7 @@
 }
 
 \newcommand{\lastframetitled}[6]{
-	\frame[plain]{\frametitle{#6}
+	\frame{\frametitle{#6}
 		\vspace{-#2pt}
 		\begin{figure}[H]
 			\centering
@@ -541,8 +543,8 @@
 }
 
 % #1 number
-% #3 vspace (positive)
 % #2 title 
+% #3 vspace (positive) without unit (pt)
 \newcommand{\xkcdframe}[3]{
 	\lastframetitled{.96\textwidth}{#3}{xkcd_#1}{http://xkcd.com/#1}{}{#2}
 }

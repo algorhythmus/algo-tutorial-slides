@@ -1,6 +1,6 @@
 %beamer
 
-%TODO: Mastertheorem auf Aufgabenfolien dazu! Selsort-Invbsp. doch dranbringen!
+%TODO: Selsort-Invbsp. doch dranbringen!
 
 \input{../preamble/tutpreamble}
 
@@ -181,7 +181,7 @@
 			&\sum\limits_{i=1}^n (n-i+1) =
 			\sum\limits_{i=1}^n n - \sum\limits_{i=1}^n i + \sum\limits_{i=1}^n 1 = 
 			n^2 - \sum\limits_{i=1}^n i + n      \\ \pause
-			\hphantom{.} = \hphantom{.}&n^2 - \frac{n \cdot (n+1)}{2} + n =
+			\vphantom{.} = \vphantom{.}&n^2 - \frac{n \cdot (n+1)}{2} + n =
 			n^2 - \frac{n^2}{2} + n - \frac{n}{2} =
 			\frac{n^2 + n}{2} \in \Theta(n^2).
 		\end{align*}
@@ -237,7 +237,7 @@
 	\end{itemize}
 \end{frame}
 
-\sectionheadframe{Das Master-Theorem}{\thassedaniel{}{Bow, bow before your king, you shits!}}
+\sectionheadframe{Das Master-Theorem}{\textit{Das} Thema des Bachelors}   % Alternativ: Segelschiff-Anspielung „Zweimaster“ oder so?
 
 \begin{frame}{Das Master-Theorem (einfache Form)} % TODO ceil the fraction?
 	Seien $a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \N$ sei 
@@ -470,13 +470,13 @@
 
 \begin{frame}[t]{Aufgaben Master-Theorem}
 	\solutionheading \smallskip
-	Laufzeit von BinarySearch ist $T(n) = \casesl{1, & n = 1 \\ 1 \· T(\fract n/2 ), & n > 1 }.$ \\
+	Laufzeit von BinarySearch ist $T(n) = \casesl{1, & n = 1 \\ 1 \· T(\fract n/2 ) {\color<3->{alertcolor} \vphantom{.} + 1}, & n > 1 }.$ \\
 	\pause \smallskip
 	\impl Master-Theorem sagt 
 		\only<.(1)|handout:0>{$T(n) \in \Th{n}$}%
 		\only<.(2)->{$\xcancel{T(n) \in \Th{n}}$}. \\
 	\pause
-	\impl \textbf{Reingefallen}! :P Master-Theorem will noch „$\vphantom{.} + c\·n$“. \textbf{Gibt's hier nicht}! \\ 
+	\impl \textbf{Reingefallen}! :P Master-Theorem will noch „$\color{alertcolor} \vphantom{.} + c\·n$“. \textbf{Gibt's hier nicht}! \\ 
 	\pause \medskip
 	Hirn einschalten: BinarySearch \textbf{halbiert das Array} in jedem Durchlauf. \\
 	Wie oft kann man $n := \size{A}$ halbieren? \\
@@ -556,7 +556,15 @@
 	}
 \end{frame}
 	
-% TODO xkcd
+
+\thassedaniel{
+	\xkcdframe{???}{Danke für eure Aufmerksamkeit! \smiley}{0}
+}{
+	\xkcdframe{297}{May the Fourth Be With You! \smiley}{0}
+}
+
+% TODO xkcd, possibly https://xkcd.com/1477/  ?
+% BETTER https://www.xkcd.com/297/
 
 \slideThanks
 	
