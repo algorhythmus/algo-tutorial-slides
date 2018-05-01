@@ -172,10 +172,11 @@
       \item Coursera: Design and Analysis of Algorithms
     \end{itemize}
 
-    \thasse{\bigskip
-    \begin{itemize}
-      \item Empfehlung für Mathematische Grundlagen: 3Blue1Brown
-    \end{itemize}}
+%	Besser als ILIAS-Link angeben, da es hier im Tut eigentlich nicht passt.
+%    \thasse{\bigskip
+%    \begin{itemize}
+%      \item Empfehlung für Mathematische Grundlagen: 3Blue1Brown
+%    \end{itemize}}
   \end{frame}
 }
 
@@ -628,114 +629,6 @@
 	\end{itemize}
 \end{frame}
 
-\iffalse  % old CH stuff
-
-\begin{frame}{Algorithmenanalyse}
-	\begin{exampleblock}{Ein zauberhafter Algorithmus}
-		\begin{algorithm}[H]
-			\DontPrintSemicolon
-			\footnotesize
-			\KwIn{Aufsteigend sortiertes $int$-\KwArray $a$ mit $|a|>0$, Zahl $k \in \Z$}
-			\KwOut{$boolean$}
-			\Begin {
-				$m : int$\;
-				$(l, r) := (0, |a|-1)$\;
-				\While{$l \neq r$} {
-					$m := \lfloor(l+r)/2\rfloor$\;
-					\uIf{$k < a[m]$} {
-						$r := m$\;
-					}
-					\uElseIf{$k > a[m]$} {
-						$l := m$\;
-					}
-					\Else {
-						\Return{$true$}\;
-					}
-				}
-				\Return{$a[l] = k$}\;
-			}
-		\end{algorithm}
-	\end{exampleblock}
-\end{frame}
-
-
-\begin{frame}{Algorithmenanalyse}
-	\begin{itemize}
-		\item Es handelt sich um die binäre Suche, die sich die Sortiertheit des Arrays zunutze macht, um echt schneller als in O($n$) zu entscheiden, ob sich ein gesuchtes Element im Array befindet oder nicht
-		\pause
-		\item Binäre Suche läuft in O($log(n)$), da der Suchbereich bei jedem Schleifendurchlauf halbiert wird
-		\pause
-	\end{itemize}
-	\textbf{Wichtige Aspekte, wenn man die Korrektheit von binärer Suche beweisen will}
-	\begin{itemize}
-		\pause
-		\item Schleifeninvariante: Wenn das gesuchte Element im Array liegt, befindet es sich nicht außerhalb des Suchbereiches. (Am Anfang ist der Suchbereich des gesamte Array)
-		\pause
-		\item (Nicht immer gefordert:) Zeigen, dass die Schleife terminieren wird, also dass der Suchbereich in jedem Schleifendurchlauf $"$echt kleiner$"$ wird.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Algorithmenanalyse}
-	\textbf{Halbwegs formale Beweisskizze} \\[0,125cm]
-	\pause
-	\begin{itemize}
-		\item Invariante: $\forall i \in \{0 ... n-1\} \setminus \{l ... r\}: a[i] \neq k$
-		\pause
-		\item IA: Invariante gilt offensichtlich $\forall i \in \emptyset$
-		\pause
-		\item IV: Invariante gilt für vorherigen Ausführungsschritt $(l_0, r_0)$
-		\pause
-		\item IS: Fallunterscheidung: Ist $k < a[m]$, so sind $a[m] ... a[r_0] > k$, insb. also $a[m] ... a[r_0] \neq k$ (Fall $k > a[m]$ analog).
-		\pause
-		\item Dass $ | \{l_0 ... m\} | $ (bzw. $ | \{m ... r_0\} | $) $ < | \{l_0 ... r_0\} | $, wird als ersichtlich angenommen
-		\pause
-		\item Am Ende ist mit $l = r =: s$ $k \neq a[i] \forall i \neq s$ und somit $k \in A \Leftrightarrow a[s] = k$
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Algorithmenanalyse}
-	\begin{exampleblock}{Ein herausgeforderter Algorithmus}
-		\begin{algorithm}[H]
-			\DontPrintSemicolon
-			\footnotesize
-			\KwIn{$int$-\KwArray $a$ mit $|a|>0$, Zahl $k \in \mathbb{Z}$}
-			\KwOut{$boolean$}
-			\Begin {
-				$n := |a|$\;
-				\For{$i\ \KwFrom\ 0\ \KwTo\ n-1$} {
-					\If{$a[i] = k$} {
-						\Return{$true$}\;
-					}
-				}
-				\Return{$false$}\;
-			}
-		\end{algorithm}
-	\end{exampleblock}
-	\begin{itemize}
-		\item Was macht der Algorithmus?
-		\item Laufzeitverhalten?
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Algorithmenanalyse}
-	\begin{itemize}
-		\item Was hier vorliegt, ist die fabulöse lineare Suche, die in linearer Laufzeit $O(n)$ entscheidet, ob ein gesuchtes Element (hier $k$) in einer Datenstruktur enthalten ist.
-		\pause
-		\item Frage: Wie könnte 
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Algorithmenanalyse}
-	\textbf{Halbwegs formale Beweisskizze} \\[0,125cm]
-	\pause
-	\begin{itemize}
-		\item Invariante: $\forall j < i: a[i] \neq k$
-		\pause
-		\item IA: Invariante gilt offensichtlich $\forall i \in \emptyset$
-	\end{itemize}
-\end{frame}
-
-\fi
 
 \newcommand{\selsortinvariant}{A[1\ ... \ i-1] \KwIs \text{sorted} \KwAnd \max(A[1\ ...\ i-1]) \leq \min(A[i..n])}
 \begin{frame}{Beispiel SelectionSort}
