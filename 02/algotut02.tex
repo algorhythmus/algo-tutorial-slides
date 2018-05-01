@@ -155,9 +155,9 @@
 			\Function{doing$(n: \N): \N$}{
 				$k := 0$\;
 				$\ell := 0$\;
-				\For{$i := 1\ \KwTo\ n$} {
+				\For{$i := 1 \KwTo n$} {
 					$\ell\pp$\;
-					\For{$j := i\ \KwTo\ n$} {
+					\For{$j := i \KwTo n$} {
 						$k\pp$\;
 					}
 				}
@@ -457,9 +457,9 @@
 				}{
 					$m := \floor{\fract a+b/2 }$ \; \smallskip
 					\eIf{$e \leq A[m]$}{
-						\Return{$\|BinarySearch|(A[a \dots m], \, e)$}
+						\mbox{\Return{$\|BinarySearch|(A[a \dots m], \, e) $ \RComment{A wird \textbf{nicht} kopiert!}}}
 					}{
-						\Return{$\|BinarySearch|(A[m+1 \dots b], \, e)$}
+						\mbox{\Return{$\|BinarySearch|(A[m+1 \dots b], \, e)$ \RComment{A wird \textbf{nicht} kopiert!}}}
 					}
 				}
 			}
