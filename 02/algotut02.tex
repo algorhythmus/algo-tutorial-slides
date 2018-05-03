@@ -10,12 +10,12 @@
 
 % presentation
 
-\begin{frame}{Quiz}
+\begin{frame}[t]{Quiz}
 	\thasse{\Socrative}
-	\FalseQuestion{Für alle Funktionen $f, g$ gilt $f < g$ oder $f = g$ oder $f > g$}
-	\FalseQuestion{$e^n \in \Oh{2^n}$}
-	\TrueQuestion{$e^n \in \Oh{n!}$}
-	\FalseQuestionE{Für Pseudocode gilt die DIN 1946-6}{Diese Norm regelt die Anzahl und Dauer von Lüftvorgängen in Wohnungen.}
+	\FalseQuestion{Für alle Funktionen $f, g$ gilt $f(n) < g(n)$ oder $f(n) = g(n)$ \\ oder $f(n) > g(n)$.}
+	\FalseQuestion{$e^n \in \Oh{2^n}$.}
+	\TrueQuestion{$e^n \in \Oh{n!}$.}
+	\FalseQuestionE{Für Pseudocode gilt die DIN~1946-6.}{Diese Norm regelt die Anzahl und Dauer von Lüftvorgängen in \\ Wohnungen.}
 \end{frame}
 
 \iffalse
@@ -457,8 +457,8 @@
 		
 		\medskip
 		Dann gilt $\forall n \geq 1: \quad T_-(n) \leq T(n) \leq T_+(n)$.\\
-		Für $T_-$ und $T_+$ gilt jeweils nach MT (Fall 1): $ T_+, T_- \in \Th{n}$.\\
-		Damit liegt auch $T \in \Th{n}. \qed$
+		Für $T_-$ und $T_+$ gilt jeweils nach MT (Fall 1): \quad $ T_+(n), T_-(n) \in \Th{n}$.\\
+		Damit liegt auch $T(n) \in \Th{n}. \qed$
 		
 \end{frame}
 
@@ -505,7 +505,6 @@
 
 
 \begin{frame}{Rekurrenzen lösen}
-	\pause
 	\taskheading{Rekurrenzen lösen}
 	Gegeben sei folgende Rekurrenz für $n = 4^k, k \in \N_0$ \\[0,5cm]
 	\begin{math}
@@ -519,8 +518,8 @@
 	
 	\pause
 	\bigskip
-	Tipp: Vorstellung eines \enquote{Berechnungsbaums}: Auf jeder Ebene doppelte Anzahl der Probleme mit geviertelter Problemgröße.\\ \pause
-	Anzahl Blötter: \quad $2^{\log_{4}n} = n^{\log_{4}2} = n^{1/2} = \sqrt{n}$
+	\textbf{Tipp}: Vorstellung eines \enquote{Berechnungsbaums}: Auf jeder Ebene doppelte Anzahl der Probleme mit geviertelter Problemgröße.\\ \pause
+	\impl Anzahl Blätter: \quad $2^{\log_{4}n} = n^{\log_{4}2} = n^{1/2} = \sqrt{n}$
 \end{frame}
 
 \begin{frame}{Rekurrenzen lösen}

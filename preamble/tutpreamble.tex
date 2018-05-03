@@ -79,9 +79,9 @@
 \renewcommand{\P}{\mathbb{P}}
 \newcommand{\BB}{\mathbb{B}} % \B already exists
 \newcommand{\NP}{\ensuremath{\mathcal{N\hspace{-1.5pt}P}}}
-\newcommand{\Oh}[1]{\mathcal{O}\left(#1\right)}
+\newcommand{\Oh}[1]{\mathcal{O}\!\left(#1\right)}
 \renewcommand{\O}{\mathcal{O}}
-\newcommand{\Om}[1]{\Omega\left(#1\right)}
+\newcommand{\Om}[1]{\Omega\!\left(#1\right)}
 \newcommand{\Th}[1]{\Theta\!\left(#1\right)}
 
 \newcommand{\realTilde}{\textasciitilde\xspace}
@@ -157,10 +157,10 @@
 \newcommand{\qqquad}{\q3uad}
 
 \newcommand{\impl}{\ifmmode\ensuremath{\mskip\thinmuskip\Rightarrow\mskip\thinmuskip}\else$\Rightarrow$\xspace\fi}  
-\newcommand{\Impl}{\ifmmode\implies\else$\Longrightarrow$\fi\xspace}
+\newcommand{\Impl}{\ifmmode\implies\else$\Longrightarrow$\xspace\fi}
 
-\newcommand{\gdw}{\ifmmode\mskip\thickmuskip\Leftrightarrow\mskip\thickmuskip\else$\Leftrightarrow$\fi\xspace}
-\newcommand{\Gdw}{\ifmmode\iff\else$\Longleftrightarrow$\fi\xspace}
+\newcommand{\gdw}{\ifmmode\mskip\thickmuskip\Leftrightarrow\mskip\thickmuskip\else$\Leftrightarrow$\xspace\fi}
+\newcommand{\Gdw}{\ifmmode\iff\else$\Longleftrightarrow$\xspace\fi}
 
 \newcommand{\symbitemnegoffset}{\hspace{-.33\baselineskip}}
 \newcommand{\implitem}{\item[\impl\symbitemnegoffset]}
@@ -590,7 +590,7 @@
 
 \newcommand{\ILIAS}{\urlnamed{https://ilias.studium.kit.edu/ilias.php?ref_id=808428&cmdClass=ilrepositorygui&cmdNode=k8&baseClass=ilrepositorygui}{ILIAS}\xspace} 
 
-\newcommand{\Socrative}{\only<handout:0>{socrative.com $\qquad$ --> Student login \\ Raumname:  \mysocrativeroom\\ \medskip}}
+\newcommand{\Socrative}{\only<handout:0>{socrative.com $\qquad$ \~~> Student login \\ Raumname:  \mysocrativeroom\\ \medskip}}
 
 \newcommand{\thasse}[1]{
 	\ifdefined\ThassesTut #1\xspace \else\fi
