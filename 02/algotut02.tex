@@ -61,7 +61,7 @@
 	\end{itemize}
 \end{frame}
 
-\fi
+
 
 \begin{frame}{Zum letzten Blatt (\#1)} %TODO adapt to current sheet
 	\begin{itemize}
@@ -106,6 +106,8 @@
 		\hspace*{-0.4cm}$\Impl a_{i+1} \cdot n + b_{i+1} = c_i \cdot n + \left(m - c_i \cdot n\right) = m. \qed$
 	}
 \end{frame}
+
+\fi
 
 \sectionheadframe{Laufzeiten}{...denn Zeit ist Geld}
 
@@ -396,7 +398,63 @@
 	\impl $T(n) \in \Th{\log n}$.
 \end{frame}
 
-\begin{frame}{Aufgaben Master-Theorem}  % TODO: maybe move to the beginning, if task sheet needs discussion
+\begin{frame}{Binäre Suche: Exkurs}
+\textbf{Binäre Suche: Generelles Prinzip}
+\begin{itemize}
+	\item Grundmenge muss \bfalert{sortiert} sein!
+	\pause
+	\item Generelles Suchprinzip: \\ Findet nicht nur Elemente in Arrays, sondern auch
+	\implitem Nullstellen/Inverse monotoner Funktionen (falls vorhanden)
+	\implitem Größte Arbeitslast eines Mehrkernsystems, die noch sinnvoll tragbar ist
+	\implitem \dots
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aufgaben Master-Theorem}
+	\taskheading{Master-Sandwich}
+	\begin{wrapfigure}{r}[-.2\baselineskip]{.38\textwidth}
+		\vspace{-2.5\baselineskip}
+		\fbox{\mastertheoreminder}
+	\end{wrapfigure}
+	Die Laufzeit eines Algorithmus~A \\
+	wird beschrieben durch \\ \smallskip
+	\begin{math}
+	T(n) = 
+	\begin{cases}
+	17,                           			   &n = 1 \\
+	3 \cdot T(\ceil{\frac{n}{5}}) + 2n + 1,  &  n > 1
+	\end{cases}.
+	\end{math} \\ \bigskip
+	
+	\mbox{Berechnet die Laufzeit von A mit dem Master-Theorem.}
+\end{frame}
+
+\begin{frame}{Master-Sandwich}
+	\solutionheading 
+	 Definiere\\ \begin{math}
+		T_-(n) = 
+		\begin{cases}
+		17,                           			   &n = 1 \\
+		3 \cdot T_-(\ceil{\frac{n}{5}}) + 2n,  &  n > 1
+		\end{cases}
+		\end{math}
+		
+		\begin{math}
+		T_+(n) = 
+		\begin{cases}
+		17,                           			   &n = 1 \\
+		3 \cdot T_+(\ceil{\frac{n}{5}}) + 3n ,  &  n > 1
+		\end{cases}.
+		\end{math}
+		
+		\medskip
+		Dann gilt $\forall n \geq 1: \quad T_-(n) \leq T(n) \leq T_+(n)$.\\
+		Für $T_-$ und $T_+$ gilt jeweils nach MT (Fall 1): $ T_+, T_- \in \Th{n}$.\\
+		Damit liegt auch $T \in \Th{n}. \qed$
+		
+\end{frame}
+
+\begin{frame}{Aufgaben Master-Theorem}
 	\taskheading{Master-Theorem}
 	\begin{wrapfigure}{r}[-.2\baselineskip]{.38\textwidth}
 		\fbox{\mastertheoreminder}
@@ -430,16 +488,17 @@
 		\pause 
 		\item Also: 
 		\begin{align*}
-		&\log_{4}a < \log_{2}7 \gdw \frac{\log a}{\log 4} < \frac{\log 7}{\log 2} \gdw \log a < \log 7 \cdot \underbrace{\log 4}_{= 2}  \\ \pause
-		\gdw &a < 2^{(\log 7) \cdot 2} = \left(2^{\log 7}\right)^{2} = 7^2 = 49 \Impl a = 48.
+			\log_{4}a &< \log_{2}7 \gdw 4^{\log_{4}a} < 4^{\log_{2}7} = 7^{\log_{2} 4} = 7^2 = 49 \\ \pause  %[3] for no pause Pause is NEEDED for rendering!
+			\Impl a &= 48.
 		\end{align*}
-		(wobei \ $\log_x y = \frac{\log y}{\log x}$ \ und \ $\log x = \log_2 x$)
+		%(wobei \ $\log_x y = \frac{\log y}{\log x}$ \ und \ $\log x = \log_2 x$)
 	\end{itemize}
 \end{frame}
 
 
-\begin{frame}{Aufgaben Master-Theorem}
-	\taskheading{Master-Theorem}
+\begin{frame}{Rekurrenzen lösen}
+	\pause
+	\taskheading{Rekurrenzen lösen}
 	Gegeben sei folgende Rekurrenz für $n = 4^k, k \in \N_0$ \\[0,5cm]
 	\begin{math}
 	T(n) = 
@@ -449,9 +508,14 @@
 	\end{cases}
 	\end{math} \\[0,5cm]
 	Findet eine Funktion $f : \N \functionto \R^+$ und Konstanten $c_1, c_2$, so dass $c_1 \cdot f(n) \leq T(n) \leq c_2 \cdot f(n)$ und beweist euren Fund.
+	
+	\pause
+	\bigskip
+	Tipp: Vorstellung eines \enquote{Berechnungsbaums}: Auf jeder Ebene doppelte Anzahl der Probleme mit geviertelter Problemgröße.\\ \pause
+	Anzahl Blötter: \quad $2^{\log_{4}n} = n^{\log_{4}2} = n^{1/2} = \sqrt{n}$
 \end{frame}
 
-\begin{frame}{Aufgaben Master-Theorem}
+\begin{frame}{Rekurrenzen lösen}
 	\solutionheading \smallskip
 	\hanging{\textbf{Behauptung} (Magie! \smiley): \quad $c_1 := 1$, $c_2 := 3$\ und\ $f(n) := \sqrt{n}$ 
 	\newline erfüllen die Bedingung $\ \forall n = 4^k, k \in \N_0$} \\ \pause
@@ -469,7 +533,7 @@
 	
 
 \thassedaniel{
-	\xkcdframe{297}{Danke für eure Aufmerksamkeit! \smiley}{0}
+	\xkcdframe{1724}{Danke für eure Aufmerksamkeit! \smiley}{0}
 }{
 	\xkcdframe{297}{May the Fourth Be With You! \smiley}{0}
 }

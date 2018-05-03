@@ -82,7 +82,7 @@
 \newcommand{\Oh}[1]{\mathcal{O}\left(#1\right)}
 \renewcommand{\O}{\mathcal{O}}
 \newcommand{\Om}[1]{\Omega\left(#1\right)}
-\newcommand{\Th}[1]{\Theta\left(#1\right)}
+\newcommand{\Th}[1]{\Theta\!\left(#1\right)}
 
 \newcommand{\realTilde}{\textasciitilde\xspace}
 \renewcommand{\qedsymbol}{\textcolor{black}{\openbox}}
@@ -156,7 +156,7 @@
 
 \newcommand{\qqquad}{\q3uad}
 
-\newcommand{\impl}{\ifmmode\ensuremath{\mskip\thinmuskip\Rightarrow\mskip\thinmuskip}\else$\Rightarrow$\fi\xspace}  
+\newcommand{\impl}{\ifmmode\ensuremath{\mskip\thinmuskip\Rightarrow\mskip\thinmuskip}\else$\Rightarrow$\xspace\fi}  
 \newcommand{\Impl}{\ifmmode\implies\else$\Longrightarrow$\fi\xspace}
 
 \newcommand{\gdw}{\ifmmode\mskip\thickmuskip\Leftrightarrow\mskip\thickmuskip\else$\Leftrightarrow$\fi\xspace}
@@ -492,6 +492,7 @@
 \newcounter{weeknum}
 
 \newcounter{tasknum}
+\resetcounteronoverlays{tasknum}
 \newcommand{\taskheading}[1]{\addtocounter{tasknum}{1}\textbf{Aufgabe \thetasknum: #1} \\}
 \newcommand{\solutionheading}{\textbf{Lösung zu Aufgabe \thetasknum} \\}
 
