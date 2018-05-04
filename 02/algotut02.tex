@@ -249,6 +249,43 @@
 
 \sectionheadframe{Das Master-Theorem}{\textit{Das} Thema des Bachelors}   % Alternativ: Segelschiff-Anspielung „Zweimaster“ oder so?
 
+\begin{frame}{Rekurrenzen}
+	\textbf{Problemstellung:} Finde Laufzeit von \emph{rekursiven} Algorithmen.
+	
+	\begin{exampleblock}{Beispiel}
+		\begin{algorithm}[H]
+			\KwMethod Foo$(L: \|List| \: \KwSty{with} \size{L} = n)$\KwEmptyBlock{
+				teile $L$ in $b$ Teile $L_1, \dots$ auf \;
+				\For{$i := 1 \KwTo n/b$} {
+					$R_i := \|Foo|(L_i)$\;
+				}
+				führe alle $R_i$ in $\Th{n}$ zusammen
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Rekurrenzen}
+	\textbf{Problemstellung:} Finde Laufzeit von \emph{rekursiven} Algorithmen.
+	
+	\textbf{Vorgehen:}
+	\begin{enumerate}
+		\item Rekurrenzgleichung aufstellen:\\
+		Abschätzen der Laufzeit $T(n)$ \enquote{wie vorhin am Code}, dabei für Foo $T(n)$ einsetzen.
+		\[
+		T(n) = 
+		\begin{cases}
+		1,  & \text{für } n = 1 \\
+		\textcolor{blue}{b} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + n, & \text{für } n > 1
+		\end{cases}
+		\]
+		
+		\item Auflösen:\\ 
+		Mit Master-Theorem (wenn möglich), ansonsten von Hand.
+	\end{enumerate}
+
+\end{frame}
+
 \begin{frame}{Das Master-Theorem (einfache Form)} % TODO ceil the fraction?
 	Seien $a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \N$ sei 
 	\[
