@@ -255,11 +255,12 @@
 	\begin{exampleblock}{Beispiel}
 		\begin{algorithm}[H]
 			\KwMethod Foo$(L: \|List| \: \KwSty{with} \size{L} = n)$\KwEmptyBlock{
-				teile $L$ in $b$ Teile $L_1, \dots$ auf \;
-				\For{$i := 1 \KwTo n/b$} {
+				\If{$n \leq \textcolor{blue}{b}$}{\Return{$L$}}
+				teile $L$ in $\textcolor{blue}{b}$ Teile $L_1, \dots$ auf \;
+				\For{$i := 1 \KwTo \textcolor{darkgreen}{d}$} {
 					$R_i := \|Foo|(L_i)$\;
 				}
-				führe alle $R_i$ in $\Th{n}$ zusammen
+				führe alle $R_i$ in Laufzeit $c\·n$ zusammen
 			}
 		\end{algorithm}
 	\end{exampleblock}
@@ -275,11 +276,12 @@
 		\[
 		T(n) = 
 		\begin{cases}
-		1,  & \text{für } n = 1 \\
-		\textcolor{blue}{b} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + n, & \text{für } n > 1
+		a,  & \text{für } n = 1 \\
+		\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\·n, & \text{für } n > 1
 		\end{cases}
 		\]
 		
+		\pause
 		\item Auflösen:\\ 
 		Mit Master-Theorem (wenn möglich), ansonsten von Hand.
 	\end{enumerate}
