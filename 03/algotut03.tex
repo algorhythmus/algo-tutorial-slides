@@ -9,6 +9,11 @@
 \starttut{3}
 	
 %TODO sectionheadframe? Datenstrukturen? Folgen?
+
+\section{Von Listen...}
+\begin{headframe}[Wählt DIE LISTE! Sie ist sehr gut!]
+	Von Listen und Arrays
+\end{headframe}
 	
 \begin{frame}{Datenstrukturen – dynamisch viele Elemente}
 	Arrays $=$ toll, aber ...
@@ -180,20 +185,21 @@
 	\end{figure}
 \end{frame}
 
+% TODO Soll das rein? Siehe ÜB!
 \begin{frame}{Verkettete Listen}
 	\begin{exampleblock}{Anwendung: Konstruierung einer \emph{Unbounded Queue}}
-		\LComment{Erinnerung: $splice(a, b, t : Handle)$ schneidet $\langle a,...,b \rangle$ aus} \\
+		\LComment{Erinnerung: $\|splice|(a, b, t : \|Handle|)$ schneidet $\langle a,...,b \rangle$ aus} \\
 		\LComment{seiner zugehörigen Liste aus und fügt es nach $t$ ein} \\
 		\begin{tabular}{  p{5,5cm} c }
 			\begin{algorithm}[H]
 				\DontPrintSemicolon
 				\footnotesize
-				$head = createHandle(\bot) : Handle$\;
+				$head = \|createHandle|(\bot) : \|Handle|$\;
 				\;
-				\Procedure{pushBack$(e : Element)$} {
-					$new := createHandle(e)$\;
+				\Procedure{pushBack$(e : \|Element|)$} {
+					$new := \|createHandle|(e)$\;
 					$new \access prev := new \access next := new$\;
-					$splice(new, new, head\access prev)$\;
+					$\|splice|(new, new, head\access prev)$\;
 				}
 			\end{algorithm}
 			&
@@ -201,14 +207,14 @@
 				\DontPrintSemicolon
 				\footnotesize
 				\;
-				\Function{popBack$ : Element$} {
+				\Function{popBack$ : \|Element|$} {
 					$\KwAssert \neg isEmpty$\;
 					$old := head \access prev$\;
 					$e := old \access e$\;
-					$d := createHandle(\bot)$\;
+					$d := \|createHandle|(\bot)$\;
 					$d \access prev := d \access next := d$\;
 					\;
-					$splice(old, old, d)$\;
+					$\|splice|(old, old, d)$\;
 					\;
 					$\KwDispose old, d$\;
 					\KwRet{$e$}\;
@@ -224,13 +230,13 @@
 		\LComment{seiner zugehörigen Liste aus und fügt es nach $t$ ein}
 		\begin{tabular}{  p{5,5cm} c }
 			\begin{algorithm}[H]
-				\footnotesize\;
-				$head = createHandle(\bot) : Handle$\;
+				\footnotesize
+				$head = \|createHandle|(\bot) : \|Handle|$\;
 				\;
-				\Procedure{pushFront$(e : Element)$} {
-					$new := createHandle(e)$\;
+				\Procedure{pushFront$(e : \|Element|)$} {
+					$new := \|createHandle|(e)$\;
 					$new \access prev := new \access next := new$\;
-					$splice(new, new, head)$\;
+					$\|splice|(new, new, head)$\;
 				}
 			\end{algorithm}
 			&
@@ -238,14 +244,14 @@
 				\DontPrintSemicolon
 				\footnotesize
 				\;
-				\Function{popFront$ : Element$} {
+				\Function{popFront$ : \|Element|$} {
 					$\KwAssert \neg isEmpty$\;
 					$old := head \access next$\;
 					$e := old \access e$\;
-					$d := createHandle(\bot)$\;
+					$d := \|createHandle|(\bot)$\;
 					$d \access prev := d \access next := d$\;
 					\;
-					$splice(old, old, d)$\;
+					$\|splice|(old, old, d)$\;
 					\;
 					$\KwDispose old, d$\;
 					\KwRet{$e$}\;
@@ -297,6 +303,7 @@
 	\end{itemize}
 \end{frame}
 
+\section{...und Arrays (feat. amortisierte Analyse)}
 
 \begin{frame}{Arrays to the rescue\only<1-2|handout:0>{?}\only<3->{!}}
 	\begin{itemize}
@@ -323,7 +330,7 @@
 	\forcenewline
 	Genauso: \textbf{Entfernen} aus einem \textbf{viertel-vollen} Array ($n$ von $4n$ gefüllt)
 	\begin{itemize} 
-		\implitem Array muss verkleinert (= umkopiert) werden
+		\implitem Array muss verkleinert ($=$ umkopiert) werden
 		\pause
 		\item Genau \textbf{dieses} Entfernen kostet $n$ (wegen Kopiererei)
 		\pause
@@ -349,7 +356,7 @@
 	\pause
 	\hanging Für jede Op der Art $i$: \quad  $c_i$ „Münzen“ auf ein „Konto“ einzahlen ($c_i$ \textbf{konstant}!) \\ 
 	\pause
-	\textcolor{blue}{Bsp}.: \hanging Arten von Ops \{Einfügen, Löschen\} \impl $c_\text{Einfügen}, c_\text{Löschen}$ festlegen) \\
+	\textcolor{blue}{Bsp}.: \hanging Arten von Ops \{Einfügen, Löschen\} \impl $c_\text{Einfügen}, c_\text{Löschen}$ festlegen \\
 	\pause
 	\hanging {Begründen: \newline Wenn mal eine Op \textbf{mehr als konstante Zeit} kostet (sagen wir $x$) \impl auf dem Konto mind. $x$ Münzen da, um das zu bezahlen.} \\
 	\pause \forcenewline
@@ -363,16 +370,17 @@
 	\end{itemize}
 \end{frame}
 
-
+\section{Aufgaben}
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Aufgabe 1: Hochgestackte Ziele} \\
+	\taskheading{Hochgestackte Ziele} 
 	Gegeben seien zwei Stacks mit $size() : \N_0$, $pushBack(e : Element)$ und $popBack() : Element$, alle jeweils in konstanter Zeit. \\
+	\smallskip
 	Entwerft daraus eine Queue, die die Operationen $pushBack(e : Element)$ und $popFront() : Element$ jeweils in amortisiert konstanter Zeit beherrscht.
 \end{frame}
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Lösung zu Aufgabe 1} \\
+	 \solutionheading
 	\begin{itemize}
 		\item ein „\textbf{Input}-Stack“, ein „\textbf{Output}-Stack“
 		\item Queue.\textit{pushBack}: auf den Input-Stack legen
@@ -395,17 +403,19 @@
 
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Aufgabe 2: A little bit more?} \\
-	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operation $increment$ (erhöht den im Zähler gespeicherten Wert um 1). Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Aggregatmethode}, dass die Operation \emph{increment} stets in amortisiert konstanter Zeit läuft.
+	\taskheading{A little bit more?} 
+	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operation $increment$ (erhöht den im Zähler gespeicherten Wert um 1). \\ 
+	\smallskip
+	Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Aggregatmethode}, dass die Operation \emph{increment} stets in amortisiert konstanter Zeit läuft.
 \end{frame}
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Lösung zu Aufgabe 2} \\
+	\solutionheading \smallskip
 	\textbf{Beobachtung}: \\
 	Bit Nr. $i\ (i \geq 0)$ wird genau alle $2^i$ Aufrufe geflippt \\
 	{\small \hanging (d.h. Bit Nr. 0 bei jedem Aufruf, Bit Nr. 1 alle zwei Aufrufe usw.)} \\
 	\pause
-	\impl im Schnitt wird Bit Nr. $i$ pro Aufruf „$\frac{1}{2^i}$-mal“ geflippt \\
+	\impl im Schnitt wird Bit Nr. $i$ pro Aufruf $\frac{1}{2^i}$-mal geflippt \\
 	\pause
 	\impl im Schnitt haben $n$ Aufrufe von \textit{increment} die Kosten \[
 		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} = 2 \cdot n
@@ -417,12 +427,14 @@
 
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Aufgabe 3: Bitte null Bit!} \\
-	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operationen $increment$ (erhöht den im Zähler gespeicherten Wert um 1) \textbf{und} $reset$ (setzt den im Zähler gespeicherten Wert auf 0 zurück). Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Kontomethode}, dass beide Methoden stets in amortisiert konstanter Zeit laufen.
+	\taskheading{Bitte null Bit!} 
+	Gegeben sei ein binärer Zähler mit einer unbegrenzten Anzahl an Bits, die alle auf 0 initialisiert sind. Der Zähler besitzt die Operationen $increment$ (erhöht den im Zähler gespeicherten Wert um 1) \textbf{und} $reset$ (setzt den im Zähler gespeicherten Wert auf 0 zurück). \\
+	\smallskip
+	Ein einzelnes Bit zu flippen zählt jeweils als eine konstante Operation. Zeigt anhand der \textbf{Kontomethode}, dass beide Methoden stets in amortisiert konstanter Zeit laufen.
 \end{frame}
 
 \begin{frame}{Amortisierte Analyse}
-	\underline{Lösung zu Aufgabe 3} \\
+	\solutionheading \smallskip
 	\textbf{Beobachtung}: 
 	\begin{itemize}
 		\item Bei jedem \emph{increment}-Aufruf: \\
@@ -449,7 +461,7 @@
 
 
 \begin{frame}{Datenstrukturen}
-	\underline{Aufgabe 4} \\
+	\taskheading{Verrückte Datenstrukturen}
 	Nehmt an, dass eine Speicherallokation beliebiger Größe in $O(1)$ läuft. Entwickelt eine Datenstruktur mit
 	\begin{itemize}
 		\item $pushBack(e : Element)$ und $popBack() : Element$ in $O(1)$ im Worst-Case (\textbf{nicht} nur amortisiert)
@@ -457,8 +469,8 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Datenstrukturen}
-	\underline{Lösung zu Aufgabe 4} \\
+\begin{frame}{Datenstrukturen} % TODO Text überarbeiten
+	\solutionheading
 	Lege eine verkettete Liste von Arrays an, deren Größe sich jeweils verdoppelt, und habe immer eine Referenz auf das letzte Array inklusive Index des letzten belegten Slots
 	\pause
 	\begin{itemize}
@@ -471,7 +483,7 @@
 
 
 \begin{frame}{Datenstrukturen}
-	\underline{Aufgabe 5: Aufgabe 4 remastered} \\
+	\taskheading{Aufgabe~\the\numexpr\thetasknum-1\relax\ remastered} 
 	Nehmt an, dass eine Speicherallokation beliebiger Größe in $O(1)$ läuft. Entwickelt eine Datenstruktur mit
 	\begin{itemize}
 		\item $pushBack(e : Element)$ und $popBack() : Element$ in $O(\log n)$ im Worst-Case (\textbf{nicht} nur amortisiert)
@@ -479,8 +491,8 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Datenstrukturen}
-	\underline{Lösung zu Aufgabe 5} \\
+\begin{frame}{Datenstrukturen} % TODO Text überarbeiten
+	\solutionheading
 	Analog zur Lösung von Aufgabe 4: Lege ein Array $A$ mit Referenzen auf Arrays an, deren Größe sich jeweils verdoppelt (d.h. das Array an der Stelle $A[i]$ hat die Größe $2^i$)
 	\pause
 	\begin{itemize}
@@ -489,6 +501,8 @@
 		\item Zugriff auf das $k$-te Element: Berechne mit dem Logarithmus den Index von $B$ in $A$ und den Index des $k$-ten Elements in $B$, der Zugriff ist in konstanter Zeit.
 	\end{itemize}
 \end{frame}
-	
+
+\xkcdframe{379}{Danke für die Aufmerksamkeit! \smiley}{0}
+% Alternativ: 163
 
 \end{document}
