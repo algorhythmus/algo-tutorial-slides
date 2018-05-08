@@ -249,6 +249,45 @@
 
 \sectionheadframe{Das Master-Theorem}{\textit{Das} Thema des Bachelors}   % Alternativ: Segelschiff-Anspielung „Zweimaster“ oder so?
 
+\begin{frame}{Rekurrenzen}
+	\textbf{Problemstellung:} Finde Laufzeit von \emph{rekursiven} Algorithmen.
+	
+	\begin{exampleblock}{Beispiel}
+		\begin{algorithm}[H]
+			\KwMethod Foo$(L: \|List| \: \KwSty{with} \size{L} = n)$\KwEmptyBlock{
+				\If{$n \leq \textcolor{blue}{b}$}{\Return{$L$}}
+				teile $L$ in $\textcolor{blue}{b}$ Teile $L_1, \dots$ auf \;
+				\For{$i := 1 \KwTo \textcolor{darkgreen}{d}$} {
+					$R_i := \|Foo|(L_i)$\;
+				}
+				führe alle $R_i$ in Laufzeit $c\·n$ zusammen
+			}
+		\end{algorithm}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Rekurrenzen}
+	\textbf{Problemstellung:} Finde Laufzeit von \emph{rekursiven} Algorithmen.
+	
+	\textbf{Vorgehen:}
+	\begin{enumerate}
+		\item Rekurrenzgleichung aufstellen:\\
+		Abschätzen der Laufzeit $T(n)$ \enquote{wie vorhin am Code}, dabei für Foo $T(n)$ einsetzen.
+		\[
+		T(n) = 
+		\begin{cases}
+		a,  & \text{für } n = 1 \\
+		\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\·n, & \text{für } n > 1
+		\end{cases}
+		\]
+		
+		\pause
+		\item Auflösen:\\ 
+		Mit Master-Theorem (wenn möglich), ansonsten von Hand.
+	\end{enumerate}
+
+\end{frame}
+
 \begin{frame}{Das Master-Theorem (einfache Form)} % TODO ceil the fraction?
 	Seien $a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \N$ sei 
 	\[
