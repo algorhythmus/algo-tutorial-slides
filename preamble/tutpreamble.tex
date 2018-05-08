@@ -494,6 +494,7 @@
 
 \newcounter{tasknum}
 \resetcounteronoverlays{tasknum}
+\def\thetasknumminusone{\the\numexpr\thetasknum-1\relax\xspace}
 \newcommand{\taskheading}[1]{\addtocounter{tasknum}{1}\textbf{Aufgabe \thetasknum: #1} \\}
 \newcommand{\solutionheading}{\textbf{Lösung zu Aufgabe \thetasknum} \\}
 
