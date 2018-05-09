@@ -8,6 +8,30 @@
 	
 \starttut{3}
 	
+\begin{frame}{Zum letzten Blatt (\#1)}
+	\textbf{Durchschnitt:} \quad etwa \thassedaniel{42}{???}~\% \\
+	\begin{itemize}
+		\item Das Wort \enquote{trivial} bitte \textbf{sehr} sparsam verwenden!\\
+			(\enquote{Alle Einhörner sind rosa!} ist trivialerweise wahr.)
+		\item Wann ist ein Algorithmus schneller? Wenn seine Laufzeit T weniger schnell wächst!
+		\item Schleifeninvarianten müssen auch \textbf{nach Ende der Schleife} noch gelten! Die Abbruchbedingung kann es also nicht sein.
+	\end{itemize}
+\end{frame}	
+
+\begin{frame}{Zum letzten Blatt (\#1)}
+	\centering
+	\includegraphics[height=.95\frameheight]{images/polyVsExp}
+\end{frame}
+
+\framePrevEpisode
+
+\begin{frame}{Quiz}
+	\thasse{\Socrative}
+	
+	% TODO: Hier Quiz-Content einfügen
+\end{frame}
+
+	
 %TODO sectionheadframe? Datenstrukturen? Folgen?
 
 \section{Von Listen...}
@@ -184,6 +208,7 @@
 		\includegraphics[height=7cm]{splice}
 	\end{figure}
 \end{frame}
+\iffalse
 
 % TODO Soll das rein? Siehe ÜB!
 \begin{frame}{Verkettete Listen}
@@ -260,7 +285,7 @@
 		\end{tabular}
 	\end{exampleblock}
 \end{frame}
-
+\fi
 
 \begin{frame}{Verkettete Listen – Zweifel?}
 	Arrays:  nur begrenzt toll \\
@@ -418,7 +443,8 @@
 	\impl im Schnitt wird Bit Nr. $i$ pro Aufruf $\frac{1}{2^i}$-mal geflippt \\
 	\pause
 	\impl im Schnitt haben $n$ Aufrufe von \textit{increment} die Kosten \[
-		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} = 2 \cdot n
+		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} = 
+		\frac{1}{1-\fract 1/2 } \* n = 2 \cdot n
 	\] ($M$: Index des höchsten gesetzten Bits) \\
 	\pause
 	\impl läuft amortisiert in $O(1)$.
