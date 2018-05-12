@@ -8,38 +8,82 @@
 	
 \starttut{3}
 	
-\begin{frame}{Zum letzten Blatt (\#1)}
-	\textbf{Durchschnitt:} \quad etwa \thassedaniel{42}{???}~\% \\
-	\begin{itemize}
+
+\mycomment{
+	%TODO: ÜB-Besprechung:
+	  Invarianten: Variablen aus dem Nichts
+	  Induktion für Invarianten (diesmal noch gnädig)
+	  Sortiert, aber gleiche Elemente
+}
+\begin{frame}{Zum \thassedaniel{letzten}{vorletzten} Blatt (\#1)}
+	\textbf{Durchschnitt:} \quad etwa \thassedaniel{42}{56}~\% \\
+	\thassedaniel{\begin{itemize}
 		\item Das Wort \enquote{trivial} bitte \textbf{sehr} sparsam verwenden!\\
 			(\enquote{Alle Einhörner sind rosa!} ist trivialerweise wahr.)
 		\item Wann ist ein Algorithmus schneller? Wenn seine Laufzeit T weniger schnell wächst!
 		\item Schleifeninvarianten müssen auch \textbf{nach Ende der Schleife} noch gelten! Die Abbruchbedingung kann es also nicht sein.
+	\end{itemize}}{
+	\begin{itemize}
+		\item Siehe W/F-Fragen letztes Mal
+		\item Invarianten: Bitte keine Variablen aus dem Nichts ziehen (z.~B. einfach so $\KwInvariant m = \gcd(a,b)$ und $m$ kommt einfach aus dem Nichts)
+		\item Unterscheiden zwischen Variablen \textbf{vor} und \textbf{nach} einem Schleifendurchlauf ($a_i$ vs. $a_{i+1}$ für aktuellen Schleifendurchlauf $i$)
 	\end{itemize}
-\end{frame}	
+	}
+\end{frame}
 
-\begin{frame}{Zum letzten Blatt (\#1)}
+\begin{frame}{Zum \thassedaniel{letzten}{vorletzten} Blatt (\#1)}
 	\centering
 	\includegraphics[height=.95\frameheight]{images/polyVsExp}
 \end{frame}
 
-\framePrevEpisode
 
-\begin{frame}{Quiz}
+
+
+%\framePrevEpisode
+
+\begin{frame}[t]{Zum \thassedaniel{letzten}{vorletzten} Blatt (\#1)}
 	\thasse{\Socrative}
 	
+	\FalseQuestionE{$\gcd(a,b)$ ist eine geeignete Schleifeninvariante.}{
+		Schleifeninvarianten sind Aussagen mit einem Wahrheitswert. Der $\gcd$ ist ne Zahl.
+	}
+	\smallskip
+	
+	\FalseQuestionE{
+		Hat jetzt mit dem Blatt nix zu tun: \\
+		Das Master-Theorem lässt sich nur bei rekursiven Verfahren \\ anwenden.}{Jeder iterative Algorithmus kann in einen rekursiven umgeschrieben \\ werden (und umgekehrt). Wenn danach das Pattern matcht, klappt auch das MT.}
+	
+	\smallskip
+	\FalseQuestionE{$m \mid a \land m \mid (b-a) \Impl m = \gcd(a,\, b-a)$.}{
+		$m$ ist dann ein gemeinsamer Teiler, aber noch lange nicht der \textbf{größte}!
+		}
 	% TODO: Hier Quiz-Content einfügen
 \end{frame}
 
-	
-%TODO sectionheadframe? Datenstrukturen? Folgen?
+\daniel{
+	\begin{frame}[t]{Zum letzten Blatt (\#2)}
+		\textbf{Durchschnitt:} \quad etwa \thassedaniel{42}{64}~\% \\
+		\medskip
+		\pause
+		
+		\TrueQuestionE{„Für ein $n \in \N$ und $\forall k \leq n$ gilt: ...“ \\ ist eine valide Induktionsvoraussetzung.}{
+			Es sind nur \textbf{endlich viele} $k$. Bei unendlich vielen kracht's.	\\
+			(War übrigens nötig bei A.2! Nur mit $n$ reichte \textbf{nicht}!)
+		}
+		\FalseQuestionE{„$C$ ist sortiert“ ist eine passende Schleifeninvariante \\ für Merging.}{$C$ von wo bis wo?!}
+		\FalseQuestionE{„$C[1..\|index|_C]$ ist sortiert“ ist eine passende \\ Schleifeninvariante für Merging.}{
+			Meine Implementierung könnte $C[i] := 42 \; \forall i$ setzen; \\ ist dann auch sortiert. \quad Generell: \\
+			\impl Ungleichungen im IS nicht aus dem Hut zaubern, sondern in IV und Invariante stopfen und mitbeweisen.
+		}
+	\end{frame}	
+}
 
 \section{Von Listen...}
 \begin{headframe}[Wählt DIE LISTE! Sie ist sehr gut!]
 	Von Listen und Arrays
 \end{headframe}
 	
-\begin{frame}{Datenstrukturen – dynamisch viele Elemente}
+\begin{frame}{{\vspace{5pt}Datenstrukturen – dynamisch viele Elemente}}
 	Arrays $=$ toll, aber ...
 		\pause
 		\begin{itemize}
@@ -443,7 +487,7 @@
 	\impl im Schnitt wird Bit Nr. $i$ pro Aufruf $\frac{1}{2^i}$-mal geflippt \\
 	\pause
 	\impl im Schnitt haben $n$ Aufrufe von \textit{increment} die Kosten \[
-		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} = 
+		n \cdot \sum\limits_{i=0}^{M} \frac{1}{2^i} < n \cdot \sum\limits_{i=0}^{\infty} \frac{1}{2^i} =
 		\frac{1}{1-\fract 1/2 } \* n = 2 \cdot n
 	\] ($M$: Index des höchsten gesetzten Bits) \\
 	\pause
