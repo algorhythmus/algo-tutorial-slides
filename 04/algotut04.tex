@@ -93,7 +93,20 @@
 \end{frame}
 
 \begin{frame}{Einschub – Erwartete Laufzeit}
-	Ein Algorithmus mit tatsächlicher Laufzeit $T(n)$ hat \textbf{erwartete Laufzeit} in $O(g(n))$ :\gdw der Erwartungswert der Laufzeit liegt in $O(g(n))$.
+	Ein Algorithmus mit tatsächlicher Laufzeit $T(n)$ hat \textbf{erwartete Laufzeit} in $O(g(n))$ :\gdw der Erwartungswert der Laufzeit liegt in $O(g(n))$. \\
+	\pause
+	\begin{center}
+		{\large \bfalert{Erwartete Laufzeit $\neq$ amortisierte Laufzeit!}} 
+	\end{center}
+	„Wir haben bei $n$ Operationen \emph{amortisierte} Laufzeit $O(\cdots)$“: \\
+	\impl Wir haben das \textbf{garantiert}! {\small (Über einzelne Operationen: keine Aussage!)} \\
+	\vspace{-.7\baselineskip}
+	\begin{center}
+		-- vs. -- 
+	\end{center}
+	\vspace{-.7\baselineskip}
+	„Wir haben bei $n$ Operationen \emph{erwartete} Laufzeit $O(\cdots)$“: \\
+	\impl Wir haben das \textbf{wahrscheinlich}. Ist bloß ein Mittelwert. Kann auch drunter oder drüber liegen.
 \end{frame}
 
 \iffalse
@@ -149,18 +162,20 @@
 
 \def\key{\|key|}
 
-\begin{frame}{Hashtables: Übersicht}
-	\begin{itemize}
+\begin{frame}{Hashtables: Übersicht} 
+	\begin{itemize} 
 			\item \textbf{ungeordnete} (!) Datenstruktur \\
 			\impl Kein Index mehr (z.B. $A[i]$) \quad {\small (Mit beliebigen Indizes erweiterbar!)}
 			\pause
 			\item \textbf{Operationen}: insert, remove, find
 			\forcenewline \pause
 			\item Unordnung: \textbf{Wie}? \\
-			\impl Jedes Element $e$ bekommt eindeutigen $\key(e)$ zugeordnet \\ (Keys ab jetzt meistens \textit{ganze Zahlen})
+				\§{\impl} Jedes Element $e$ bekommt eindeutigen $\key(e)$ zugeordnet \\ 
+				\. {\small (Keys ab jetzt meistens \textit{ganze Zahlen})} \\
+			\impl Benutzen Key, um das Element \emph{möglichst schnell} zu wiederzufinden
 			\pause
-			\item Es gilt
-			$\forall\; e, e': \quad \key(e) \ \stackedtight{< \\ = \\ >}\ \key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\ (wie gesagt, $\key$ \textbf{eindeutig})
+			\item „Key \textbf{eindeutig}“ heißt \\
+			$\forall e, e': \quad \key(e) \ \stackedtight{< \\ = \\ >}\ \key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\
 	\end{itemize} 
 \end{frame}
 
@@ -175,11 +190,10 @@
 		\implitem Element $e$ landet in $t\left\lbrack h\left(\key(e) \right)\right\rbrack$ \quad  (Invariante!) \\
 		{\small (Wie genau: später)}
 		\pause
-		% TODO umordnen?
 		\item[\Cons] Perfektes, injektives $h$: Schön wär's! \\
 		\impl \textbf{Kollisionen} zu wahrscheinlich {\small (zwei Elemente an selbe Stelle)}
 		\pause
-		\implitem Rettung: \textbf{universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
+		\implitem Rettung: \zB \textbf{universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
 		Wenn $n \in O(m)$ Elemente in die Hashtable eingefügt werden \impl erwartete $ \abs{\text{Kollisionen}} \in O(1)$ 
 		\pause
 		\item Typische univ. Hashfunktion: \\
@@ -212,9 +226,21 @@
 	\visible<2->{\includegraphics[width=.6\textwidth]{hashing-linked-lists}}
 \end{frame}
 
+\begin{frame}{Hashfunktionen allgemein}
+	\textbf{Bearbeitungshinweise}
+	\begin{itemize}
+		\item Universelle Hashfunktion „herbeibeschwören“ \\
+		{\small (z.B. auf Übungsblatt, in Klausur)}: \\
+		„Sei h eine beliebige Hashfunktion aus der Familie universeller Hashfunktionen. Dann...“ 
+		\item Ihr schreibt nen Algo. Es sollen $k$ Elemente jeweils in erwartet $O(1)$ in eine Hashtable eingefügt werden. \\
+		\§{\impl} \textbf{Explizit} angeben, dass Größe der Hashtable in $\Omega(k)$ liegt! \\
+		\. Sonst: Laufzeit \bfalert{kaputt}, Satz aus VL greift dann \textbf{nicht}!
+	\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Hashtables mit verketteten Listen}
-	\textbf{Operation: $insert(e : Element)$} \\[0,125cm]
+	\textbf{Operation: $\|insert|(e : \Element)$} \\[0,125cm]
 	\begin{itemize}
 		\item Fügt das Element $e$ an den \textbf{Anfang} der Liste beim Array-Index $h(\key(e))$ ein
 		\pause
@@ -224,7 +250,7 @@
 \end{frame}
 
 \begin{frame}{Hashtables mit verketteten Listen}
-	\textbf{Operation: $remove(k : \Z)$} \\[0,125cm]
+	\textbf{Operation: $\|remove|(k : \Z)$} \\[0,125cm]
 	\begin{itemize}
 		\item Entfernt das Element $e$ mit $\key(e) = k$ aus der Liste beim Array-Index $h(k)$ (und gibt $e$ zurück)
 		\pause
@@ -234,7 +260,7 @@
 \end{frame}
 
 \begin{frame}{Hashtables mit verketteten Listen}
-	\textbf{Operation: $find(k : \Z)$} \\[0,125cm]
+	\textbf{Operation: $\|find|(k : \Z)$} \\[0,125cm]
 	\begin{itemize}
 		\item Sucht das Element $e$ mit $\key(e) = k$ aus der Liste beim Array-Index $h(k)$ und gibt $e$ zurück
 		\pause
@@ -283,14 +309,18 @@
 		\implitem Weg mit den Listen, stattdessen:
 		\pause 
 		\item \textbf{Einfügen}: \\ 
-		Slot \textbf{besetzt}? \impl lege Element beim \textbf{nächstbesten} freien Slot rechts davon ab\\
+		Slot \textbf{besetzt}? \\ 
+		\impl lege Element beim \textbf{nächstbesten} freien Slot rechts davon ab\\
 		\pause
-		Array \textbf{voll}? \impl not nice \\ 
-		\impl Erweitere das Array um „\textbf{Pufferbereich}“ mit Größe $m'$ \\ (auf den die Hashfunktion nicht abbildet)
+		Rechts \textbf{alles besetzt}? Zwei Möglichkeiten: \\ 
+		\begin{enumerate}
+			\item[1.] Array \textbf{zyklisch}: Beginne Suche von vorn 
+			\item[2.] Erweitere das Array um „\textbf{Pufferbereich}“ mit Größe $m'$ \\ (auf den die Hashfunktion \textbf{nicht} abbildet)
+		\end{enumerate}
 		\pause
 		\item \textbf{Suche}: Starte Suche wo vermutet, weiterlaufen (und testen) bis $e$ gefunden (falls $\bot$ erreicht: Abbruch)
 		\pause
-		\item \textbf{Entfernen}: Suche das zu entfernende Element (wie oben), danach alle Elemente, die zu weit rechts liegen, nach links schieben (\impl Leerstellen schließen!)
+		\item \textbf{Entfernen}: Suche das zu entfernende Element (wie oben), danach alle Elemente, die zu weit rechts liegen, nach links schieben (\impl~Leerstellen schließen!)
 	\end{itemize}
 \end{frame}
 
@@ -330,7 +360,7 @@
 	\textbf{Lineare Suche besser als Verkettete Listen?} \\[0,125cm]
 	\begin{itemize}
 		\pause
-		\item[\Pros] Cachefreundlich \\[0,25cm]
+		\item[\Pros] Cachefreundlich 
 		\pause
 		\item[\Cons] Beschränkte Größe (Unbounded Array geht auch, aber mehr Sonderfälle)
 		\pause
@@ -340,6 +370,7 @@
 \end{frame}
 
 \begin{frame}{Hashtables}
+	\ThisHasSubtasks
 	\taskheading{Ein philosophischer Abend}
 	
 	Nach dem dritten Glas Vollmilch kommt ein Kommilitone auf die bahnbrechende Entdeckung, dass sich Hashing mit verketteten Listen hochgradig optimieren ließe, indem man die verketteten Listen stets sortiert halte. 
@@ -360,7 +391,7 @@
 
 
 \begin{frame}{Hashtables}
-	\subtaskheading{b}{Ein philosophischer Abend}
+	\subtaskheading{Ein philosophischer Abend}
 	
 	Nachdem ihr einen gewissen Kommilitonen gefesselt und geknebelt auf dem Hinterhof zum Nachdenken abgelegt habt, diskutiert ihr, was passiert, wenn man die sortierten verketteten Listen durch sortierte unbeschränkte Arrays ersetzt.
 	\medskip
@@ -381,7 +412,7 @@
 
 
 \begin{frame}{Hashtables}
-	\subtaskheading{c}{Ein philosophischer Abend}
+	\subtaskheading{Ein philosophischer Abend}
 	
 	Da außer euch zur späten Stunde keine anderen Kunden mehr vorhanden sind, gesellt sich der Milchbarkeeper zu euch und fragt, ob man da nicht noch was mit amortisierter Analyse machen kann.
 	\medskip

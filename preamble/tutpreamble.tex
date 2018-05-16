@@ -157,6 +157,12 @@
 
 \newcommand{\qqquad}{\q3uad}
 
+
+\def\indentstring{}
+\def\§#1{\gdef\indentstring{#1}#1}
+\def\.{{$\hphantom{\text{\indentstring}}$}}
+
+
 \newcommand{\impl}{\ifmmode\ensuremath{\mskip\thinmuskip\Rightarrow\mskip\thinmuskip}\else$\Rightarrow$\xspace\fi}  
 \newcommand{\Impl}{\ifmmode\implies\else$\Longrightarrow$\xspace\fi}
 
@@ -305,12 +311,13 @@
 \SetKwDir{KwPointerTo}{Pointer to}
 \SetKwData{KwList}{List}
 \SetKwData{KwSet}{Set}
+\newcommand{\Element}{\|Element|}
 \newcommand{\KwListOf}{\ensuremath{\mathop{\KwList \KwOf}}} 
 \newcommand{\KwSetOf}{\ensuremath{\mathop{\KwSet \KwOf}}} 
 \SetKwDir{KwDispose}{dispose}
 
 
-\def\|#1|{\text{#1}}  % | steht für senkrecht (anstatt kursiv wie sonst im math mode)
+\def\|#1|{\text{\normalfont #1}}  % | steht für senkrecht (anstatt kursiv wie sonst im math mode)
 
 % proper math typography
 \newcommand{\functionto}{\longrightarrow} 
@@ -335,9 +342,9 @@
 \newcommand{\hanging}{\hangindent=0.7cm}
 \newcommand{\indented}{\hanging}
 
-\newcommand{\Pros}{{\huge \protect\textcolor{adaptinggreen}{\protect\contour{black}{$\protect\textbf{+}$}}}\xspace}
+\newcommand{\Pros}{{\huge \protect\textcolor{adaptinggreen}{\protect\contour{black}{\raisebox{-.3pt}{$\protect\textbf{+}$}}}}\xspace}
 
-\newcommand{\Cons}{\hspace{1pt}\protect\scalebox{0.88}[1]{\huge \protect\contour{black}{\protect\textcolor{adaptingred}{$\protect\textbf{--}$}}}\hspace{1pt}\xspace}
+\newcommand{\Cons}{\hspace{1pt}\protect\scalebox{0.88}[1]{\huge \protect\contour{black}{\protect\textcolor{adaptingred}{\raisebox{-1pt}{$\protect\textbf{--}$}}}}\hspace{1pt}\xspace}
 
 \newcommand{\yop}{\textcolor{checkgreen}{\protect\contour{black}{\protect\textbf{\checked}}}\xspace}
 \newcommand{\crash}{\ensuremath{\textcolor{crashred}{\protect\contour{black}{\protect\textbf{\lightning}}}}\xspace}
@@ -486,18 +493,22 @@
 % the presentation starts here
 
 
-
 %% Titel einfügen
 \newcommand{\titleframe}{\frame{\titlepage}}
 
 \newcounter{weeknum}
 
 \newcounter{tasknum}
+\newcounter{subtasknum}
+\resetcounteronoverlays{subtasknum}
 \resetcounteronoverlays{tasknum}
+\let\oldthesubtasknum\thesubtasknum
+\def\thesubtasknum{\ifnum\oldthesubtasknum=0\relax\else\alph{subtasknum})\fi}
+\def\ThisHasSubtasks{\setcounter{subtasknum}{1337}}
 \def\thetasknumminusone{\the\numexpr\thetasknum-1\relax\xspace}
-\newcommand{\taskheading}[1]{\addtocounter{tasknum}{1}\textbf{Aufgabe \thetasknum: #1} \\}
-\newcommand{\subtaskheading}[2]{\textbf{Aufgabe \thetasknum#1: #2} \\}
-\newcommand{\solutionheading}{\textbf{Lösung zu Aufgabe \thetasknum} \\}
+\newcommand{\taskheading}[1]{\ifnum\oldthesubtasknum=1337\relax\setcounter{subtasknum}{1}\else\setcounter{subtasknum}{0}\fi\addtocounter{tasknum}{1}\textbf{Aufgabe \thetasknum\thesubtasknum: #1} \\}
+\newcommand{\subtaskheading}[1]{\addtocounter{subtasknum}{1}\textbf{Aufgabe \thetasknum\thesubtasknum: #1} \\}
+\newcommand{\solutionheading}{\textbf{Lösung zu Aufgabe \thetasknum\thesubtasknum} \\}
 
 \setbeamertemplate{section in toc}{
 	\gray{\inserttocsection} \par	
