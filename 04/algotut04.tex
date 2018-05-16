@@ -134,6 +134,8 @@
 	Hashing
 \end{headframe}
 
+\def\key{\|key|}
+
 \begin{frame}{Hashtables: Übersicht}
 	\begin{itemize}
 			\item \textbf{ungeordnete} (!) Datenstruktur \\
@@ -142,10 +144,10 @@
 			\item \textbf{Operationen}: insert, remove, find
 			\forcenewline \pause
 			\item Unordnung: \textbf{Wie}? \\
-			\impl Jedes Element $e$ bekommt eindeutigen $key(e)$ zugeordnet \\ (Keys ab jetzt meistens \textit{ganze Zahlen})
+			\impl Jedes Element $e$ bekommt eindeutigen $\key(e)$ zugeordnet \\ (Keys ab jetzt meistens \textit{ganze Zahlen})
 			\pause
 			\item Es gilt
-			$\forall\; e, e': \quad key(e) \ \stackedtight{< \\ = \\ >}\ key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\ (wie gesagt, $key$ \textbf{eindeutig})
+			$\forall\; e, e': \quad \key(e) \ \stackedtight{< \\ = \\ >}\ \key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\ (wie gesagt, $\key$ \textbf{eindeutig})
 	\end{itemize} 
 \end{frame}
 
@@ -154,16 +156,17 @@
 \begin{frame}{Hashtables: Under the hood} 
 	\textbf{Aufbau} \\
 	\begin{itemize}
-		\item Als Datenablage ein \textbf{Array} $t$ mit Länge $m$
+		\item Als Datenablage \impl $t: \KwArray[0 \dots m-1]$ mit Länge $m$
 		\pause
-		\item \textbf{Hashfunktion} $h: \Z \functionto \{0, ..., m-1\}$ \\
+		\item \textbf{Hashfunktion} $h: \Z \functionto \{0, \dots, m-1\}$ \\
 		Soll Elemente „gleichmäßig“ aufs Array verteilen
 		\pause
-		\implitem Element $e$ landet in $t\left\lbrack h\left(key(e) \right)\right\rbrack$ \quad  (Invariante!) \\
+		\implitem Element $e$ landet in $t\left\lbrack h\left(\key(e) \right)\right\rbrack$ \quad  (Invariante!) \\
 		{\small (Wie genau: später)}
 		\pause
+		% TODO umordnen?
 		\item[\Cons] Perfektes, injektives $h$: Schön wär's! \\
-		\impl \textbf{Kollisionen} wahrscheinlich (zwei Elemente an selbe Stelle)
+		\impl \textbf{Kollisionen} generell zu wahrscheinlich {\small (zwei Elemente an selbe Stelle)}
 		\pause
 		\implitem Rettung: \textbf{universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
 		Wenn $n \in O(m)$ Elemente in die Hashtable eingefügt werden \impl erwartete $ \abs{\text{Kollisionen}} \in O(1)$ 
@@ -200,7 +203,7 @@
 \begin{frame}{Hashtables mit verketteten Listen}
 	\textbf{Operation: $insert(e : Element)$} \\[0,125cm]
 	\begin{itemize}
-		\item Fügt das Element $e$ an den \textbf{Anfang} der Liste beim Array-Index $h(key(e))$ ein
+		\item Fügt das Element $e$ an den \textbf{Anfang} der Liste beim Array-Index $h(\key(e))$ ein
 		\pause
 		\item Erwartete Laufzeit: $O(1)$
 		\item Worst-Case: $O(1)$
@@ -210,7 +213,7 @@
 \begin{frame}{Hashtables mit verketteten Listen}
 	\textbf{Operation: $remove(k : \Z)$} \\[0,125cm]
 	\begin{itemize}
-		\item Entfernt das Element $e$ mit $key(e) = k$ aus der Liste beim Array-Index $h(k)$ (und gibt $e$ zurück)
+		\item Entfernt das Element $e$ mit $\key(e) = k$ aus der Liste beim Array-Index $h(k)$ (und gibt $e$ zurück)
 		\pause
 		\item Erwartete Laufzeit: $O(1)$
 		\item Worst-Case: $O(n)$
@@ -220,7 +223,7 @@
 \begin{frame}{Hashtables mit verketteten Listen}
 	\textbf{Operation: $find(k : \Z)$} \\[0,125cm]
 	\begin{itemize}
-		\item Sucht das Element $e$ mit $key(e) = k$ aus der Liste beim Array-Index $h(k)$ und gibt $e$ zurück
+		\item Sucht das Element $e$ mit $\key(e) = k$ aus der Liste beim Array-Index $h(k)$ und gibt $e$ zurück
 		\pause
 		\item Erwartete Laufzeit: $O(1)$
 		\item Worst-Case: $O(n)$
@@ -231,7 +234,7 @@
 \begin{frame}{Hashtables mit verketteten Listen}
 	\underline{Aufgabe 1} \\
 	Gegeben sei eine Hashtabelle der Größe $m$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 
-	36, 78, 50, 1, 92, 15, 43, 99, 64 \quad  (hierbei gilt $key(e) := e$) \\
+	36, 78, 50, 1, 92, 15, 43, 99, 64 \quad  (hierbei gilt $\key(e) := e$) \\
 	Dabei sei $m$ zunächst 5 und danach 7.
 \end{frame}
 
@@ -280,7 +283,7 @@
 
 \begin{frame}{Hashtables mit linearer Suche}
 	\underline{Aufgabe 2: Mehr Hashing} \\
-	Gegeben sei eine Hashtabelle der Größe $m = 8$ und Puffergröße $m' = 2$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 36, 78, 50, 1, 92, 15, 43, 99, 64 \quad (hierbei gilt $key(e) := e$) \\
+	Gegeben sei eine Hashtabelle der Größe $m = 8$ und Puffergröße $m' = 2$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 36, 78, 50, 1, 92, 15, 43, 99, 64 \quad (hierbei gilt $\key(e) := e$) \\
 	Verwendet hierbei Hashing mit linearer Suche. \\ 
 	Was passiert, wenn im Anschluss die 43 wieder entfernt wird?
 \end{frame}
