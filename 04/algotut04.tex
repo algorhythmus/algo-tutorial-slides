@@ -9,11 +9,26 @@
 \begin{document}
 	
 \starttut{4}
+
+\thasse{
+	\begin{frame}[t]{Zum letzten Blatt (\#2)}
+	\textbf{Durchschnitt:} \quad etwa \thassedaniel{61}{64}~\% \\
+	\medskip
+	\pause
 	
-\begin{headframe}[Probably useful]
-	Wahrscheinlichkeiten
-\end{headframe}
+	\TrueQuestionE{„Für ein $n \in \N$ und $\forall k \leq n$ gilt: ...“ \\ ist eine valide Induktionsvoraussetzung.}{
+		Es sind nur \textbf{endlich viele} $k$. Bei unendlich vielen kracht's.	\\
+		(War übrigens nötig bei A.2! Nur mit $n$ reichte \textbf{nicht}!)
+	}
+	\FalseQuestionE{„$C$ ist sortiert“ ist eine passende Schleifeninvariante \\ für Merging.}{$C$ von wo bis wo?!}
+	\FalseQuestionE{„$C[1..\|index|_C]$ ist sortiert“ ist eine passende \\ Schleifeninvariante für Merging.}{
+		Meine Implementierung könnte $C[i] := 42 \; \forall i$ setzen; \\ ist dann auch sortiert. \quad Generell: \\
+		\impl Ungleichungen im IS nicht aus dem Hut zaubern, sondern in IV und Invariante stopfen und mitbeweisen.
+	}
+\end{frame}	
+}
 	
+\sectionheadframe{Wahrscheinlichkeiten}{Probably useful}
 
 \begin{frame}{My little Wahrscheinlichkeitstheorie}
 	\begin{itemize}
@@ -130,9 +145,7 @@
 \end{frame}
 \fi
 
-\begin{headframe}[Das Genie beherrscht das Chaos]
-	Hashing
-\end{headframe}
+\sectionheadframe{Hashing}{Das Genie beherrscht das Chaos}
 
 \def\key{\|key|}
 
@@ -151,8 +164,6 @@
 	\end{itemize} 
 \end{frame}
 
-
-
 \begin{frame}{Hashtables: Under the hood} 
 	\textbf{Aufbau} \\
 	\begin{itemize}
@@ -166,7 +177,7 @@
 		\pause
 		% TODO umordnen?
 		\item[\Cons] Perfektes, injektives $h$: Schön wär's! \\
-		\impl \textbf{Kollisionen} generell zu wahrscheinlich {\small (zwei Elemente an selbe Stelle)}
+		\impl \textbf{Kollisionen} zu wahrscheinlich {\small (zwei Elemente an selbe Stelle)}
 		\pause
 		\implitem Rettung: \textbf{universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
 		Wenn $n \in O(m)$ Elemente in die Hashtable eingefügt werden \impl erwartete $ \abs{\text{Kollisionen}} \in O(1)$ 
@@ -187,6 +198,8 @@
 		%\item Typische Hashfunktion: 
 	\end{itemize}
 \end{frame}
+
+\section{\dots mit verketteten Listen}
 
 \begin{frame}{Hashtables mit verketteten Listen}
 	\begin{itemize}
@@ -232,14 +245,14 @@
 
 
 \begin{frame}{Hashtables mit verketteten Listen}
-	\underline{Aufgabe 1} \\
+	\taskheading{Verkettete Listen}
 	Gegeben sei eine Hashtabelle der Größe $m$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 
 	36, 78, 50, 1, 92, 15, 43, 99, 64 \quad  (hierbei gilt $\key(e) := e$) \\
 	Dabei sei $m$ zunächst 5 und danach 7.
 \end{frame}
 
 \begin{frame}{Hashtables mit verketteten Listen}
-	\underline{Lösung von Aufgabe 1} \\[0,64cm]
+	\solutionheading
 	$m = 5:$
 	\begin{tabular}{ | c | c | c | c | c | }
 		\hline
@@ -261,6 +274,7 @@
 	Achtung: Die Reihenfolge innerhalb der verketteten Liste entspricht jeweils der \textbf{umgekehrten} Einfügereihenfolge (da Elemente immer am \textbf{Anfang} der verketteten Liste hinzugefügt werden) 
 \end{frame}
 
+\section{\dots mit linearer Suche}
 
 \begin{frame}{Hashtables mit linearer Suche}
 	\begin{itemize}
@@ -282,14 +296,14 @@
 
 
 \begin{frame}{Hashtables mit linearer Suche}
-	\underline{Aufgabe 2: Mehr Hashing} \\
+	\taskheading{Lineare Suche}
 	Gegeben sei eine Hashtabelle der Größe $m = 8$ und Puffergröße $m' = 2$ mit der Hashfunktion $h(x) := x \mod m$. Füge nacheinander folgende Elemente ein: \\ 36, 78, 50, 1, 92, 15, 43, 99, 64 \quad (hierbei gilt $\key(e) := e$) \\
 	Verwendet hierbei Hashing mit linearer Suche. \\ 
 	Was passiert, wenn im Anschluss die 43 wieder entfernt wird?
 \end{frame}
 
 \begin{frame}{Hashtables mit linearer Suche}
-	\underline{Lösung von Aufgabe 2} \\[.3\baselineskip]
+	\solutionheading
 	\begin{tabular}{ l | c | c | c | c | c | c | c | c | c | c |}
 		& \multicolumn{8}{ c |}{\small m} & \multicolumn{2}{c}{\small m'}
 		\\ \hline
@@ -326,15 +340,17 @@
 \end{frame}
 
 \begin{frame}{Hashtables}
-	\underline{Aufgabe 3: Ein philosophischer Abend}
-	\\
-	Nach dem dritten Glas Vollmilch kommt ein Kommilitone auf die bahnbrechende Entdeckung, dass sich Hashing mit verketteten Listen hochgradig optimieren ließe, indem man die verketteten Listen stets sortiert halte. \\
-	$a)$ Wie ändert sich das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
+	\taskheading{Ein philosophischer Abend}
+	
+	Nach dem dritten Glas Vollmilch kommt ein Kommilitone auf die bahnbrechende Entdeckung, dass sich Hashing mit verketteten Listen hochgradig optimieren ließe, indem man die verketteten Listen stets sortiert halte. 
+	\medskip
+	
+	Wie ändert sich das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
 \end{frame}
 
 \begin{frame}{Hashtables}
-	\underline{Lösung zu Aufgabe 3a)}
-	\\
+	\solutionheading
+	
 	\begin{itemize}
 		\item $insert$: \textbf{Worst-Case} ändert sich zu $\Theta(n)$, wenn ein Element ganz am Ende eingefügt werden muss (und somit die ganze verkettete Liste durchlaufen wird)
 		\item $remove$ und $find$: \textbf{Binäre Suche} wäre ne Idee, aber bringt nichts: \\
@@ -344,15 +360,16 @@
 
 
 \begin{frame}{Hashtables}
-	\underline{Aufgabe 3: Ein philosophischer Abend}
-	\\
+	\subtaskheading{b}{Ein philosophischer Abend}
+	
 	Nachdem ihr einen gewissen Kommilitonen gefesselt und geknebelt auf dem Hinterhof zum Nachdenken abgelegt habt, diskutiert ihr, was passiert, wenn man die sortierten verketteten Listen durch sortierte unbeschränkte Arrays ersetzt.
-	\\
-	$b)$ Wie ändert sich nun das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
+	\medskip
+	
+	Wie ändert sich nun das Worst-Case-Laufzeitverhalten von $insert$, $remove$ und $find$?
 \end{frame}
 
 \begin{frame}{Hashtables}
-	\underline{Lösung zu Aufgabe 3b)}
+	\solutionheading
 	\begin{itemize}
 		\item $insert$: Im Worst-Case immer noch $\Theta(n)$. Zwar kann die Einfügestelle mit binärer Suche in $\Theta( \log n)$ gefunden werden, doch alle Elemente rechts davon müssen um eins verschoben werden
 		\pause
@@ -364,15 +381,16 @@
 
 
 \begin{frame}{Hashtables}
-	\underline{Aufgabe 3: Ein philosophischer Abend}
-	\\
+	\subtaskheading{c}{Ein philosophischer Abend}
+	
 	Da außer euch zur späten Stunde keine anderen Kunden mehr vorhanden sind, gesellt sich der Milchbarkeeper zu euch und fragt, ob man da nicht noch was mit amortisierter Analyse machen kann.
-	\\
-	$c)$ Welches amortisierte Laufzeitverhalten lässt sich für $insert$, $remove$ und $find$ diagnostizieren (wenn man weiterhin sortierte unbeschränkte Arrays verwendet)?
+	\medskip
+	
+	Welches amortisierte Laufzeitverhalten lässt sich für $insert$, $remove$ und $find$ diagnostizieren (wenn man weiterhin sortierte unbeschränkte Arrays verwendet)?
 \end{frame}
 
 \begin{frame}{Hashtables}
-	\underline{Lösung zu Aufgabe 3c)}
+	\solutionheading
 	\begin{itemize}
 		\item $insert$: Betrachte eine Folge von $n$ Einfügeoperationen, deren Elemente streng monoton kleiner werden (Worst-Case). Die $k$-te Einfügeoperationen muss $(k-1)$ Elemente verschieben \\
 		\impl n Operationen haben die Laufzeit $\Theta(n^2)$, da lässt sich nichts amortisieren
@@ -386,8 +404,8 @@
 
 
 
-\begin{frame}{Hashtables}
-	\underline{Aufgabe 4: \emph{SparseArray}} \\
+\begin{frame}{Komplexe Datenstrukturen}
+	\taskheading{SparseArray}
 	Nehmt an, dass \textbf{allocate} euch beliebig viel \emph{uninitialisierten} Speicher in konstanter Zeit liefert. Entwerft anhand dessen ein \emph{SparseArray} mit folgenden Eigenschaften: 
 	\begin{itemize}
 		\item Ein \emph{SparseArray} mit $n$ Slots braucht $O(n)$ Speicher
@@ -397,9 +415,9 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Hashtables}
-	\underline{Lösung zu Aufgabe 4}
-	\\
+\begin{frame}{Komplexe Datenstrukturen}
+	\solutionheading
+	
 	Konstruiere ein \emph{SparseArray} der Größe $n$ mihtilfe von drei Arrays: \\ 
 	$D$ (für die \textbf{Daten}), $Z$ (für \textbf{Zähler}) und $B$ (für \textbf{Beweise}). \\ 
 	Zudem initialisiere Counter $c := 0$. \\ 
@@ -424,9 +442,9 @@
 	
 \end{frame}
 
-\begin{frame}{Hashtables}
-	\underline{Lösung zu Aufgabe 4}
-	\\
+\begin{frame}{Komplexe Datenstrukturen}
+	\solutionheading
+	
 	\begin{algorithm}[H]
 		\Function{get$(i)$}{
 			\eIf{$Z[i] < c \KwAnd B[Z[i]] = i$}{
@@ -446,6 +464,6 @@
 	\end{algorithm}
 \end{frame}
 
-	
+\xkcdframevert{795}{Danke für die Aufmerksamkeit! \smiley}{2}
 
 \end{document}
