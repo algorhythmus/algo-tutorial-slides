@@ -10,6 +10,14 @@
 	
 \starttut{4}
 
+\framePrevEpisode
+
+\begin{frame}[t]{Quiz}
+	\FalseQuestionE{Auf verketteten Listen läuft popBack in $O(1)$.}{Auf \textbf{einfach verketteten} Listen nicht!}
+	\TrueQuestionE{Auf Unbounded Arrays lässt sich pushBack und popBack auch nicht-amortisiert in $O(1)$ implementieren.}{Man hält immer ein nächst-kleineres und ein nächst-größeres Array parat und kopiert das Schritt für Schritt bei jeder Operation mit. \impl mehr Speicher}
+	\FalseQuestionE{Eine amortisierte Laufzeitangabe liefert uns keine Laufzeitgarantien.}{Doch: $n$~Operationen laufen garantiert in der für $n$~Operationen angegebenen Laufzeit ab. (Eine einzelne Op: keine Ahnung)}
+\end{frame}
+
 \thasse{
 	\begin{frame}[t]{Zum letzten Blatt (\#2)}
 	\textbf{Durchschnitt:} \quad etwa \thassedaniel{61}{64}~\% \\
@@ -162,7 +170,7 @@
 
 \def\key{\|key|}
 
-\begin{frame}{Hashtables: Übersicht} 
+\begin{frame}{Hashtables: Übersicht}
 	\begin{itemize} 
 			\item \textbf{ungeordnete} (!) Datenstruktur \\
 			\impl Kein Index mehr (z.B. $A[i]$) \quad {\small (Mit beliebigen Indizes erweiterbar!)}
@@ -170,9 +178,9 @@
 			\item \textbf{Operationen}: insert, remove, find
 			\forcenewline \pause
 			\item Unordnung: \textbf{Wie}? \\
-				\§{\impl} Jedes Element $e$ bekommt eindeutigen $\key(e)$ zugeordnet \\ 
+				\§{\impl} Jedes Element $e$ bekommt eindeutigen $\key(e)$ zugeordnet \\
 				\. {\small (Keys ab jetzt meistens \textit{ganze Zahlen})} \\
-			\impl Benutzen Key, um das Element \emph{möglichst schnell} zu wiederzufinden
+			\impl Benutzen Key, um das Element \emph{schnell} zu wiederzufinden
 			\pause
 			\item „Key \textbf{eindeutig}“ heißt \\
 			$\forall e, e': \quad \key(e) \ \stackedtight{< \\ = \\ >}\ \key(e') \gdw e \ \stackedtight{< \\ = \\ >} \ e'$ \\
@@ -231,7 +239,7 @@
 	\begin{itemize}
 		\item Universelle Hashfunktion „herbeibeschwören“ \\
 		{\small (z.B. auf Übungsblatt, in Klausur)}: \\
-		„Sei h eine beliebige Hashfunktion aus der Familie universeller Hashfunktionen. Dann...“ 
+		„Sei $h$ eine beliebige Hashfunktion aus der Familie universeller Hashfunktionen. Dann...“ 
 		\item Ihr schreibt nen Algo. Es sollen $k$ Elemente jeweils in erwartet $O(1)$ in eine Hashtable eingefügt werden. \\
 		\§{\impl} \textbf{Explizit} angeben, dass Größe der Hashtable in $\Omega(k)$ liegt! \\
 		\. Sonst: Laufzeit \bfalert{kaputt}, Satz aus VL greift dann \textbf{nicht}!
@@ -385,7 +393,9 @@
 	\begin{itemize}
 		\item $insert$: \textbf{Worst-Case} ändert sich zu $\Theta(n)$, wenn ein Element ganz am Ende eingefügt werden muss (und somit die ganze verkettete Liste durchlaufen wird)
 		\item $remove$ und $find$: \textbf{Binäre Suche} wäre ne Idee, aber bringt nichts: \\
-		Index-Zugriff auf Listen nicht in $O(1)$ \impl binäre Suche nicht in $O(\log n)$
+		Index-Zugriff auf Listen nicht in $O(1)$ \impl binäre Suche nicht in $O(\log n)$ \\
+		\pause 
+		\item {\small Mit Skip-Lists (s. Übung) geht's auch schneller (zumindest amortisiert und je nachdem, wie balanciert die Datenstruktur gerade ist)}
 	\end{itemize}
 \end{frame}
 
@@ -477,6 +487,13 @@
 	\solutionheading
 	
 	\begin{algorithm}[H]
+		\Procedure{reset}{
+			$c := 0$ \;
+			\LComment{Das markiert gemütlich den Inhalt aller Arrays als Unsinn}
+		}
+		\;
+		\pause
+		\;
 		\Function{get$(i)$}{
 			\eIf{$Z[i] < c \KwAnd B[Z[i]] = i$}{
 				\Return{$D[i]$}
@@ -484,13 +501,6 @@
 				\LComment{garbage inside $D[i]$, so:} \;
 				\Return{$\bot$} 
 			}
-		}
-		\;
-		\pause
-		\;
-		\Procedure{reset}{
-			$c := 0$ \;
-			\LComment{Das markiert recht gemütlich den Inhalt aller Arrays als Unsinn}
 		}
 	\end{algorithm}
 \end{frame}
