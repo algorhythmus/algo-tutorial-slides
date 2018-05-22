@@ -9,23 +9,22 @@
 \starttut{5}
 	
 % REFERENZIELLE INTEGRITÄT?
+\mycomment{
+	\begin{frame}{Schwarzes Brett}
+		\begin{itemize}
+			\item \textbf{21.06.: Probeklausur!} (statt Übungstermin, statt Übungsblatt) \\
+			Wird nicht \textbf{gewertet}, aber von mir \textbf{korrigiert} \\
+			Stoff: max. bis VL[...21.06.]
+			\pause
+			\item Hashing mit verketteten Listen: insert $=$ push\textbf{Front} \\
+			(Elemente werden am \textbf{Anfang} der Liste eingefügt!)
+			\pause
+			\item Buzzwords: Hashing \gdw \textbf{erwartete} Laufzeit!
+		\end{itemize}
+	\end{frame}
+}
 
-\begin{frame}{Schwarzes Brett}
-	\begin{itemize}
-		\item \textbf{21.06.: Probeklausur!} (statt Übungstermin, statt Übungsblatt) \\
-		Wird nicht \textbf{gewertet}, aber von mir \textbf{korrigiert} \\
-		Stoff: max. bis VL[...21.06.]
-		\pause
-		\item Hashing mit verketteten Listen: insert $=$ push\textbf{Front} \\
-		(Elemente werden am \textbf{Anfang} der Liste eingefügt!)
-		\pause
-		\item Buzzwords: Hashing \gdw \textbf{erwartete} Laufzeit!
-	\end{itemize}
-\end{frame}
-
-\begin{headframe}[Des Informatikers liebstes Hobby] %TODO
-	Sortieren
-\end{headframe}
+\sectionheadframe{Sortieren}{Des Informatikers liebstes Hobby} %TODO
 
 \begin{frame}{Sortieralgorithmen}
 	\textbf{Ein paar Definitionen} \\[0,125cm]
@@ -35,8 +34,9 @@
 		\item Ein Sortieralgorithmus heißt \textbf{stabil} :\gdw Elemente mit \textbf{exakt gleichem} Wert haben nach dem Sortieren die \textbf{gleiche Reihenfolge} zueinander wie davor
 	\end{itemize}
 \end{frame}
+
+\section{Insertion-/SelectionSort}
 	
-%[t] oder [c]
 \begin{frame}{Sortieren – Insertion-/SelectionSort}
 	\textbf{Insertion- und SelectionSort: Sortieren von Arrays} \\[0,125cm]
 	\begin{itemize}
@@ -63,15 +63,15 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Sortieren – Insertion-/SelectionSort}
+\begin{frame}[t]{Sortieren – Insertion-/SelectionSort}
 	\begin{exampleblock}{InsertionSort}
 		\begin{algorithm}[H]
-			\Procedure{InsertionSort$(A: \KwArray[1..n] \KwOf Element)$}{
+			\Procedure{InsertionSort$(A: \KwArray[1..n] \KwOf \Element)$}{
 				\For{$i := 2 \KwTo n$} {
 					\LComment{Füge $A[i]$ in den sortierten Bereich ein: } \;
 					$j := i$\;
 					\While{$j > 1 \KwAnd A[j-1] > A[j]$} {
-						$swap(A[j-1], A[j])$\;
+						$\|swap|(A[j-1],\, A[j])$\;
 						$j\mm$\;
 					}
 				}
@@ -84,10 +84,10 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Sortieren – Insertion-/SelectionSort}
+\begin{frame}[t]{Sortieren – Insertion-/SelectionSort}
 	\begin{exampleblock}{SelectionSort}
 		\begin{algorithm}[H]
-			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf Element)$}{
+			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf \Element)$}{
 				\For{$i := 1 \KwTo n$} {
 					$\|minIndex| := i$\;
 					\For{$j := i+1 \KwTo n$} {
@@ -96,14 +96,14 @@
 						}
 					}
 					\LComment{Das ausgewählte Element landet beim Index $i$:} \;
-					$swap(A[i], A[\|minIndex|])$\;
+					$swap(A[i],\, A[\|minIndex|])$\;
 				}
 			}
 		\end{algorithm}
 	\end{exampleblock}
 	\begin{itemize}
 		\item Worst-Case? \only<2>{\impl  $\Theta(n^2)$ (immer)}
-		\item Best-Case? \only<2>{\impl  $\Theta(n^2)$ (immer)}
+		\item Best-Case? \visible<2>{\impl  $\Theta(n^2)$ (immer -- zumindest so, wie hier, ohne Optimierungen)}
 	\end{itemize}
 \end{frame}
 
@@ -121,7 +121,7 @@
 	\end{itemize}
 \end{frame}
 
-
+\section{Mergesort}
 \begin{frame}{Sortieren\only<1-3|handout:0>{ ...und mit Listen?}\only<4->{ – Mergesort}}
 	Bekannt:   %[t] and \vspace doesnt seem to work here... :(
 	\begin{itemize}
@@ -133,7 +133,7 @@
 		\pause
 		\implitem Also: Zerlege Listen rekursiv bis zum Basisfall und füge die Ergebnisse jeweils zusammen \impl \textbf{Mergesort}
 		\begin{algorithm}[H]
-			\Function{MergeSort$(L: \KwListOf Element): \KwListOf Element$}{
+			\Function{MergeSort$(L: \KwListOf \Element): \KwListOf \Element$}{
 				\lIf{$\abs{L} \leq 1$}{\Return{$L$}} 
 				\Else{
 					$\Matrix{\|first| \\ \|second|}
@@ -177,23 +177,41 @@
 	\end{itemize}
 \end{frame}
 
-%TODO: Nicht vorwegnehmen.
+\begin{frame}{Aufgabe: Mergesort}
+	\taskheading{Mergesort}
+	Sortiert die Liste $\llist{65,12,42,87,5,42,33,29}$ mit Mergesort und zeichnet dazu den Rekursionsbaum.
+\end{frame}
+
+\begin{frame}{Aufgabe: Mergesort}
+	\solutionheading
+	\medskip
+	\includegraphics[height=.7\frameheight]{Mergesortaufgabe.pdf}
+\end{frame}
+%TODO Solutionframe
+
 \begin{frame}[t]{Sortieren – untere Schranke}
 	\textbf{Vorlesung}: \\
 	\quad Vergleichsbasiertes Sortieren von $n$ Elementen dauert $\Omega(n \log n)$. \\
 	\pause
-	\forcenewline
-	\textbf{Warum?} \\
-	\forcenewline
-	\pause
-	\impl Ein \textbf{log}ischer Zusammenhang? \\[0,125cm]
-	\YesQuestion{Ist $\log(n!) \in \Theta(n\log n)$?} 
+	\bigskip
+	\textbf{Zutaten:} \quad $\log(n!) \in \Theta(n\log n)$
+	\mycomment{  % Dämlich. Jeder sagt da „Ja“.
+		\textbf{Warum?} \\
+		\forcenewline
+		\pause
+		\impl Ein \textbf{log}ischer Zusammenhang? \\[0,125cm]
+		\YesQuestion{Ist $\log(n!) \in \Theta(n\log n)$?} 
+	}
+	
 \end{frame}
 
 \begin{frame}{Sortieren – untere Schranke}
 	$\log(n!) \in O(n\log n)$, denn: 
 	\pause
-	\[\log(n!) = \log(1 \cdot 2 \cdot \cdots \cdot (n-1) \cdot n) \leq \log(n \cdot n \cdot \cdots \cdot n \cdot n) = \log(n^n) = n\log n \]
+	\begin{align*}
+		\log(n!) &= \log(1 \cdot 2 \cdot \cdots \cdot (n-1) \cdot n) \\
+				 &\leq \log(n \cdot n \cdot \cdots \cdot \hphantom{(} n \hphantom{{\!}-1)} \cdot n) = \log(n^n) = n\log n.
+	\end{align*}
 	\pause
 	
 	$\log(n!) \in \Omega(n\log n)$, denn:
@@ -201,18 +219,18 @@
 	\begin{align*}
 		\log(n!) 
 		&= \log \Big( 
-		\underbrace{1 \cdot 2 \cdot \cdots \cdot ( 
+		\underbrace{1 \cdot 2 \cdots \cdot ( 
 			\floor{\tfrac{n}{2}} - 1
-			)}_{\visible<5->{\geq 1 \cdots 1}}& \cdot \floor{\tfrac{n}{2}} \cdot & \underbrace{( 
+			)}_{\visible<5->{\geq 1 \cdots 1}}     \cdot \floor{\tfrac{n}{2}} \cdot     \underbrace{( 
 			\floor{\tfrac{n}{2}} + 1
-			) \cdot \cdots \cdot (n-1 ) \cdot n }_{\visible<5->{\geq \floor{\tfrac{n}{2}} \cdots \floor{\tfrac{n}{2}}}}
+			)  \cdots \cdot (n-1 ) \cdot n }_{\visible<5->{\geq \floor{\tfrac{n}{2}} \cdots \floor{\tfrac{n}{2}}}}
 		\Big) \\
 		\pause\pause
-		&\geq \log \big( \overbrace{1 \cdot 1 \cdot \cdots \cdot 1 \cdot 1}& \cdot \floor{\tfrac{n}{2}} \cdot & \overbrace{\floor{\tfrac{n}{2}} \cdot \cdots \cdot \floor{\tfrac{n}{2}} \cdot \floor{\tfrac{n}{2}} } \big) \\
+		&\geq \log \big( \overbrace{1 \cdot 1 \cdots\cdots\cdots\cdot 1 \cdot 1}      \cdot \floor{\tfrac{n}{2}} \cdot     \overbrace{\floor{\tfrac{n}{2}}  \cdots \cdots \cdots\cdots\cdots \floor{\tfrac{n}{2}} } \big) \\
 		\pause
-		& \omit\rlap{$ \geq \log\left(\floor{\frac{n}{2}}^{\floor{\frac{n}{2}}}\right) = \floor{\frac{n}{2}} \cdot \log(\floor{\frac{n}{2}}) $} \\ 
+		& \geq \log\left(\floor{\frac{n}{2}}^{\floor{\frac{n}{2}}}\right) = \floor{\frac{n}{2}} \cdot \log\left(\floor{\frac{n}{2}}\right) \\ 
 		\pause
-		& \omit\rlap{$ \in \Theta\left(\frac{1}{2} \cdot n \cdot (\log n - \log 2 )\right) = \Theta(n \log n) $}
+		& \in \Th{\frac{1}{2} \cdot n \cdot (\log n - \log 2 )} = \Theta(n \log n)
 	\end{align*}
 \end{frame}
 
@@ -287,20 +305,23 @@
 	\url{http://panthema.net/2013/sound-of-sorting/}
 \end{frame}
 
+\section{Aufgaben}
 
 \begin{frame}{Sortieren}
-	\underline{Aufgabe 1: Spaghettisort} \\
-	Unterm Schrank der Vorratskammer findet ihr noch einen guten Batzen (unzubereiteter, trockener) Spaghetti. Leider sind diese im Laufe der Jahre etwas brüchig geworden und liegen daher nun in sehr vielen verschiedenen Längen vor. Um einzuschätzen, ob ihr die Spaghetti noch essen wollt oder nicht, möchtet ihr das Durcheinander in eine übersichtlichere Anordnung überführen. Überlegt euch ein Verfahren, wie ihr die Nudeln in linearer Zeit (in Bezug auf die Anzahl der Spaghetti) der Länge nach sortieren könnt.
+	\taskheading{Spaghettisort} 
+	Unterm Schrank der Vorratskammer findet ihr noch einen guten Batzen (unzubereiteter, trockener) Spaghetti. Leider sind diese im Laufe der Jahre etwas brüchig geworden und liegen daher nun in sehr vielen verschiedenen Längen vor. Um einzuschätzen, ob ihr die Spaghetti noch essen wollt oder nicht, möchtet ihr das Durcheinander in eine übersichtlichere Anordnung überführen. \\
+	\medskip
+	Überlegt euch ein Verfahren, wie ihr die Nudeln in linearer Zeit (in Bezug auf die Anzahl der Spaghetti) der Länge nach sortieren könnt.
 \end{frame}
 
 \begin{frame}{Sortieren}
-	\underline{Lösung von Aufgabe 1} \\
+	\solutionheading 
 	Die Spaghetti in der Hand auf dem Tisch aufrichten und „absacken“ lassen. Mit der anderen Hand von oben auf die Spaghetti herabfahren und so feststellen, welche Nudel zuerst piekst. Diese ist dann die Längste und wird links zu den bereits entfernten Spaghetti dazugelegt. Wiederholen, bis keine Spaghetti mehr unsortiert sind.
 \end{frame}
 
 
 \begin{frame}{Sortieren}
-	\underline{Aufgabe 2: Doktor Meta is back!} \\[0,125cm]
+	\taskheading{Doktor Meta is back!} 
 	{	\small
 		Der ebenso geniale wie hochmoderne Superbösewicht Doktor Meta ist in Aufbruchstimmung! Erst neulich hat er eine klaffende Marktlücke erkannt, mit der er seinen Reichtum mehren und schließlich die Weltherrschaft an sich reißen wird: Den Verleih von \textbf{Turingmaschinen}!
 		
@@ -316,8 +337,8 @@
 \end{frame}
 
 \begin{frame}{Sortieren}
-	\underline{Lösung von Aufgabe 2} \\
-	\vspace{-.6\baselineskip} \textbf{Konvertiere} Buchungsliste $\rightsquigarrow$ Liste von \textbf{Ereignissen}: $\left(\stackedtight{\text{Zeitpunkt } \\ \text{Typ }t \\ dx}\right)$, \\ 
+	\solutionheading
+	\vspace{-.4\baselineskip} \textbf{Konvertiere} Buchungsliste $\rightsquigarrow$ Liste von \textbf{Ereignissen}: $\left(\stackedtight{\text{Zeitpunkt } \\ \text{Typ }t \\ dx}\right)$, \\ 
 	\vspace{-.8\baselineskip} wobei $dx = \tight{\caseslr{-1 & \text{für Ausleihe} \\ 1 & \text{für Rückgabe}}}$. \\
 	\impl Für jede Buchung werden \textbf{zwei} Ereignisse angelegt. \\
 	\textbf{Sortiere} Ereignisliste aufsteigend nach Zeitpunkt (falls gleiche Zeit \impl Rückgabe \textbf{vor} Ausleihe!) \\
