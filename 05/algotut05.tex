@@ -64,27 +64,6 @@
 \end{frame}
 
 \begin{frame}[t]{Sortieren – Insertion-/SelectionSort}
-	\begin{exampleblock}{InsertionSort}
-		\begin{algorithm}[H]
-			\Procedure{InsertionSort$(A: \KwArray[1..n] \KwOf \Element)$}{
-				\For{$i := 2 \KwTo n$} {
-					\LComment{Füge $A[i]$ in den sortierten Bereich ein: } \;
-					$j := i$\;
-					\While{$j > 1 \KwAnd A[j-1] > A[j]$} {
-						$\|swap|(A[j-1],\, A[j])$\;
-						$j\mm$\;
-					}
-				}
-			}
-		\end{algorithm}
-	\end{exampleblock}
-	\begin{itemize}
-		\item Worst-Case? \only<2>{\impl $\Theta(n^2)$ (umgekehrt sortiertes Array)}
-		\item Best-Case? \only<2>{\impl $\Theta(n)$ (bereits sortiertes Array)}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[t]{Sortieren – Insertion-/SelectionSort}
 	\begin{exampleblock}{SelectionSort}
 		\begin{algorithm}[H]
 			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf \Element)$}{
@@ -107,6 +86,26 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}[t]{Sortieren – Insertion-/SelectionSort}
+	\begin{exampleblock}{InsertionSort}
+		\begin{algorithm}[H]
+			\Procedure{InsertionSort$(A: \KwArray[1..n] \KwOf \Element)$}{
+				\For{$i := 2 \KwTo n$} {
+					\LComment{Füge $A[i]$ in den sortierten Bereich ein: } \;
+					$j := i$\;
+					\While{$j > 1 \KwAnd A[j-1] > A[j]$} {
+						$\|swap|(A[j-1],\, A[j])$\;
+						$j\mm$\;
+					}
+				}
+			}
+		\end{algorithm}
+	\end{exampleblock}
+	\begin{itemize}
+		\item Worst-Case? \only<2>{\impl $\Theta(n^2)$ (umgekehrt sortiertes Array)}
+		\item Best-Case? \only<2>{\impl $\Theta(n)$ (bereits sortiertes Array)}
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{Sortieren – Insertion-/SelectionSort}
 	\textbf{Das geht doch besser! Oder?}
@@ -185,24 +184,71 @@
 \begin{frame}{Aufgabe: Mergesort}
 	\solutionheading
 	\medskip
+	\centering
 	\includegraphics[height=.7\frameheight]{Mergesortaufgabe.pdf}
 \end{frame}
-%TODO Solutionframe
+
+\begin{frame}{Sortieren}
+	\taskheading{Spaghettisort} 
+	Unterm Schrank der Vorratskammer findet ihr noch einen guten Batzen (unzubereiteter, trockener) Spaghetti. Leider sind diese im Laufe der Jahre etwas brüchig geworden und liegen daher nun in sehr vielen verschiedenen Längen vor. Um einzuschätzen, ob ihr die Spaghetti noch essen wollt oder nicht, möchtet ihr das Durcheinander in eine übersichtlichere Anordnung überführen. \\
+	\medskip
+	Überlegt euch ein Verfahren, wie ihr die Nudeln in linearer Zeit (in Bezug auf die Anzahl der Spaghetti) der Länge nach sortieren könnt.
+\end{frame}
+
+\begin{frame}{Sortieren}
+	\solutionheading 
+	Die Spaghetti in der Hand auf dem Tisch aufrichten und „absacken“ lassen. Mit der anderen Hand von oben auf die Spaghetti herabfahren und so feststellen, welche Nudel zuerst piekst. Diese ist dann die Längste und wird links zu den bereits entfernten Spaghetti dazugelegt. Wiederholen, bis keine Spaghetti mehr unsortiert sind.
+\end{frame}
 
 \begin{frame}[t]{Sortieren – untere Schranke}
 	\textbf{Vorlesung}: \\
 	\quad Vergleichsbasiertes Sortieren von $n$ Elementen dauert $\Omega(n \log n)$. \\
 	\pause
 	\bigskip
-	\textbf{Zutaten:} \quad $\log(n!) \in \Theta(n\log n)$
-	\mycomment{  % Dämlich. Jeder sagt da „Ja“.
-		\textbf{Warum?} \\
-		\forcenewline
-		\pause
-		\impl Ein \textbf{log}ischer Zusammenhang? \\[0,125cm]
-		\YesQuestion{Ist $\log(n!) \in \Theta(n\log n)$?} 
-	}
+	\textbf{Zutaten:} 
+	\begin{itemize}[<+->]
+		\item \textbf{Binärbaum}: Ein Baum, bei dem jeder Knoten \textbf{maximal zwei} Kindknoten besitzt.
+		\item \textbf{Höhe} $h$ eines Binärbaums: Die \textbf{Länge} des längsten (wiederholungsfreien) Pfades von der \textbf{Wurzel} zu einem \textbf{Blatt} \\ {\small ($=$ Anzahl Kanten, über die man läuft)}. 
+		\item Ein Binärbaum der Höhe $h$ hat \textbf{maximal} $2^h$  Blätter.
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Der Sortierbaum -- Aufbau}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=11cm]{vergleichsbaum}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Sortieren – untere Schranke}
+	\textbf{Der Sortierbaum -- Funktionsweise}
+	\begin{itemize}
+	\item Für jede Folgenlänge $n$ gibt es einen \textbf{eigenen} Sortierbaum.
+	\item Jeder \textbf{Knoten} im Baum repräsentiert den \textbf{Vergleich} zweier Elemente, dessen zwei mögliche Ergebnisse ($\leq$ oder $>$) zu versch. Kindern führen
+	\implitem Ganz unten: \textbf{Blätter} repräsentieren \textbf{endgültige sortierte Reihenfolge} der Elemente (die durch die vorherigen Vergleiche bekannt ist)
 	
+	\pause
+	\medskip
+	\item Betrachte minimalen Sortierbaum $T$ für eine Folge der Länge $n$.
+	\item Der Sortierbaum muss zu \textit{jeder möglichen Umsortierung} der Folge führen können \impl er \textbf{muss} $n!$ Blätter haben.
+	\implitem Höhe $h_T \geq \log(n!)$
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]{Sortieren – untere Schranke}
+	\textbf{Vorlesung}: \\
+	\quad Vergleichsbasiertes Sortieren von $n$ Elementen dauert $\Omega(n \log n)$. \\
+	\bigskip
+	\textbf{Zutaten:} 
+	\begin{itemize}
+		\item \textbf{Binärbaum}: Ein Baum, bei dem jeder Knoten \textbf{maximal zwei} Kindknoten besitzt.
+		\item \textbf{Höhe} $h$ eines Binärbaums: Die \textbf{Länge} des längsten (wiederholungsfreien) Pfades von der \textbf{Wurzel} zu einem \textbf{Blatt} \\ {\small ($=$ Anzahl Kanten, über die man läuft)}. 
+		\item Ein Binärbaum der Höhe $h$ hat \textbf{maximal} $2^h$  Blätter.
+		\item \alert{$\log(n!) \in \Theta(n\log n)$}
+	\end{itemize}	
 \end{frame}
 
 \begin{frame}{Sortieren – untere Schranke}
@@ -235,88 +281,47 @@
 \end{frame}
 
 \begin{frame}{Sortieren – untere Schranke}
-	\textbf{Vorbereitende Definitionen}
-	\pause
-	\begin{itemize}
-		\item \textbf{Binärbaum}: Ein Baum, bei dem jeder Knoten \textbf{maximal zwei} Kindknoten besitzt. 
-		\pause
-		\item \textbf{Wurzel}: Knoten eines Baumes, der keine Eltern hat.
-		\item \textbf{Blatt}: Knoten eines Baumes, der keine Kinder hat.
-		\pause
-		\item \textbf{Höhe} $h$ eines Binärbaums: Die \textbf{Länge} des längsten (wiederholungsfreien) Pfades von der \textbf{Wurzel} zu einem \textbf{Blatt} \\ {\small ($=$ Anzahl Kanten, über die man läuft)}.
-	\end{itemize}
+\textbf{Der Sortierbaum -- Analyse}
+\begin{itemize}
+	\item Höhe $h_T \geq \log(n!) \in \Theta(n \log n)$ 
+	\item Höhe $h_T \entspr$ Anzahl nötiger \textbf{Vergleiche} \entspr (Worst-Case-)\textbf{Laufzeit}
+	\Implitem Vergleichsbasierte Sortieralgorithmen können keinen besseren Worst-Case als $\Theta(n\log n)$ haben.
+	\implitem \textbf{untere asymptotische Schranke} für vergleichsbasiertes Sortieren, „schneller geht's nicht“. \quad\qedsymbol
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Sortieren – untere Schranke}
-	\textbf{Behauptung}: Ein Binärbaum der Höhe $h$ hat \textbf{maximal} $2^h$  Blätter. \\
-	\pause
-	\textbf{Beweis} durch vollständige Induktion über $h$: \\
-	\pause
-	\hanging {\textbf{IA}. ($h = 0$):  \quad $T$ mit $h = 0$ hat nur einen Knoten: Wurzel $=$ Blatt. \newline $2^0 = 1$ \ \checkmark } \\
-	\pause
-	\hanging {\textbf{IV}.: Für ein festes $h \in \N_0$ gelte die Behauptung für alle Binärbäume der Höhe $h' \leq h$.} \\
-	\pause
-	\hanging {\textbf{IS}. ($h \rightsquigarrow h+1$): \quad Sei $T$ Binärbaum mit Höhe $h+1$ und Wurzel $w$. $w$ hat maximal 2 Kinder. Beide sind Wurzeln kleinerer Sub-Bäume $S_1, S_2$. Die $S_k$ haben max. Höhe $h$ $\stackrel{\text{IV}}{\impl}$ haben max. $2^h$ Blätter. \newline
-		\Impl $T$ hat insges. max. $2 \cdot 2^h = 2^{h+1}$ Blätter. \qed } \\
-	%Betrachte den Wurzelknoten des Binärbaumes der Höhe $h+1$. Dieser hat maximal zwei Kindknoten. Jeder dieser Kindknoten ist Wurzelknoten eines (Sub-)Baumes der maximalen Höhe $h$ und führt (nach IV.) somit jeweils maximal zu $2^h$ Blattknoten. \\
-	%Der gesamte Binärbaum hat also insgesamt maximal $2 \cdot 2^h = 2^{h+1}$ Blattknoten. 
-	\pause
-	\impl \textbf{Folgerung}: Ein Binärbaum mit $n$ Blättern muss \textit{mindestens} die Höhe $\log n$ haben.
-\end{frame}
+%\begin{frame}{Sortieren – untere Schranke}
+%	\textbf{Vorbereitende Definitionen}
+%	\pause
+%	\begin{itemize}
+%		
+%		\pause
+%		\item \textbf{Wurzel}: Knoten eines Baumes, der keine Eltern hat.
+%		\item \textbf{Blatt}: Knoten eines Baumes, der keine Kinder hat.
+%		\pause
+%		
+%	\end{itemize}
+%\end{frame}
 
-\begin{frame}{Sortieren – untere Schranke}
-	\textbf{Der Sortierbaum -- Aufbau}
-	\begin{figure}[htp]
-		\centering
-		\includegraphics[width=11cm]{vergleichsbaum}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Sortieren – untere Schranke}
-	\textbf{Der Sortierbaum -- Funktionsweise}
-	\pause
-	\begin{itemize}
-		\item Für jede Folgenlänge $n$ gibt es einen \textbf{eigenen} Sortierbaum.
-		\pause
-		\item Jeder \textbf{Knoten} im Baum repräsentiert den \textbf{Vergleich} zweier Elemente, dessen zwei mögliche Ergebnisse ($\leq$ oder $>$) zu versch. Kindern führen
-		\pause
-		\implitem Ganz unten: \textbf{Blätter} repräsentieren \textbf{endgültige sortierte Reihenfolge} der Elemente (die durch die vorherigen Vergleiche bekannt ist)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Sortieren – untere Schranke}
-	\textbf{Der Sortierbaum -- Analyse}
-	\pause
-	\begin{itemize}
-		\item Betrachte minimalen Sortierbaum $T$ für eine Folge der Länge $n$.
-		\pause
-		\item Der Sortierbaum muss zu \textit{jeder möglichen Umsortierung} der Folge führen können \impl er \textbf{muss} $n!$ Blätter haben.
-		\pause
-		\implitem Höhe $h_T \geq \log(n!) \in \Theta(n \log n)$ 
-		\pause
-		\item Höhe $h_T \entspr$ Anzahl nötiger \textbf{Vergleiche} \entspr (Worst-Case-)\textbf{Laufzeit}
-		\Implitem Vergleichsbasierte Sortieralgorithmen können keinen besseren Worst-Case als $\Theta(n\log n)$ haben.
-		\pause
-		\implitem \textbf{untere asymptotische Schranke} für vergleichsbasiertes Sortieren, „schneller geht's nicht“. \quad\qedsymbol
-	\end{itemize}
-\end{frame}
+%\begin{frame}{Sortieren – untere Schranke}
+%	\textbf{Behauptung}: Ein Binärbaum der Höhe $h$ hat \textbf{maximal} $2^h$  Blätter. \\
+%	\pause
+%	\textbf{Beweis} durch vollständige Induktion über $h$: \\
+%	\pause
+%	\hanging {\textbf{IA}. ($h = 0$):  \quad $T$ mit $h = 0$ hat nur einen Knoten: Wurzel $=$ Blatt. \newline $2^0 = 1$ \ \checkmark } \\
+%	\pause
+%	\hanging {\textbf{IV}.: Für ein festes $h \in \N_0$ gelte die Behauptung für alle Binärbäume der Höhe $h' \leq h$.} \\
+%	\pause
+%	\hanging {\textbf{IS}. ($h \rightsquigarrow h+1$): \quad Sei $T$ Binärbaum mit Höhe $h+1$ und Wurzel $w$. $w$ hat maximal 2 Kinder. Beide sind Wurzeln kleinerer Sub-Bäume $S_1, S_2$. Die $S_k$ haben max. Höhe $h$ $\stackrel{\text{IV}}{\impl}$ haben max. $2^h$ Blätter. \newline
+%		\Impl $T$ hat insges. max. $2 \cdot 2^h = 2^{h+1}$ Blätter. \qed } \\
+%	%Betrachte den Wurzelknoten des Binärbaumes der Höhe $h+1$. Dieser hat maximal zwei Kindknoten. Jeder dieser Kindknoten ist Wurzelknoten eines (Sub-)Baumes der maximalen Höhe $h$ und führt (nach IV.) somit jeweils maximal zu $2^h$ Blattknoten. \\
+%	%Der gesamte Binärbaum hat also insgesamt maximal $2 \cdot 2^h = 2^{h+1}$ Blattknoten. 
+%	\pause
+%	\impl \textbf{Folgerung}: Ein Binärbaum mit $n$ Blättern muss \textit{mindestens} die Höhe $\log n$ haben.
+%\end{frame}
 
 \begin{frame}{The Sound of Sorting}
 	\url{http://panthema.net/2013/sound-of-sorting/}
-\end{frame}
-
-\section{Aufgaben}
-
-\begin{frame}{Sortieren}
-	\taskheading{Spaghettisort} 
-	Unterm Schrank der Vorratskammer findet ihr noch einen guten Batzen (unzubereiteter, trockener) Spaghetti. Leider sind diese im Laufe der Jahre etwas brüchig geworden und liegen daher nun in sehr vielen verschiedenen Längen vor. Um einzuschätzen, ob ihr die Spaghetti noch essen wollt oder nicht, möchtet ihr das Durcheinander in eine übersichtlichere Anordnung überführen. \\
-	\medskip
-	Überlegt euch ein Verfahren, wie ihr die Nudeln in linearer Zeit (in Bezug auf die Anzahl der Spaghetti) der Länge nach sortieren könnt.
-\end{frame}
-
-\begin{frame}{Sortieren}
-	\solutionheading 
-	Die Spaghetti in der Hand auf dem Tisch aufrichten und „absacken“ lassen. Mit der anderen Hand von oben auf die Spaghetti herabfahren und so feststellen, welche Nudel zuerst piekst. Diese ist dann die Längste und wird links zu den bereits entfernten Spaghetti dazugelegt. Wiederholen, bis keine Spaghetti mehr unsortiert sind.
 \end{frame}
 
 
@@ -358,14 +363,6 @@
 	%Das Sortieren von $2n$ Ereignissen liegt in $O(n\log n)$ (z.B. mit Mergesort), das Anlegen von $A$ in $O(k)$. Der Rest liegt in $O(n)$, also insgesamt $O(n\log n + k)$ Laufzeit.
 \end{frame}
 
-\iffalse
- 
-\begin{frame}
-	\begin{tikzpicture}[remember picture,overlay]
-	\node[xshift=-1cm,yshift=-4.4cm] at (current page.north) {\includegraphics[height=.89\paperheight]{xkcd_ineffective_sorts_2x}};
-	\end{tikzpicture}
-\end{frame}
-
-\fi 
+\xkcdframe{1185}{Danke für eure Aufmerksamkeit! \smiley}{0}
 
 \end{document}
