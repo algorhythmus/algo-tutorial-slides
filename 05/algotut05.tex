@@ -24,6 +24,35 @@
 	\end{frame}
 }
 
+\begin{frame}[t]{Zu Blatt \#3}
+	\textbf{Durchschnitt}: \quad etwa \thassedaniel{???}{68}~\% der Punkte \\
+	\begin{itemize}
+		\item Macht euch das Leben \emph{leichter} und implementiert XOR-Listen und Queues \textbf{zyklisch}! \smiley
+		\item \textbf{Schusselfehler}: Spielt eure Algorithmen mal für einfache Beispiele durch
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Zu Blatt \#4}
+	\textbf{Durchschnitt}: \quad etwa \thassedaniel{???}{66}~\% der Punkte \quad {\small (mit viiieeel Gnade!)} \\
+	\smallskip
+	\FalseQuestionE{Wenn man eine Hashtabelle (mit universeller Hashfunktion) \\ wählt, die asymptotisch größer ist, 
+		als die Anzahl der \\ auftretenden $insert$-Aufrufe, dauern $insert$, $remove$ und \\ $find$ nur in $\Oh{1}$.}{
+			\bfalert{\large ERWARTET $\Oh{1}$!}
+	}
+	\only<.(1)->{ 
+		\begin{itemize}
+			\implitem Aufgabenstellung in B (und auch C) war \textbf{kaputt}: \\ 
+					  „Anzahl Kollisionen konstant beschränkt“ \textbf{total unrealistisch}, \\
+					  Laufzeitforderung $\Oh{\abs{R}}$ \textbf{nicht realisierbar} \\ 
+					  \pause
+					  \§{\impl besser: }„Anzahl Kollisionen \textbf{erwartet} konstant beschränkt“ \\
+					  \.„Laufzeitforderung: \textbf{erwartet} in $\Oh{\abs{R}}$“ 
+					  \pause
+			\implitem Korrektur gnädig: Viele „null-Punkte-würdige“ Sachen kriegten trotzdem (Teil-)Punkte 
+		\end{itemize}	
+	}
+\end{frame}
+
 \sectionheadframe{Sortieren}{Des Informatikers liebstes Hobby} %TODO
 
 \begin{frame}{Sortieralgorithmen}
@@ -121,7 +150,7 @@
 \end{frame}
 
 \section{Mergesort}
-\begin{frame}{Sortieren\only<1-3|handout:0>{ ...und mit Listen?}\only<4->{ – Mergesort}}
+\begin{frame}{{Sortieren\only<1-3|handout:0>{ ...und mit Listen?}\only<4->{ – Mergesort}}}
 	Bekannt:   %[t] and \vspace doesnt seem to work here... :(
 	\begin{itemize}
 		\item \textbf{Zwei sortierte} verkettete Listen können in $O(n)$ zu \textbf{einer sortierten} verketteten Liste zusammengefügt werden (\emph{merge})
@@ -130,7 +159,7 @@
 		\pause
 		\item Listen können \textbf{zerteilt} werden
 		\pause
-		\implitem Also: Zerlege Listen rekursiv bis zum Basisfall und füge die Ergebnisse jeweils zusammen \impl \textbf{Mergesort}
+		\implitem Also: Zerlege Listen rekursiv bis zum Basisfall und füge die Ergebnisse jeweils zusammen \impl \textbf{Mergesort} 
 		\begin{algorithm}[H]
 			\Function{MergeSort$(L: \KwListOf \Element): \KwListOf \Element$}{
 				\lIf{$\abs{L} \leq 1$}{\Return{$L$}} 
@@ -199,6 +228,8 @@
 	\solutionheading 
 	Die Spaghetti in der Hand auf dem Tisch aufrichten und „absacken“ lassen. Mit der anderen Hand von oben auf die Spaghetti herabfahren und so feststellen, welche Nudel zuerst piekst. Diese ist dann die Längste und wird links zu den bereits entfernten Spaghetti dazugelegt. Wiederholen, bis keine Spaghetti mehr unsortiert sind.
 \end{frame}
+
+\section{Untere Schranke $\Om{n \log n}$}
 
 \begin{frame}[t]{Sortieren – untere Schranke}
 	\textbf{Vorlesung}: \\
