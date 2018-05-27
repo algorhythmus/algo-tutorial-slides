@@ -24,9 +24,9 @@
 \begin{frame}{Eimerweise Sortieralgorithmen}
 	\textbf{Erinnerung: Bucketsort} 
 	\begin{itemize}
-		\item $n$ Elemente \textbf{beschränkter} Größe (also $\in \{a, ..., b\} $)
-		\item Lege an $buckets: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad {($k := \abs{buckets}$)}
-		\item Schmeiße jedes Element $e$ in seinen Eimer: $buckets[e].pushBack(e)$ (hinten anhängen)
+		\item $n$ Elemente \textbf{beschränkter} Größe (also $\forall e : \; e \in \{a, ..., b\} $)
+		\item Lege an \: $\|buckets|: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad ($k := \abs{\|buckets|}$)
+		\item Schmeiße jedes Element $e$ in seinen Eimer: $\|buckets|[e].\|pushBack|(e)$ (hinten anhängen)
 		\item Am \textbf{Ende}: „Eimer“ zusammenhängen
 		\implitem Array sortiert. 
 		\item \textbf{Laufzeit}: $O(n+k)$

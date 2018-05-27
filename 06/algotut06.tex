@@ -24,8 +24,18 @@
 
 \fi
 
+\mycomment{
+	\begin{frame}{Zu Blatt \#5}
+		Durchschnitt: \quad etwa \thassedaniel{XXX}{XXX}~\% der Punkte
+		\begin{itemize}
+			\item ...
+		\end{itemize}
+	\end{frame}
+}
+
+\sectionheadframe{Quicksort}{Eine erquickende Neuerung}
+
 \begin{frame}{Quicksort}
-	\textbf{Eine erquickende Neuerung} \\[0,125cm]
 	\begin{itemize}
 		\item Erinnerung: Array sortierbar durch Einteilung in sortierten und unsortierten Bereich
 		\pause
@@ -102,7 +112,7 @@
 
 \input{threeway-partition-example}
 
-\begin{frame}{Quicksort (mit Drei-Wege-Partitionierung)}
+\begin{frame}{{\vspace{.3\baselineskip}Quicksort (mit Drei-Wege-Partitionierung)}}
 	Laufzeit, wenn alle Elemente gleich sind? \\
 	\pause
 	\impl $\Theta(n)$
@@ -136,7 +146,8 @@
 		\item Was wären mögliche Vorteile/Nachteile? \\ 
 		\pause
 		\Pros Rekursive Aufrufe werden durch einen platzsparenderen Ersatz gespeichert \\
-		\Cons Implementierungsaufwand \impl \textbf{Fehleranfälligkeit}
+		\Cons Implementierungsaufwand: Echte Rekursion ist hübscher :P
+		%\Cons Implementierungsaufwand \impl \textbf{Fehleranfälligkeit}
 	\end{itemize}
 \end{frame}
 
@@ -155,7 +166,7 @@
 
 
 \begin{frame}[t]{Sortieralgorithmen -- Showdown}
-	\vspace{-.6\baselineskip}
+	\vspace{-.5\baselineskip}
 	\begin{tabular}{ p{.14\textwidth} | p{.35\textwidth} | p{.4\textwidth} } % c ~ p{5cm}
 		& Mergesort & Quicksort \\ 
 		\hhline{=|=|=}
@@ -179,13 +190,15 @@
 	\visible<3->{** abgesehen von Listenzertrennung in linearer Zeit \\ \quad (zur Mitte muss gelaufen werden)}
 \end{frame}
 
+\sectionheadframe{Bucketsort}{„Hashing für Arme“}
+
 \begin{frame}{Bucketsort}
 	\textbf{Alles im Eimer?} \\
 	\begin{itemize}
-		\item $n$ Elemente \textbf{beschränkter} Größe (also $\in \{a, ..., b\} $)
+		\item $n$ Elemente \textbf{beschränkter} Größe (also $\forall e : \; e \in \{a, ..., b\} $)
 		\pause
-		\item Lege an $buckets: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad \only<4->{($k := \abs{buckets}$)}
-		\item Schmeiße jedes Element $e$ in seinen Eimer: $buckets[e].pushBack(e)$ (hinten anhängen)
+		\item Lege an \: $\|buckets|: \KwArray[a..b] \KwOf \KwListOf \|Element|$ \quad \only<4->{($k := \abs{\|buckets|}$)}
+		\item Schmeiße jedes Element $e$ in seinen Eimer: $\|buckets|[e].\|pushBack|(e)$ (hinten anhängen)
 		\pause
 		\item Am \textbf{Ende}: „Eimer“ zusammenhängen
 		\implitem Array sortiert. 
@@ -201,8 +214,8 @@
 		\item Eimer nicht unbedingt \textbf{Listen}
 		\item Eimer nicht unbedingt nur für \textbf{eine Größe} \\
 		\impl \textbf{Intervalle} möglich \\
-		\impl In diesem Fall: Buckets müssen am Ende noch \textbf{sortiert} werden! 
-		(Z.~B. mit \emph{InsertionSort}) \\
+		\§{\impl} In diesem Fall: Buckets müssen am Ende noch \textbf{sortiert} werden! 
+		\. (Z.~B. mit \emph{InsertionSort}) \\
 		\impl Dafür empfehlenswert: Elemente \textbf{gleichverteilt} auf Buckets
 		\implitem Bucketsort ist \textbf{kein} Sortieralgorithmus für sich, sondern eine \textbf{Familie} von Sortieralgorithmen. 
 	\end{itemize}
@@ -210,7 +223,7 @@
 
 
 \begin{frame}{Bucketsort}
-	\underline{Aufgabe:} \\
+	\taskheading{Bucket, bucket Kuchen}
 	Sortiert folgende Liste mit Bucketsort: \\ $\llist{36, 78, 50, 1, 92, 15, 43, 99, 64}$. \\ 
 	Verwendet dabei 5 Buckets in den Intervallen: \\
 	0 bis 19, 20 bis 39, 40 bis 59, 60 bis 79 und 80 bis 99.
@@ -218,7 +231,7 @@
 \end{frame}
 
 \begin{frame}{Bucketsort}
-	\underline{Lösung:} \\[0,25cm]
+	\solutionheading \medskip
 	\begin{tabular}{ | c | c | c | c | c | }
 		0–19 & 20–39 & 40–59 & 60–79 & 80–99
 		\\ \hline
@@ -230,7 +243,7 @@
 \end{frame}
 
 \begin{frame}{{}„Nerd's Heaven“{}}
-	\pause\pause 
+	\pause\pause  % To prevent this from accidentally being uncovered 
 	\textbf{Rumänische Volkstänze FTW!} \\
 	\begin{itemize}
 		\item InsertionSort: \\
@@ -241,9 +254,11 @@
 		\url{https://www.youtube.com/watch?v=XaqR3G\_NVoo} 
 		\item Quicksort: \\
 		\url{https://www.youtube.com/watch?v=ywWBy6J5gz8} 
+		\item[...] u.~v.~m.
 	\end{itemize}
 	
 \end{frame}
 
+\xkcdframe{1185}{Danke für die Aufmerksamkeit! \smiley}{2.1}
 
 \end{document}
