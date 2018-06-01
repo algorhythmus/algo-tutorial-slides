@@ -6,25 +6,30 @@
 	
 \starttut{6}
 
-\iffalse
-
-\begin{frame}{Zum letzten Übungsblatt}
-	\textbf{Achtung bei der Wahl von Datenstrukturen} \\[0,125cm]
-	\begin{itemize}
-		\pause
-		\item Aufgabenstellung spezifiziert nicht, ob eine Menge von Daten als Array oder Liste gegeben ist \impl Beides darf als Parametertyp gewählt werden
-		\pause
-		\item Aber: Wenn über die Daten iteriert wird, folgendes beachten:
-		\pause
-		\item Listen bieten Indexzugriff i.A. \textbf{nicht in konstanter Zeit}! D.h. wenn man „via Index“ über eine Liste iteriert, hat die Iteration eine Laufzeit von $\Theta(n^2)$
-		\pause
-		\item Daher: Iteration bei Arrays frei via Index oder \textit{for-each}, bei Listen \textbf{nur} \textit{for-each}, wenn die Laufzeit wichtig ist (bei Arrays und Listen kann davon ausgegangen werden, dass \textit{for-each} die Daten in linearer Reihenfolge durchläuft)
-	\end{itemize}
+\thasse{
+\begin{frame}[t]{Zu Blatt \#4}
+	\textbf{Durchschnitt}: \quad etwa \thassedaniel{???}{66}~\% der Punkte \quad {\small (mit viiieeel Gnade!)} \\
+	\smallskip
+	\FalseQuestionE{Wenn man eine Hashtabelle (mit universeller Hashfunktion) \\ wählt, die asymptotisch größer ist, 
+		als die Anzahl der \\ auftretenden $insert$-Aufrufe, dauern $insert$, $remove$ und \\ $find$ nur $\Oh{1}$.}{
+		\bfalert{\large ERWARTET $\Oh{1}$!}
+	}
+	\only<.(1)->{ 
+		\begin{itemize}
+			\implitem Aufgabenstellung in B (und auch C) war \textbf{kaputt}: \\ 
+			„Anzahl Kollisionen konstant beschränkt“ \textbf{total unrealistisch}, \\
+			Laufzeitforderung $\Oh{\abs{R}}$ \textbf{nicht realisierbar} \\ 
+			\pause
+			\§{\impl besser: }„Anzahl Kollisionen \textbf{erwartet} konstant beschränkt“ \\
+			\.„Laufzeitforderung: \textbf{erwartet} in $\Oh{\abs{R}}$“ 
+			\pause
+			\implitem Korrektur gnädig: Viele „null-Punkte-würdige“ Sachen kriegten trotzdem (Teil-)Punkte 
+		\end{itemize}	
+	}
 \end{frame}
+}
 
-\fi
-
-\mycomment{
+\daniel{
 	\begin{frame}{Zu Blatt \#5}
 		Durchschnitt: \quad etwa \thassedaniel{XXX}{XXX}~\% der Punkte
 		\begin{itemize}
@@ -33,7 +38,19 @@
 	\end{frame}
 }
 
+\begin{frame}[t]{Quiz}
+	\FalseQuestion{MergeSort läuft im BestCase in $\Oh{n}$.}
+	\TrueQuestion{MergeSort sortiert stabil.}
+	\FalseQuestion{Wir können nicht schneller als $\Theta(n \log n)$ sortieren.}
+	\FalseQuestion{Bei Hashtabellen ist der Hashwert $h(e)$ der Key eines Elements}
+	\TrueQuestion{Eine Familie von Hashfunktionen ist universell, falls für alle $x \neq y$ gilt: $\P_h[h(x) = h(y)] = \frac{1}{m}$}
+\end{frame}
+
 \sectionheadframe{Quicksort}{Eine erquickende Neuerung}
+
+\begin{frame}{}
+	\includegraphics[width=\textwidth]{images/kwicksoert.png}
+\end{frame}
 
 \begin{frame}{Quicksort}
 	\begin{itemize}
@@ -243,8 +260,8 @@
 \end{frame}
 
 \begin{frame}{{}„Nerd's Heaven“{}}
-	\pause\pause  % To prevent this from accidentally being uncovered 
-	\textbf{Rumänische Volkstänze FTW!} \\
+	\pause  % To prevent this from accidentally being uncovered 
+	\textbf{Rumänische Volkstänze FTW!} \\\pause
 	\begin{itemize}
 		\item InsertionSort: \\
 		\url{https://www.youtube.com/watch?v=ROalU379l3U} 
