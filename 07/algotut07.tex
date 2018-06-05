@@ -5,21 +5,13 @@
 
 \input{../preamble/tutpreamble}
 
+\morescalingdelimiters
+
 \begin{document}
 	
 \starttut{7}
-
-\begin{frame}{Schwarzes Brett}
-	\begin{itemize}
-		\item \textbf{Erinnerung}: Am \textbf{21.06.} statt Übungstermin \textbf{Probeklausur}! Hingehen lohnt sich!
-		\item Nächstes Mal (23.06.) bin ich \textbf{nicht da} – werde aber \textbf{vertreten} von \textbf{Christopher} (dem Schöpfer der Vorlage dieser Folien \smiley). \\
-		Blätter kriegt ihr vermutlich von ihm.
-	\end{itemize}
-\end{frame}
 	
-\begin{headframe}
-	Eimerweise Sortieralgorithmen
-\end{headframe}
+\sectionheadframe{Eimerweise Sortieralgorithmen}{}
 	
 \begin{frame}{Eimerweise Sortieralgorithmen}
 	\textbf{Erinnerung: Bucketsort} 
@@ -54,22 +46,22 @@
 		\begin{algorithm}[H]
 			\small
 			\Function{CountingSort$(A : \KwArray[1...n] \KwOf \N)$} {
-				$C[1...k] := (0,...,0) : \KwArray \KwOf \N$ \LComment{das Zählerarray} \;
-				$B[1...n] : \KwArray \KwOf \N$ \RComment{das sortierte Array (in VL ein Parameter)} \;
+				$C := (0,...,0) : \KwArray[1...k] \KwOf \N$ \RComment{das Zählerarray} \;
+				$S : \KwArray[1...n] \KwOf \N$ \RComment{das sortierte Array (in VL ein Parameter)} \;
 				\For{$i := 1 \KwTo n$} {
-					$C[A[i]]\pp$\;
+					$C\big[A[i]\big]\pp$\;
 				}
 				$C[0] := 1$\;
 				\For{$i := 2 \KwTo k$} {
 					$C[i] \pluseq C[i-1]$\;
 				}
-				\LComment{$C[\ell-1]$ sagt jetzt, wo in $B$ der Bereich für die Zahl $\ell \in A$ beginnt}
+				\LComment{$C[\ell-1]$ sagt jetzt, wo in $S$ der Bereich für die Zahl $\ell \in A$ beginnt}
 				
 				\For{$i := 1 \KwTo n$} {
-					$B\Big[C\big[A[i]-1\big]\Big] := A[i]$ \RComment{$A[i]$ in den zugehörigen Bereich einfügen}
-					$C\left[A[i]-1\right]\pp$ \LComment{verschiebe Start des Bereiches um eins nach rechts}
+					$S\Big[C\big[A[i]-1\big]\Big] := A[i]$ \RComment{$A[i]$ in den zugehörigen Bereich einfügen}  \;
+					$C\big[A[i]-1\big]\pp$ \LComment{verschiebe Start des Bereiches um eins nach rechts}
 				}
-				\Return{$B$}\;
+				\Return{$S$}
 			}
 		\end{algorithm}
 	\end{exampleblock}
@@ -85,18 +77,20 @@
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Aufgabe 1: Das zählt nicht} \\
-	Gegeben sei $ A \in \left( \bigcup\limits_{i=1}^{k} \left\lbrace i,\ i+\frac{1}{2} \right\rbrace\right)^n$. Gebt ein Verfahren an, mit dem $A$ in $O(n + k)$ sortiert werden kann. 
+	\taskheading{Das zählt nicht} 
+	Gegeben sei $ A \in \left( \bigcup\limits_{i=1}^{k} \left\lbrace i,\ i+\frac{1}{2} \right\rbrace\right)^{\!n}$. Gebt ein Verfahren an, mit dem $A$ in $O(n + k)$ sortiert werden kann. 
 	% NICHT vereinfachen: Eigentliche Aufgabe ist, den Formalkram zu verstehen (sonst zu trivial)
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Lösung zu Aufgabe 1} \\
+	\solutionheading
 	($A$ ist ein \textbf{Tupel} (da Element eines kartesischen Produktes).) \\
 	Sortiere $A' := 2 \cdot A$ durch \emph{CountingSort} mit $k' := 2k+1$ und teile jeden Wert im sortierten Array wieder durch 2. \\
 	\textbf{Laufzeit}: Da $|A'| = |A| = n$ in \\ 
 	$O(n + k')$ = $O(n + 2k+1)$ = $O(n + k)$ 
 \end{frame}
+
+
 
 \begin{frame}{Radixsort}
 	\textbf{Ein neuer Ansatz} \\
@@ -115,12 +109,12 @@
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Aufgabe 2: Radixchensalat} \\
+	\taskheading{Radixchensalat} 
 	Sortiert die folgende Liste mit \emph{LSD-Radixsort}:  $\langle 36, 78, 50, 1, 92, 15, 43, 99, 64 \rangle$
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Lösung zu Aufgabe 2} \\[0,25cm]
+	\solutionheading \medskip
 	Eingabe:  $\langle 36, 78, 50, \gray{0}1, 92, 15, 43, 99, 64 \rangle$
 	\\[0,25cm]
 	Nach der ersten Stelle (von rechts): \\ $\langle 5\textbf{0}, \gray{0}\textbf{1}, 9\textbf{2}, 4\textbf{3}, 6\textbf{4}, 1\textbf{5}, 3\textbf{6}, 7\textbf{8}, 9\textbf{9} \rangle$
@@ -144,18 +138,76 @@
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Aufgabe 3: Liste der bedrohten Sortierarten} \\
+	\taskheading{Radar-Sort}
+	Gegeben ist ein Array von Punkten $P: \KwArray[1..n] \KwOf \R_+ \times \R$, deren Koordinaten beschränkt sind. Ihr steht im Ursprung und wollt die Punkte \textbf{gegen} den Uhrzeigersinn abklappern, wobei von hintereinanderliegenden Punkten zuerst die betrachtet werden sollen, die näher am Ursprung liegen. \\ 
+	\vspace{-1.3\baselineskip}
+	\begin{center}
+		\scalebox{.8}{
+			\begin{tikzpicture}
+			[every node/.style={fill, circle, inner sep=1.5pt}]
+			\node[label=above:$x$,inner sep = 0pt, white] (x) at (0, 2.5) {};
+			\node[label=right:$y$,inner sep = 0pt, white] (y) at (4, 0) {};
+			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, -2) -- (x) {};
+			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, 0)  -- (y) {};
+			\node (0) at (0,0) {};
+			\node[label=above:6] (6) at (0.75,2) {};
+			\node[label=above:4] (4) at (1,1) {};
+			\node[label=above:5] (5) at (2,2) {};
+			\node[label=above:3] (3) at (3,0.5) {};
+			\node[label=above:2] (2) at (1,-0.7) {};
+			\node[label=above:1] (1) at (.75,-1.5) {};
+			
+			\foreach \x in {1,...,6}
+			{
+				\draw (0) -- (\x);
+			}
+			
+			\draw[->, dashed,  arrows = -{Stealth[inset=0pt]}] (0,-.7) arc (-90:90:.7);
+			\end{tikzpicture}
+		}	
+	\end{center} 
+	\vspace{-.5\baselineskip}
+	Findet zwei Möglichkeiten, dieses Problem zu lösen. 
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\solutionheading
+	\begin{itemize}
+		\item Es gibt $r > 0$,\, $\phi \in (-\fract \pi/2 , \fract \pi/2 )$, \; sodass \;  $(x, y) = (r \* \cos \phi, r \* \sin \phi)$
+		\implitem Wandle Punkte in \textbf{Polarkoordinaten} um
+		\pause
+		\item[1.] Möglichkeit:
+		\begin{itemize}
+			\item Sortiere aufsteigend nach Distanz $r$ mit Intervall-Bucketsort
+			\item Sortiere aufsteigend nach Winkel $\phi$ mit Intervall-Bucketsort % dEPRECATED \quad ($-\fract \pi/2 $ \entspr „6~Uhr“,\, $\fract \pi/2 $ \entspr „12~Uhr“) 
+			\implitem Funktioniert dank Stabilität
+			\item Laufzeit: $\Th{n}$, da $r$ und $\phi$ beschränkt
+		\end{itemize}
+		\pause
+		\item[2.] Möglichkeit:
+		\begin{itemize}
+			\item Sortiere aufsteigend mithilfe eigener Ordnung: \\
+			$(\phi_1, r_1) < (\phi_2, r_2) \Gdwdef \phi_1 < \phi_2 \lor (\phi_1 = \phi_2 \land r_1 < r_2)$
+			\item Laufzeit: $\Th{n \log n}$
+		\end{itemize}
+		\medskip
+		\item Das geht übrigens auch mit Sortieren nach Nachname und Vorname etc. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Eimerweise Sortieralgorithmen}
+	\taskheading{Liste der bedrohten Sortierarten} 
 	Gegeben seien $n$ Zahlen im Bereich von $0$ bis $n^3 - 1$. Gebt ein Verfahren an, mit dem diese in $\Theta(n)$ sortiert werden können.
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Lösung zu Aufgabe 3} \\
+	\solutionheading
 	Betrachte die Zahlen in Darstellung zur Basis $n$, d.h. jede Zahl hat in dieser Darstellung 3 Stellen. \\ 
 	Wende $RadixSort$ an \impl die Zahlen werden in $\Theta(3 \cdot (n + n)) = \Theta(n)$ sortiert.
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Aufgabe 4: PancakeSort} \\
+	\taskheading{Pancake-Sort}
 	\mycomment{
 		Für eine Familienfeier habt ihr euch großzügigerweise bereiterklärt, einen großen Stapel Pfannkuchen zu liefern. Ärgerlicherweise bemerkt ihr zu spät, dass eure Schöpfkelle ein Loch hat, so dass jedesmal eine unterschiedliche Menge Teig in der Pfanne gelandet ist -- somit ist jeder Pfannkuchen unterschiedlich groß und der Stapel sieht völlig chaotisch aus, weshalb \emph{bestimmt} die Welt untergeht. Glücklicherweise steht euch euer Vetter Donald mit Rat und Tat zur Seite, denn er ist der unbestrittene Weltmeister in der Kunst des Pfannkuchenwendens. Phänomenalerweise ist er sogar in der Lage, einen beliebig großen (Teil-)Stapel Pfannkuchen in einem Schwung komplett umzudrehen! Leider ist er seit einem Zwischenfall beim Pfannenwenderweitwurf etwas beschränkt, so dass er auf eure Anleitung angewiesen ist. Gebt ein In-place-Verfahren an, mit dem der Pfannkuchenstapel in möglichst geringer Zeit (bzgl. Anzahl der Pfannkuchen) sortiert werden kann.
 	}
@@ -163,7 +215,7 @@
 \end{frame}
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
-	\underline{Lösung zu Aufgabe 4} \\
+	\solutionheading
 	\begin{itemize}
 		\item Zu Beginn sieht der Stapel so aus: [bottom...biggest...top]
 		\item Wende Teilstapel [biggest..top] \LComment{Größter nach oben}
@@ -174,21 +226,18 @@
 	%Wende den Teilstapel bestehend aus dem größten Pfannkuchen und allen Pfannkuchen, die sich über diesem befinden (somit befindet sich der größte Pfannkuchen ganz oben). Wende im Anschluss den gesamten Stapel (nun ist der größte Pfannkuchen ganz unten). Setze dieses Verfahren in Bezug auf den restlichen unsortierten Teilstapel (über dem eben „einsortierten“ Pfannkuchen) fort. Folglich sind maximal zwei Wendungen pro Pfannkuchen nötig (die letzten zwei Pfannkuchen erfordern weniger), also läuft das Ganze in linearer Zeit.
 \end{frame}
 
-
-
-\begin{headframe}[And now for something completely different...]
-	Binäre Heaps
-\end{headframe}
+\sectionheadframe{Binäre Heaps}{Haufen mit Ordnung}
+% TODO [And now for something completely different...]
 
 \begin{frame}{Binäre Heaps}
-	\textbf{} 
 	\begin{itemize}
 		\item \textbf{Binärbaum}: Baum, wobei jeder Knoten \textbf{max. zwei Kinder} hat.
 		\pause
 		\item Ein Baum $T$ erfüllt die \textbf{Heap-Eigenschaft} :\gdw \\ 
-		$\forall v \in T : \quad parent(v) \leq v$ \\ 
-		{\small (je näher an Wurzel $=$ Minimum, desto kleiner die Werte) } \\
-		\textcolor{red}{\textbf{Achtung}}: Das heißt \textbf{nicht} \xcancel{\text{„T ist sortiert“}}!
+		$\forall v \in T : \quad \|parent|(v) \leq v$ \\ \smallskip
+		{\small (Wurzel $=$ Minimum, \\
+			je näher an Wurzel, desto kleiner die Werte) } \\ \smallskip
+		\bfalert{Achtung}: Das heißt \textbf{nicht} \xcancel{\text{„T ist sortiert“}}!
 		\pause
 		\item Ein \textbf{binärer Heap} ist ein Binärbaum, der die Heap-Eigenschaft erfüllt.
 		\pause
@@ -212,16 +261,16 @@
 		\column{.4\textwidth}
 			\vspace{-7\baselineskip} % [T] option doesn't even work. Fuck you, LaTeX!
 			\begin{align*}
-				&parent(j) = \floor{\tfrac{j}{2}} \\
-				&leftChild(j) = 2j \\
-				&rightChild(j) = 2j + 1
+				&\|parent|(j) = \floor{\tfrac{j}{2}} \\
+				&\|leftChild|(j) = 2j \\
+				&\|rightChild|(j) = 2j + 1
 			\end{align*}
 		\column[c]{.5\textwidth}
 			\includegraphics[height=4.7cm]{heaparray}
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Binäre Heaps}
+\begin{frame}{Binäre Heaps – Operationen}
 	\textbf{Einfügen von Elementen (insert)} 
 	\begin{itemize}
 		\item Setze Element $e$ in die \textbf{unterste} Ebene, so weit \textbf{rechts} wie möglich
@@ -233,7 +282,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Binäre Heaps}
+\begin{frame}{Binäre Heaps – Operationen}
 	\textbf{Entfernen des Minimums (deleteMin)}
 	\begin{itemize}
 		\item Einfach: Minimum $= A[1]$ „\textbf{oben wegnehmen}“
@@ -254,7 +303,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Binäre Heaps}
+\begin{frame}{Binäre Heaps – Operationen}
 	\textbf{Aufbau aus einem chaotischen Array (buildHeap)} 
 	\begin{itemize}
 		\item Haben chaotisches Array $A$, wollen \textbf{Heapstruktur} auf $A$ herstellen
@@ -298,11 +347,7 @@
 	\end{itemize}
 \end{frame}
 
-
-
-\begin{headframe}[– Literally –]
-	Sorting Algorithms
-\end{headframe}
+\sectionheadframe{Sorting Algorithms}{– Literally –}
 
 \begin{frame}{Sorting Algorithms}
 	\textbf{Sortiere} Mergesort, Radixsort, Heapsort, InsertionSort, SelectionSort, CountingSort, Quicksort {\small (mit partition)}, (simples) Bucketsort nach \textbf{Stabilität}. \\
@@ -425,10 +470,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Schönes Wochenende noch! \smiley}
-	\centering
-	\includegraphics[width=.83\textwidth]{xkcd-835}
-\end{frame}
+\xkcdframevert{835}{Danke für eure Aufmerksamkeit! \smiley}{2}
 
 \only<beamer:0>{\slideThanks}
 

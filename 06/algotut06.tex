@@ -31,19 +31,22 @@
 
 \daniel{
 	\begin{frame}{Zu Blatt \#5}
-		Durchschnitt: \quad etwa \thassedaniel{XXX}{XXX}~\% der Punkte
-		\begin{itemize}
-			\item ...
-		\end{itemize}
+		\textbf{Durchschnitt}: \quad etwa \thassedaniel{XXX}{72}~\% der Punkte \\
+		\medskip
+		\FalseQuestionE{merges0rt läuft in $\Theta(\size{R})$.}{
+		In $\Theta(n \* \size{R})$ bzw. $\Theta(n \log \size{R})$ \\ (je nach Implementierung und für $n := \size{A}$). \\ Es macht aber $\Oh{\size{R}}$ \textbf{Rekursionsabstiege}!
+		
+		}	
+		
 	\end{frame}
 }
 
 \begin{frame}[t]{Quiz}
-	\FalseQuestion{MergeSort läuft im BestCase in $\Oh{n}$.}
+	\FalseQuestionE{MergeSort läuft im Best-Case in $\Oh{n}$.}{\textbf{Immer} in $\Theta(n \log n)$.}
 	\TrueQuestion{MergeSort sortiert stabil.}
-	\FalseQuestion{Wir können nicht schneller als $\Theta(n \log n)$ sortieren.}
-	\FalseQuestion{Bei Hashtabellen ist der Hashwert $h(e)$ der Key eines Elements}
-	\TrueQuestion{Eine Familie von Hashfunktionen ist universell, falls für alle $x \neq y$ gilt: $\P_h[h(x) = h(y)] = \frac{1}{m}$}
+	\FalseQuestionE{Wir können nicht schneller als $\Theta(n \log n)$ sortieren.}{Vergleichsbasiert ja. Gibt aber auch noch andere Sortierverfahren (Stay tuned!)}
+	\FalseQuestion{Bei Hashtabellen ist der Hashwert $h(e)$ der Key eines \\ Elements.}
+	\TrueQuestion{Eine Familie von Hashfunktionen ist universell, falls für alle \\ $x \neq y$ gilt: \quad $\P_h[h(x) = h(y)] = \frac{1}{m}$.}
 \end{frame}
 
 \sectionheadframe{Quicksort}{Eine erquickende Neuerung}
@@ -159,7 +162,8 @@
 	\begin{itemize}
 		\item Wie könnte eine iterative Implementierung von Quicksort aussehen? \\
 		\pause
-		\impl Speichere „Rekursionsparameter“ als Tupel $(\ell, r)$ auf einem \textbf{Stack}, welcher mit einer „großen Schleife“ abgearbeitet wird (\emph{faked recursion})
+		\impl Speichere „Rekursionsparameter“ als Tupel $(\ell, r)$ auf einem \textbf{Stack}, welcher mit einer „großen Schleife“ abgearbeitet wird (\emph{faked recursion}) \\
+		\daniel{{\small Eine Queue ginge in \emph{diesem} Fall (!) auch, wäre halt nicht ganz so intuitiv.}}
 		\item Was wären mögliche Vorteile/Nachteile? \\ 
 		\pause
 		\Pros Rekursive Aufrufe werden durch einen platzsparenderen Ersatz gespeichert \\
