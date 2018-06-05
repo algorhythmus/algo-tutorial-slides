@@ -139,8 +139,8 @@
 
 \begin{frame}{Eimerweise Sortieralgorithmen}
 	\taskheading{Radar-Sort}
-	Gegeben ist ein Array von Punkten $P: \KwArray[1..n] \KwOf \R_+ \times \R$, deren Koordinaten beschränkt sind. Ihr steht im Ursprung und wollt die Punkte \textbf{gegen} den Uhrzeigersinn abklappern, wobei von hintereinanderliegenden Punkten zuerst die betrachtet werden sollen, die näher am Ursprung liegen. \\ 
-	\vspace{-1.3\baselineskip}
+	Gegeben ist ein Array von Punkten $P: \KwArray[1..n] \KwOf \R_+ \times \R$, deren Koordinaten beschränkt sind. Ihr steht im Ursprung und wollt die Punkte \textbf{gegen} den Uhrzeigersinn abklappern, wobei von hintereinanderliegenden Punkten zuerst die betrachtet werden sollen, die näher am Ursprung liegen. \quad (Es wird hier nur mit Festkommazahlen gerechnet.)\\ 
+	\vspace{-.9\baselineskip}
 	\begin{center}
 		\scalebox{.8}{
 			\begin{tikzpicture}
@@ -166,7 +166,7 @@
 			\end{tikzpicture}
 		}	
 	\end{center} 
-	\vspace{-.5\baselineskip}
+	\vspace{-1.2\baselineskip}
 	Findet zwei Möglichkeiten, dieses Problem zu lösen. 
 \end{frame}
 
@@ -178,8 +178,8 @@
 		\pause
 		\item[1.] Möglichkeit:
 		\begin{itemize}
-			\item Sortiere aufsteigend nach Distanz $r$ mit Intervall-Bucketsort
-			\item Sortiere aufsteigend nach Winkel $\phi$ mit Intervall-Bucketsort % dEPRECATED \quad ($-\fract \pi/2 $ \entspr „6~Uhr“,\, $\fract \pi/2 $ \entspr „12~Uhr“) 
+			\item Sortiere aufsteigend nach Distanz $r$ mit Radixsort
+			\item Sortiere aufsteigend nach Winkel $\phi$ mit Radixsort 
 			\implitem Funktioniert dank Stabilität
 			\item Laufzeit: $\Th{n}$, da $r$ und $\phi$ beschränkt
 		\end{itemize}
