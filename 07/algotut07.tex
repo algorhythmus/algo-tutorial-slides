@@ -16,12 +16,33 @@
 	\textbf{Durchschnitt}: \quad etwa \thassedaniel{58}{72}~\% der Punkte \\
 	\medskip
 	\FalseQuestionE{merges0rt läuft in $\Theta(n\log n)$.}{
-		In $\Theta(n \* \size{R})$ bzw. $\Theta(n \log \size{R})$ \\ (je nach Implementierung und für $n := \size{A}$). \\ Es macht aber $\Oh{\size{R}}$ \textbf{Rekursionsabstiege}!}	
+		In $\Theta(n \* \size{R})$ bzw. $\Theta(n \log \size{R})$ \\ (je nach Implementierung und für $n := \size{A}$). \\ Es macht aber $\Oh{\size{R}}$ \textbf{Rekursionsabstiege}!}
 	\FalseQuestion{Quicksort hat Laufzeit $\Oh{n\log n}$}
-	
 \end{frame}
 }
-	
+
+\daniel{
+	\begin{frame}{Zu Blatt \#6}
+		\textbf{Durchschnitt}: \quad etwa \thassedaniel{XXX}{81}~\% der Punkte
+		\begin{itemize}
+			\item Macht euch das Leben \textbf{leichter} und indiziert eure Arrays von $1...n$ (sofern es nützt, so wie in der A)
+			\item Nutzt die Methode $\|swap|(a, b)$ zum Tauschen anstatt irgendwas mit $temp$ anzustellen.
+			\item $e_1.\|compareTo|(e_2) > 0$: \textbf{WTF?} \\
+			\impl Wieso nicht einfach $e_1 > e_2$?
+			\implitem Vor allem in der \textbf{Klausur}, sonst verschwendet ihr Zeit!
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Schwarzes Brett}
+		Am \textbf{Mi, 20.06.} zum Algorithmen-Termin: \: \textbf{Probeklausur!}
+		\begin{itemize}
+			\item Zählt nicht (auch keine Bonuspunkte)
+			\item[\Pros\symbitemnegoffset] „Reale“ Klausurbedingungen
+			\implitem Hingehen lohnt sich!
+		\end{itemize}
+	\end{frame}
+}
+
 \sectionheadframe{Eimerweise Sortieralgorithmen}{}
 	
 \begin{frame}{Eimerweise Sortieralgorithmen}
@@ -63,7 +84,7 @@
 					$C\big[A[i]\big]\pp$\;
 				}
 				$C[0] := 1$\;
-				\For{$i := 2 \KwTo k$} {
+				\For{$i := 1 \KwTo k$} {
 					$C[i] \pluseq C[i-1]$\;
 				}
 				\LComment{$C[\ell-1]$ sagt jetzt, wo in $S$ der Bereich für die Zahl $\ell \in A$ beginnt}
@@ -134,7 +155,7 @@
 \end{frame}
 
 \begin{frame}{(LSD-)Radixsort}
-	\textbf{Eigenschaften}   
+	\textbf{Eigenschaften}  \\
 	\begin{itemize}
 		\item \textbf{Laufzeit}: linear (für \textbf{konstante} $d$ \textbf{und} $K$!) \\
 		\pause

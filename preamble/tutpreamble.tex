@@ -178,6 +178,7 @@
 \newcommand{\implitem}{\item[\impl\symbitemnegoffset]}
 \newcommand{\Implitem}{\item[\Impl\symbitemnegoffset]}
 
+\newcommand{\clap}[1]{\makebox[0pt][c]{#1}}
 
 \newcommand{\forcenewline}{\mbox{}\\}
 
@@ -346,6 +347,14 @@
 
 \newcommand{\hanging}{\hangindent=0.7cm}
 \newcommand{\indented}{\hanging}
+
+\def\hstretchto#1#2{%
+	\mbox{}\vphantom{#2}\rlap{#2}\hphantom{#1}%
+}
+
+\def\vstretchto#1#2{%
+	\mbox{}\hphantom{#2}\smash{#2}\vphantom{#1}%
+}
 
 \newcommand{\Pros}{{\huge \protect\textcolor{adaptinggreen}{\protect\contour{black}{\raisebox{-.3pt}{$\protect\textbf{+}$}}}}\xspace}
 
