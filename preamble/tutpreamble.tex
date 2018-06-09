@@ -158,7 +158,7 @@
 % e.g. \q1uad = \quad, \q2uad = \qquad etc.
 
 \newcommand{\qqquad}{\q3uad}
-
+\newcommand{\minusquad}{\hspace{-1em}}
 
 \def\indentstring{}
 \def\§#1{\def\indentstring{#1}#1}
@@ -210,9 +210,11 @@
 \colorprovide{lightred}{red!30}
 \colorprovide{lightgreen}{green!40}
 \colorprovide{lightyellow}{yellow!50}
+\colorprovide{lightblue}{blue!10}
 \colorprovide{beamerlightred}{lightred}
 \colorprovide{beamerlightgreen}{lightgreen}
 \colorprovide{beamerlightyellow}{lightyellow}
+\colorprovide{beamerlightblue}{lightblue}
 \colorprovide{fullred}{red!60}
 \colorprovide{fullgreen}{green}
 \definecolor{darkred}{RGB}{115,48,38}
@@ -222,9 +224,11 @@
 \only<handout:0>{\colorlet{adaptinglightred}{beamerlightred}}
 \only<handout:0>{\colorlet{adaptinglightgreen}{beamerlightgreen}}
 \only<handout:0>{\colorlet{adaptinglightyellow}{beamerlightyellow}}
+\only<handout:0>{\colorlet{adaptinglightblue}{beamerlightblue}}
 \only<beamer:0>{\colorlet{adaptinglightred}{lightred}}
 \only<beamer:0>{\colorlet{adaptinglightgreen}{lightgreen}}
 \only<beamer:0>{\colorlet{adaptinglightyellow}{lightyellow}}
+\only<beamer:0>{\colorlet{adaptinglightblue}{lightblue}}
 \only<handout:0>{\colorlet{adaptingred}{lightred}}
 \only<beamer:0>{\colorlet{adaptingred}{fullred}}
 \only<handout:0>{\colorlet{adaptinggreen}{lightgreen}}
@@ -435,6 +439,12 @@
 % #2: Explanation
 \newcommand{\DependsQuestionE}[2]{
 	\GenericQuestion{adaptinglightyellow}{darkyellow}{Je nachdem!}{#1}{#2}
+}
+
+% #1: Q text
+% #2: Answer
+\newcommand{\ContentQuestion}[2]{
+	\GenericQuestion{adaptinglightblue}{black}{\minusquad}{#1}{#2}
 }
 
 \newenvironment{headframe}{\Huge THIS IS AN ERROR. PLEASE CONTACT THE ADMIN OF THIS TEX CODE. (headframe env def failed)}{}

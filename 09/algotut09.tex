@@ -10,144 +10,7 @@
 	
 \starttut{9}
 	
-\begin{headframe}[Der Plural, nicht der Kohlenstoff]
-	Graphen
-\end{headframe}
-	
-\begin{frame}{Graphen}
-	\textbf{Wir erinnern uns ...} 
-	\begin{itemize}
-		\item Graph $G = (V, E)$ mit \textbf{Knoten}menge $V \neq \emptyset$ und \textbf{Kanten}menge $E$
-		\pause
-		\item \emph{Gerichteter} Graph: $E \subseteq V \times V$
-		\item \emph{Ungerichteter} Graph: $E \subseteq \Big\lbrace \{u, v\} \bigm| u, v \in V \Big\rbrace$
-		\pause
-		\item Umwandlung \textit{ungerichtet} $\rightsquigarrow$ \textit{gerichtet} trivial \\ 
-		\impl Im Folgenden stets \emph{gerichtete} Graphen
-		\pause
-		\item $n := |V|$
-		\item $m := |E|$
-		\pause
-		\item Betrachten üblicherweise $V = \{1...n\}$ 
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Kantenfolge} \\[0,125cm]
-	\begin{itemize}
-		\item {\small (Zusammenhängender)} Graph eindeutig definiert durch \textbf{Menge aller Kanten} (Reihenfolge egal)
-		\pause
-		\item Knoten $v$ existiert in $G$ \\ 
-		\gdw $\exists\ (v, x) \text{ oder } (x, v) \in \textit{Kantenliste}$ \quad ($x$ beliebig)
-		\pause
-		\item[\Pros] \textbf{Kompakt} \impl Gut handhabbar (im Speicher oder bei I/O)
-		\pause
-		\item[\Cons] Einzige effiziente Operation: \textbf{Durchlaufen} aller Kanten
-	\end{itemize}
-	\begin{figure}[htp]
-		\centering
-		\includegraphics[width=12cm]{kantenliste}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Adjazenzmatrix} \\
-	Verwende Matrix $A \in \{0, 1\}^{n \times n}$ \ mit \ $a_{ij} = 1 \gdw (i, j) \in E$
-	\begin{figure}[htp]
-		\centering
-		\includegraphics[width=\textwidth]{adjazenzmatrix}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Adjazenzmatrix} 
-	\begin{itemize}
-		\item[\Pros] recht \textbf{platzeffizient}, falls Graph dicht
-		\pause
-		\item[\Pros] \textbf{Einfügen}, \textbf{Löschen}  und \textbf{Testen} von Kanten in $O(1)$ und simpel
-		\pause
-		\item[\Pros] $\{0, 1\} \rightsquigarrow \R$ erweitern für \textbf{Kantengewichte}
-		\pause
-		\item[\Pros] LA, yay! :D
-	\end{itemize}
-	\begin{itemize}
-		\pause
-		\item[\Cons] platz\textbf{in}effizient bei dünnbesetzten Graphen \\ 
-		{\small (also durchschn. Knotengrad $\ll n$)}
-		\pause
-		\item[\Cons] \textbf{langsame} Navigation
-		\pause
-		\item[\Cons] LA \textit{*kotz*} 
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Adjazenzfeld (aka Adjazenzarray)} 
-	\begin{itemize}
-		\item 
-			\begin{tabbing}
-				Definiere \= $V : \KwArray[1...n+1] \KwOf \{1 ... m+1\}$ und \\
-				\> $E : \KwArray[1...m] \KwOf \{1...n\}$
-			\end{tabbing}
-		\pause
-		\item Von $v$ erreichbare Knoten: $\big\lbrace\, E[i] \mid V[v] \leq i < V[v+1] \, \big\rbrace$
-		\pause
-		\item \emph{„Dummy-Eintrag“}: \\
-		$V[n+1] := m+1$, damit oben $v = n$ nicht knallt
-	\end{itemize}
-	\visible<2->{\begin{figure}[htp]
-		\centering
-		\includegraphics[width=\textwidth]{adjazenzfeld}
-	\end{figure}}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Adjazenzfeld (aka Adjazenzarray)} 
-		\begin{itemize}
-			\item[\Pros] \textbf{Navigation} gut möglich
-			\pause
-			\item[\Pros] \textbf{Zusatzinfos} (z.~B. Kantengewichte) durch weitere Arrays leicht aufrüstbar
-			\pause
-			\item[\Pros] \textbf{Cachefreundlich}
-			\pause
-			\item[\Pros] Nachrüstbar: Kanten \textbf{löschen}, \textbf{rückwärts} laufen 
-		\end{itemize}
-		\begin{itemize}
-			\pause
-			\item[\Cons] Hinzufügen von Kanten scheiße \quad (\#ArraysHalt...)
-		\end{itemize}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\textbf{Adjazenzliste} 
-	\begin{itemize}
-		\item Verwende $\KwArray A[1...n]$ von verketteten Listen
-		\pause
-		\item $A[v]$: Liste aller von $v \in V$ aus \textbf{erreichbaren Knoten} \\
-		\forcenewline
-		\pause
-		\item[\Pros] Alle Features vom Adjazenzfeld
-		\pause
-		\item[\Pros] ...und noch mehr: \textbf{Einfügen}, \textbf{Löschen} von Kanten 
-		\pause
-		\item[\Cons] Benötigt mehr \textbf{Platz} (für Zeiger)
-		\pause
-		\item[\Cons] \textbf{Cachefeindlicher}
-	\end{itemize}
-	\begin{figure}[htp]
-		\centering
-		\includegraphics[width=.6\textwidth]{adjazenzliste}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Repräsentationen von Graphen}
-	\underline{Aufgabe 1: Malen nach Zahlen} \\
-	Stellt diesen Graphen als Adjazenzfeld, Adjazenzmatrix und Kantenfolge dar (alphabetisch geordnet).
-	\begin{figure}[htp]
-		\centering
-		\includegraphics[height=6cm]{beispielgraph}
-	\end{figure}
-\end{frame}
+\sectionheadframe{Graphen durchlaufen}{Hänsel und Gretel im Tiefensuchwald}
 
 \begin{frame}{Graphen durchlaufen}
 	\begin{itemize}
@@ -158,12 +21,35 @@
 	\end{itemize}
 \end{frame}
 
-\delimitershortfall=0pt  % for proper \left( \right) typography
-\delimiterfactor=1
+\morescalingdelimiters
 
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
 	\begin{exampleblock}{Intuitive Implementierung: Tiefensuche}
 		\begin{algorithm}[H]
+			\small
+			\Function{DFS-Forest$(G = (V, E)): (\KwArrayOf V, \KwArrayOf \N_0)$} {
+				$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
+				$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$  \;
+				\smallskip
+				\Procedure{DFS$(u,\, prev: V)$} {
+					\If{$\neg visited[u]$} {
+						visit$(u)$  \RComment{Do something with u} \;
+						$visited[u] := \KwTrue, \quad parent[u] := prev, \quad  d[u] := d[prev] + 1$\;
+						\ForEach{$(u, v) \in E$} {
+							DFS$(v,\, prev = u)$
+						}
+					}
+				}
+				\smallskip
+				\For{$v \in V$}{
+					\If{$\neg visited[v]$}{
+						DFS$(v,\, prev = v)$	
+					}	
+				}
+				\Return{$(parent, d)$}
+			}
+		\end{algorithm}
+		\mycomment{
 			\Procedure{DFS$(G = (V, E),\ s \in V)$} {
 				DFSrec$\left(G, s,\ (\KwFalse, ... , \KwFalse)\right)$\;
 			}
@@ -178,25 +64,26 @@
 					}
 				}
 			}
-		\end{algorithm}
+		}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
-	\underline{Aufgabe 2: Tiefe in freier Wildbahn} \\
-	Führt auf diesem Graphen Tiefensuche von $s$ ausgehend aus. Nachbarn werden in alphabetischer Reihenfolge besucht.
+	\taskheading{Tiefe in freier Wildbahn} 
+	Führt auf diesem Graphen Tiefensuche von $s$ ausgehend aus und malt den Tiefensuchwald. Nachbarn werden in alphabetischer Reihenfolge besucht.
+	\vspace{-\baselineskip}
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielgraph}
+		\includegraphics[height=6cm]{beispielgraph-edited}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
-	\underline{Lösung von Aufgabe 2} \\
+	\solutionheading
 	Besuchsreihenfolge: \\ s, a, b, c, e, h, g, f, d, i, j, k
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielDFS}
+		\includegraphics[height=6cm]{beispielDFS-edited}
 	\end{figure}
 \end{frame}
 
@@ -204,7 +91,7 @@
 	\begin{itemize}
 		\item<+-> \textbf{Beobachtung}: Dringt schnell \textbf{tief} in den Graphen ein, anstatt sich „auszubreiten“ (daher der Name)
 		\item<+-> \textbf{Laufzeit}? \visible<+->{$\Theta(n+m)$} \\ 
-		\NoQuestionE{In-place?}{(wegen $visited$ und Rekursion)}
+		\NoQuestionE{In-place?}{(wegen $visited$, $parent$ und Rekursion)}
 		\item<+-> Etwas chaotische Laufwege -- geht's auch organisierter?
 	\end{itemize}
 \end{frame}
@@ -231,44 +118,46 @@
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
+	\vspace{-.2\baselineskip}
 	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Layer-Counter}}
 		\begin{algorithm}[H]
 			\small
 			\Procedure{BFS-with-LayerCounter$(G = (V, E),\ s \in V)$} {
 				$visited := (\KwFalse, ... , \KwFalse)$\;
-				$Q := \{s\}, \quad Q' := \emptyset$  \RComment{Extra queue Q'} \;
-				$layer := 0$ \RComment{For counting the layers of traversal} \;
+				$Q := \{s\},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue Q'} \;
+				\alert{$layer := 0$} \RComment{For counting the layers of traversal} \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
 					\If{$\neg visited[u]$} {
-						visit$(u, layer)$  \RComment{Do something with u and layer} \;
+						visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
 						$visited[u] := \KwTrue$ \;
 						\ForEach{$(u, v) \in E$} {
 							$Q'.\text{pushBack}(v)$  \RComment{Append to next-queue Q'} \;
 						}
 					}
-					
-					\If{$Q = \emptyset$}{ 
-						$(Q, Q') := (Q', Q)$ \RComment{New layer, so swap queues} \;
-						$layer\pp$ \;
+					\alert{
+						\If{$Q = \emptyset$}{ 
+							$(Q, Q') := (Q', Q)$ \RComment{New layer, so swap queues} \;
+							$layer\pp$ \;
+						}
 					}
 				}
 			}
-		\end{algorithm}
+		\end{algorithm} \vspace{-.4\baselineskip}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
-	\underline{Aufgabe 3: Volle Breitseite} \\
+	\taskheading{Volle Breitseite}
 	Führt auf diesem Graphen Breitensuche von $s$ ausgehend aus. Nachbarn werden in alphabetischer Reihenfolge besucht.
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielgraph}
+		\includegraphics[height=6cm]{beispielgraph-edited}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
-	\underline{Lösung von Aufgabe 3} \\
+	\solutionheading
 	Besuchsreihenfolge: \\ s,\quad a, c, d, \quad b, e, f, g, i, j, \quad h, k
 	\begin{figure}[htp]
 		\centering
@@ -310,31 +199,31 @@
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Kantentypen}
-	\underline{Aufgabe 4: Die Graphschaft besichtigen} \\
-	Betrachtet die vorhin durchgespielte Tiefen- und Breitensuche und klassifiziert jeweils alle Kanten entsprechend.
+	\taskheading{Die Graphschaft besichtigen} 
+	Betrachtet die vorhin durchgespielte Tiefen- und Breitensuche und klassifiziert jeweils alle Kanten entsprechend. \vspace{-.2\baselineskip}
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielgraph}
+		\includegraphics[height=6cm]{beispielgraph-edited}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Kantentypen}
-	\underline{Lösung zu Aufgabe 4.1: für Tiefensuche} \\
-	\forcenewline
-	\forcenewline
+	\solutionheading
+	Für Tiefensuche: \\
+	\vspace{-.3\baselineskip}
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielDFStree}
+		\includegraphics[height=6.5cm]{beispielDFStree-edited}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Kantentypen}
-	\underline{Lösung zu Aufgabe 4.2: für Breitensuche} \\
-	\forcenewline
-	\forcenewline
+	\solutionheading
+	Für Breitensuche:
+	\vspace{-.3\baselineskip}
 	\begin{figure}[htp]
 		\centering
-		\includegraphics[height=6cm]{beispielBFStree}
+		\includegraphics[height=6.5cm]{beispielBFStree-edited}
 	\end{figure}
 \end{frame}
 
@@ -384,21 +273,7 @@
 	\end{itemize}
 \end{frame}	
 
-\begin{frame}{Graphenbeweise}
-	\underline{Aufgabe 5: I Wanna Ride My Acycle!} \\
-	Es sei $G = (V, E)$ ein gerichteter azyklischer Graph (DAG) mit endlich vielen und mindestens einem Knoten. Zeige, dass $G$ mindestens einen Knoten mit Eingangsgrad 0 besitzt. \\
-	\pause
-	\forcenewline
-	\underline{Lösung zu Aufgabe 5} \\
-	Angenommen, jeder Knoten hat Eingangsgrad $\geq 1$. ($=$ Gegenteil.) \\ 
-	Nehme irgendeinen Knoten $v$. Auf diesen zeigt also garantiert ne \textbf{Kante}. Laufe sie \textbf{rückwärts} $\rightsquigarrow$ neuer Knoten. \textbf{Wiederhole} beliebig oft (das geht dank Annahme!). \\
-	Also geht das öfter, als $G$ Knoten hat \impl Irgendwann ein Knoten 2x besucht \impl Wir laufen im Kreis \impl \crash $G$ kreisfrei. 
-\end{frame}
-
-\begin{frame}{Schönes Wochenende! \smiley}
-	\centering
-	\includegraphics[width=.78\textwidth]{xkcd-dfs}
-\end{frame}
+\xkcdframevert{761}{}{1.5}
 
 \only<beamer:0>{\slideThanks}
 

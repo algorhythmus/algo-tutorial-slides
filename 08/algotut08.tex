@@ -1,14 +1,6 @@
 %beamer
 
-%TODO: W/F-Fragen
-\mycomment{
-Wie viele Elemente maximal und minimal hat ein Heap der Höhe h?
-2h – 1, bzw. 2h-1
-Ist das Array [23, 17, 14, 6, 13, 10, 1, 5, 7, 12] ein min-Heap?
-Nein! (Zeichne!
-Wo befindet sich das kleinste Element im max-Heap? Irgendwo auf dem höchsten Level.
-Ist eine aufsteigend sortierte Array ein min-Heap?
-Ja!}
+
 
 %\PassOptionsToClass{handout}{beamer}
 
@@ -29,6 +21,22 @@ Ja!}
 			\item \textbf{VL-Verlegung}: VL/Übung am \textbf{Mi, 28. Juni}, im Fasanengarten-HS!
 		\end{itemize}
 	\end{frame}
+}
+
+\daniel{
+	\begin{frame}{Zu Blatt \#7}
+		\textbf{Durchschnitt}: \quad \thassedaniel{XXX}{XXX}~\% der Punkte
+		\begin{itemize}
+			\item 
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[t]{Quiz}
+		\ContentQuestion{Wie viele Elemente kann ein Heap der Höhe $h$ minimal/maximal haben?}{Minimal $2\*(h-1)$, maximal $2h - 1$.}
+		\NoQuestion{Ist das Array $(23, 17, 14, 6, 13, 10, 1, 5, 7, 12)$ ein Min-Heap?}
+		\ContentQuestion{Wo befindet sich das kleinste Element im Max-Heap?}{In einem Blatt im untersten Level.}\smallskip
+		\YesQuestion{Ist ein aufsteigend sortiertes Array ein Min-Heap?}
+	\end{frame}	
 }
 
 \sectionheadframe{Sortierte Folgen}{Die eierlegende Wollmilchdatenstruktur}
@@ -130,6 +138,15 @@ Ja!}
 		\quad Finde nächstgrößeres; \\
 		\quad Falls $j \neq e$: Nehme Vorgänger von $j$ in verketteter Liste
 	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
+	\textbf{Finden von (nächstgrößeren {\small (-kleineren)}) Elementen} \\
+	\medskip
+	Beispiel: Suche nach 55: \\
+	\centering 
+	\includegraphics[width=\textwidth]{ab-find}
 \end{frame}
 
 \begin{frame}{Sortierte Folgen -- (a, b)-Bäume}
@@ -244,6 +261,156 @@ Ja!}
 %		\item Wer sich also trotzdem mit dem fehlerhaften $dpartition$-Algorithmus rumgequält hat, bekam zusätzliche Bonuspunkte
 %	\end{itemize}
 %\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GRAPHEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sectionheadframe{Graphen}{Der Plural, nicht der Kohlenstoff}
+
+\begin{frame}{Graphen}
+	\textbf{Wir erinnern uns ...} 
+	\begin{itemize}
+		\item Graph $G = (V, E)$ mit \textbf{Knoten}menge $V \neq \emptyset$ und \textbf{Kanten}menge $E$
+		\pause
+		\item \emph{Gerichteter} Graph: $E \subseteq V \times V$
+		\item \emph{Ungerichteter} Graph: $E \subseteq \Big\lbrace \{u, v\} \bigm| u, v \in V \Big\rbrace$
+		\pause
+		\item Umwandlung \textit{ungerichtet} $\rightsquigarrow$ \textit{gerichtet} trivial \\ 
+		\impl Im Folgenden stets \emph{gerichtete} Graphen
+		\pause
+		\item $n := |V|$
+		\item $m := |E|$
+		\pause
+		\item Betrachten üblicherweise $V = \{1...n\}$ 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Kantenfolge} \\[0,125cm]
+	\begin{itemize}
+		\item {\small (Zusammenhängender)} Graph eindeutig definiert durch \textbf{Menge aller Kanten} (Reihenfolge egal)
+		\pause
+		\item Knoten $v$ existiert in $G$ \\ 
+		\gdw $\exists\ (v, x) \text{ oder } (x, v) \in \textit{Kantenliste}$ \quad ($x$ beliebig)
+		\pause
+		\item[\Pros] \textbf{Kompakt} \impl Gut handhabbar (im Speicher oder bei I/O)
+		\pause
+		\item[\Cons] Einzige effiziente Operation: \textbf{Durchlaufen} aller Kanten
+	\end{itemize}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=12cm]{kantenliste}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Adjazenzmatrix} \\
+	Verwende Matrix $A \in \{0, 1\}^{n \times n}$ \ mit \ $a_{ij} = 1 \gdw (i, j) \in E$
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=\textwidth]{adjazenzmatrix}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Adjazenzmatrix} 
+	\begin{itemize}
+		\item[\Pros] recht \textbf{platzeffizient}, falls Graph dicht
+		\pause
+		\item[\Pros] \textbf{Einfügen}, \textbf{Löschen}  und \textbf{Testen} von Kanten in $O(1)$ und simpel
+		\pause
+		\item[\Pros] $\{0, 1\} \rightsquigarrow \R$ erweitern für \textbf{Kantengewichte}
+		\pause
+		\item[\Pros] LA, yay! :D
+	\end{itemize}
+	\begin{itemize}
+		\pause
+		\item[\Cons] platz\textbf{in}effizient bei dünnbesetzten Graphen \\ 
+		{\small (also durchschn. Knotengrad $\ll n$)}
+		\pause
+		\item[\Cons] \textbf{langsame} Navigation
+		\pause
+		\item[\Cons] LA \textit{*kotz*} 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Adjazenzfeld (aka Adjazenzarray)} 
+	\begin{itemize}
+		\item 
+		\begin{tabbing}
+			Definiere \= $V : \KwArray[1 \dots n+1] \KwOf \{1 \dots m+1\}$ und \\
+			\> $E : \KwArray[1 \dots m] \KwOf \{1 \dots n\}$
+		\end{tabbing}
+		\pause
+		\item Von $v$ erreichbare Knoten: $\big\lbrace\, E[i] \mid V[v] \leq i < V[v+1] \, \big\rbrace$
+		\pause
+		\item \emph{„Dummy-Eintrag“}: \\
+		$V[n+1] := m+1$, damit oben $v = n$ nicht knallt
+	\end{itemize}
+	\visible<2->{\begin{figure}[htp]
+			\centering
+			\includegraphics[width=\textwidth]{adjazenzfeld}
+		\end{figure}}
+\end{frame}
+	
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Adjazenzfeld (aka Adjazenzarray)} 
+	\begin{itemize}
+		\item[\Pros] \textbf{Navigation} gut möglich
+		\pause
+		\item[\Pros] \textbf{Zusatzinfos} (z.~B. Kantengewichte) durch weitere Arrays leicht aufrüstbar
+		\pause
+		\item[\Pros] \textbf{Cachefreundlich}
+		\pause
+		\item[\Pros] Nachrüstbar: Kanten \textbf{löschen}, \textbf{rückwärts} laufen 
+	\end{itemize}
+	\begin{itemize}
+		\pause
+		\item[\Cons] Hinzufügen von Kanten scheiße \quad (\#ArraysHalt...)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\textbf{Adjazenzliste} 
+	\begin{itemize}
+		\item Verwende $\KwArray A[1...n]$ von verketteten Listen
+		\pause
+		\item $A[v]$: Liste aller von $v \in V$ aus \textbf{erreichbaren Knoten} \\
+		\forcenewline
+		\pause
+		\item[\Pros] Alle Features vom Adjazenzfeld
+		\pause
+		\item[\Pros] ...und noch mehr: \textbf{Einfügen}, \textbf{Löschen} von Kanten 
+		\pause
+		\item[\Cons] Benötigt mehr \textbf{Platz} (für Zeiger)
+		\pause
+		\item[\Cons] \textbf{Cachefeindlicher}
+	\end{itemize}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=.6\textwidth]{adjazenzliste}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Repräsentationen von Graphen}
+	\taskheading{Malen nach Zahlen}
+	Stellt diesen Graphen als Adjazenzfeld, Adjazenzmatrix und Kantenfolge dar (alphabetisch geordnet). \vspace{-.3\baselineskip}
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[height=6cm]{beispielgraph-edited}
+	\end{figure}
+\end{frame}
+	
+\begin{frame}{Graphenbeweise}
+	\taskheading{I Wanna Ride My Acycle!} 
+	Es sei $G = (V, E)$ ein gerichteter azyklischer Graph (DAG) mit endlich vielen und mindestens einem Knoten. Zeige, dass $G$ mindestens einen Knoten mit Eingangsgrad 0 besitzt. \\
+	\pause
+	\bigskip
+	\solutionheading
+	Angenommen, jeder Knoten hat Eingangsgrad $\geq 1$. ($=$ Gegenteil.) \\ 
+	Nehme irgendeinen Knoten $v$. Auf diesen zeigt also garantiert ne \textbf{Kante}. Laufe sie \textbf{rückwärts} $\rightsquigarrow$ neuer Knoten. \textbf{Wiederhole} beliebig oft (das geht dank Annahme!). \\
+	Also geht das öfter, als $G$ Knoten hat \impl Irgendwann ein Knoten 2x besucht \impl Wir laufen im Kreis \impl \crash $G$ kreisfrei. 
+\end{frame}
 
 \only<beamer:0>{\slideThanks}
 
