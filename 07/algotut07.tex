@@ -177,10 +177,10 @@
 		\scalebox{.8}{
 			\begin{tikzpicture}
 			[every node/.style={fill, circle, inner sep=1.5pt}]
-			\node[label=above:$x$,inner sep = 0pt, white] (x) at (0, 2.5) {};
-			\node[label=right:$y$,inner sep = 0pt, white] (y) at (4, 0) {};
-			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, -2) -- (x) {};
-			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, 0)  -- (y) {};
+			\node[label=above:$y$,inner sep = 0pt, white] (y) at (0, 2.5) {};
+			\node[label=right:$x$,inner sep = 0pt, white] (x) at (4, 0) {};
+			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, 0) -- (x) {};
+			\draw[->, thick, arrows = -{Stealth[inset=0pt]}] (0, -2)  -- (y) {};
 			\node (0) at (0,0) {};
 			\node[label=above:6] (6) at (0.75,2) {};
 			\node[label=above:4] (4) at (1,1) {};
@@ -285,7 +285,7 @@
 \begin{frame}{Binäre Heaps – Operationen}
 	\textbf{Einfügen von Elementen (insert)} 
 	\begin{itemize}
-		\item Setze Element $e$ in die \textbf{unterste} Ebene, so weit \textbf{rechts} wie möglich
+		\item Setze Element $e$ in die \textbf{unterste} Ebene, auf den \textbf{ersten freien Platz} von links
 		\pause
 		\item Heap-Eigenschaft \textbf{fixen}: mit \emph{siftUp} \\
 		Vertausche $e$ solange mit seinem Parent, bis wieder erfüllt
