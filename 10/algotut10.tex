@@ -10,18 +10,7 @@
 	
 \starttut{10}
 	
-\begin{frame}{Noch was zu DFS/BFS}
-	\begin{itemize}
-		\item DFS/BFS finden \textbf{Pfade} von Startknoten $s$ zu allen anderen erreichbaren Knoten \\
-		\impl $parent$-Array zum Rekonstruieren der Pfade \\
-		{\small ($parent[v]$: Vorgänger von $v$ im Pfad zu $v$)}
-		\item DFS/BFS messen „\textbf{Distanz}“ der Knoten \\
-		\impl $d$-Array mit $d[v] = $ Anzahl Kanten auf dem Weg zu $v$ 
-		\Implitem \textbf{Rückgabewerte} von BFS/DFS im Pseudocode benutzbar: \\
-		$(parent, d) := \text{BFS}(G, s)$ \RComment{DFS similar} \\
-		\LComment{Now use $parent[\cdot]$ and $d[\cdot]$} 
-	\end{itemize}
-\end{frame}
+
 
 \begin{headframe}[Es kommt halt \textit{doch} auf die Länge an...]
 	Kürzeste Pfade
@@ -237,34 +226,6 @@
 	\pause
 	$\exists$ Eulerkreis in $G$ \gdw $G$ hat nur gerade Knotengrade. \\
 	$\exists$ Hamiltonkreis in $G$ \gdw Ausprobieren! :P (Gibt kein einfaches Kriterium)
-\end{frame}
-
-
-\begin{frame}{Graphen}
-	\underline{Aufgabe 4: Tiefensuche revisited} \\
-	Implementiert Tiefensuche nicht-rekursiv als Pseudocode. Das asymptotische Laufzeitverhalten von Tiefensuche darf hierbei nicht überschritten werden.
-\end{frame}
-
-\begin{frame}{Kürzeste Pfade}
-	\underline{Lösung zu Aufgabe 4} \\
-	Recursion-Faking mittels Stack: 
-	\begin{algorithm}[H]
-		\Procedure{DFS$\left(G=(V,E),\ s \in V\right)$}{
-			$S := \llist{s} : \text{Stack}$ \;
-			$visited := (\KwFalse, ..., \KwFalse): \KwArrayOf \text{Boolean}$ \;
-			\While{$S \neq \emptyset$}{
-				$u := S$.pop$()$ \;
-				\If{$\KwNot visited[u]$}{
-					$visited[u] := \KwTrue$ \; 
-					\For{$(u,v) \in E$}{
-						\If{$\KwNot visited[v]$}{
-							$S$.push$(v)$
-						}	
-					}
-				}
-			}
-		}
-	\end{algorithm}
 \end{frame}
 
 \only<beamer:0>{\slideThanks}

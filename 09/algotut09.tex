@@ -18,60 +18,64 @@
 		\item \textbf{Ziel}: Von $s$ aus alle weiteren Knoten besuchen
 		\pause
 		\item \textbf{Aber}: Keine \textbf{Doppel}besuche/Endlosschleifen \impl \textbf{Merke} besuchte Knoten
+		\item Am Ende wollen wir \textbf{zu jedem Knoten nen Weg} haben
 	\end{itemize}
 \end{frame}
 
 \morescalingdelimiters
 
-\begin{frame}{Graphen durchlaufen – Tiefensuche}
-	\begin{exampleblock}{Intuitive Implementierung: Tiefensuche}
-		\begin{algorithm}[H]
-			\small
-			\Function{DFS-Forest$(G = (V, E)): (\KwArrayOf V, \KwArrayOf \N_0)$} {
-				$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
-				$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$  \;
-				\smallskip
-				\Procedure{DFS$(u,\, prev: V)$} {
-					\If{$\neg visited[u]$} {
-						visit$(u)$  \RComment{Do something with u} \;
-						$visited[u] := \KwTrue, \quad parent[u] := prev, \quad  d[u] := d[prev] + 1$\;
-						\ForEach{$(u, v) \in E$} {
-							DFS$(v,\, prev = u)$
-						}
-					}
-				}
-				\smallskip
-				\For{$v \in V$}{
-					\If{$\neg visited[v]$}{
-						DFS$(v,\, prev = v)$	
-					}	
-				}
-				\Return{$(parent, d)$}
-			}
-		\end{algorithm}
-		\mycomment{
-			\Procedure{DFS$(G = (V, E),\ s \in V)$} {
-				DFSrec$\left(G, s,\ (\KwFalse, ... , \KwFalse)\right)$\;
-			}
-			\;
-			\Procedure{DFSrec$(G = (V, E),\ u \in V, visited : \KwArrayOf Boolean)$} {
-				\If{$\neg visited[u]$} {
-					visit$(u)$  \RComment{Do something with u} \;
-					$visited[u] := \KwTrue$\;
-					\;
-					\ForEach{$(u, v) \in E$} {
-						DFSrec$(G, v, visited)$\;
-					}
+\mycomment{  % Forest-Fassung:
+	\Function{DFS-Forest$(G = (V, E)): (\KwArrayOf V, \KwArrayOf \N_0)$} {
+		$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
+		$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$  \;
+		\smallskip
+		\Procedure{DFS$(u,\, prev: V)$} {
+			\If{$\neg visited[u]$} {
+				visit$(u)$  \RComment{Do something with u} \;
+				$visited[u] := \KwTrue, \quad parent[u] := prev, \quad  d[u] := d[prev] + 1$\;
+				\ForEach{$(u, v) \in E$} {
+					DFS$(v,\, prev = u)$
 				}
 			}
 		}
+		\smallskip
+		\For{$v \in V$}{
+			\If{$\neg visited[v]$}{
+				DFS$(v,\, prev = v)$	
+			}	
+		}
+		\Return{$(parent, d)$}
+	}
+}
+
+\begin{frame}{Graphen durchlaufen – Tiefensuche}
+	\begin{exampleblock}{Intuitive Implementierung: Tiefensuche\only<all:1>{, Beta-Version}\only<all:2>{, Release-Candidate}}
+		\begin{algorithm}[H]
+			\Function{DFS$(G = (V, E),\, s \in V)$}{
+				$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
+				\visible<all:2>{$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$}  \;
+				\medskip
+				\Procedure{DFS-step$(u\visible<all:2>{,\, prev} \in V)$} {
+					\If{$\neg visited[u]$} {
+						$visited[u] := \KwTrue\visible<all:2>{, \quad parent[u] := prev, \quad  d[u] := d[prev] + 1}$\;
+						visit$(u\only<all:2>{,\, prev})$ \only<all:1>{\hphantom{$,\, prev$}} \RComment{Do something with u \only<all:2>{and prev}} \;
+						\ForEach{$(u, v) \in E$} {
+							DFS-step$(v\only<all:2>{,\, prev = u})$
+						}
+					}
+				}
+				\medskip
+				DFS-step$(s\only<all:2>{,\,  prev = s})$ \;
+				\visible<all:2>{\Return{$(parent, d)$}}
+			}
+		\end{algorithm}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
 	\taskheading{Tiefe in freier Wildbahn} 
-	Führt auf diesem Graphen Tiefensuche von $s$ ausgehend aus und malt den Tiefensuchwald. Nachbarn werden in alphabetischer Reihenfolge besucht.
-	\vspace{-\baselineskip}
+	Führt auf diesem Graphen Tiefensuche von $s$ ausgehend aus und malt die Laufwege hinein. Nachbarn werden in alphabetischer Reihenfolge besucht.
+	\vspace{-1.1\baselineskip}
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{beispielgraph-edited}
@@ -81,13 +85,14 @@
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
 	\solutionheading
 	Besuchsreihenfolge: \\ s, a, b, c, e, h, g, f, d, i, j, k
+	\vspace{-.4\baselineskip}
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{beispielDFS-edited}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Graphen durchlaufen – Tiefensuche}
+\begin{frame}[t]{Graphen durchlaufen – Tiefensuche}
 	\begin{itemize}
 		\item<+-> \textbf{Beobachtung}: Dringt schnell \textbf{tief} in den Graphen ein, anstatt sich „auszubreiten“ (daher der Name)
 		\item<+-> \textbf{Laufzeit}? \visible<+->{$\Theta(n+m)$} \\ 
@@ -97,11 +102,11 @@
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
-	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche}
+	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche (einfach)}
 		\begin{algorithm}[H]
 			\Procedure{BFS$(G = (V, E),\ s \in V)$} {
 				$visited := (\KwFalse, ... , \KwFalse)$\;
-				$Q := \{s\}$ \;
+				$Q := \llist{s} : \|Queue|$ \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
 					\If{$\neg visited[u]$} {
@@ -118,38 +123,40 @@
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
-	\vspace{-.2\baselineskip}
-	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Layer-Counter}}
+	\vspace{-.3\baselineskip}
+	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Layer-Counter} uvm.}
 		\begin{algorithm}[H]
-			\small
-			\Procedure{BFS-with-LayerCounter$(G = (V, E),\ s \in V)$} {
-				$visited := (\KwFalse, ... , \KwFalse)$\;
-				$Q := \{s\},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue Q'} \;
-				\alert{$layer := 0$} \RComment{For counting the layers of traversal} \;
+			\small \vspace{-.4\baselineskip}
+			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
+				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
+				$Q := \llist{s},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue Q'} \;
+				$\alert{parent[s] := s, \quad layer := 0}$ \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
 					\If{$\neg visited[u]$} {
 						visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
-						$visited[u] := \KwTrue$ \;
+						$visited[u] := \KwTrue, \quad \alert{d[u] := layer}$ \;
 						\ForEach{$(u, v) \in E$} {
+							\alert{$parent[v] := u$} \;
 							$Q'.\text{pushBack}(v)$  \RComment{Append to next-queue Q'} \;
-						}
+						} \vspace{-.2\baselineskip}
 					}
 					\alert{
 						\If{$Q = \emptyset$}{ 
 							$(Q, Q') := (Q', Q)$ \RComment{New layer, so swap queues} \;
-							$layer\pp$ \;
+							$layer\pp$ 
 						}
-					}
-				}
+					} \vspace{-.2\baselineskip}
+				} \vspace{-.2\baselineskip}
 			}
-		\end{algorithm} \vspace{-.4\baselineskip}
+		\end{algorithm} \vspace{-.5\baselineskip}
 	\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
 	\taskheading{Volle Breitseite}
 	Führt auf diesem Graphen Breitensuche von $s$ ausgehend aus. Nachbarn werden in alphabetischer Reihenfolge besucht.
+	\vspace{-.3\baselineskip}
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{beispielgraph-edited}
@@ -159,6 +166,7 @@
 \begin{frame}{Graphen durchlaufen – Breitensuche}
 	\solutionheading
 	Besuchsreihenfolge: \\ s,\quad a, c, d, \quad b, e, f, g, i, j, \quad h, k
+	\vspace{-.3\baselineskip}
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{beispielBFSwithLayers}
@@ -171,6 +179,23 @@
 		\item<+-> Offensichtlich: Findet \textbf{kürzeste Pfade} (bei \textbf{ungewichteten} Kanten)
 		\item<+-> \textbf{Laufzeit}? \visible<+->{$\Theta(n+m)$} \\ 
 		\NoQuestionE{In-place}{(wegen $visited$, $Q$ und $Q'$)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Graphen durchlaufen – Generell}
+	\begin{itemize}
+		\item DFS/BFS finden \textbf{Pfade} von Startknoten $s$ zu allen anderen erreichbaren Knoten \\
+		\impl $parent$-Array zum Rekonstruieren der Pfade \\
+		{\small ($parent[v]$: Vorgänger von $v$ im Pfad zu $v$)}
+		\item DFS/BFS messen „\textbf{Distanz}“ der Knoten \\
+		\impl $d$-Array mit $d[v] = $ Anzahl Kanten auf dem Weg zu $v$ 
+		\implitem \textbf{Rückgabewerte} von BFS/DFS im Pseudocode benutzbar: \\
+		$(parent, d) := \|BFS|(G, s)$ \RComment{DFS similar} \\
+		\LComment{Now use $parent[\cdot]$ and $d[\cdot]$} 
+		\bigskip
+		\pause
+		\item DFS/BFS finden \textbf{nur} alle von $s$ \textbf{erreichbaren} Knoten
+		\implitem Um den \textbf{ganzen Graphen} abzudecken, müsst ihr von jedem noch nicht erreichten Knoten \textbf{extra} loslaufen \: \emph{(„Tiefen-/Breitensuchwald“)}
 	\end{itemize}
 \end{frame}
 
@@ -272,6 +297,60 @@
 		Es gibt \textbf{keine} solche Strategie; \emph{forward}-Kanten bei DFS in manchen Fällen unvermeidbar
 	\end{itemize}
 \end{frame}	
+
+
+% Theoretisch prokrastinierbar, aber weils hier thematisch besser passt... Zeit langt vermutl. eh nicht:
+
+\begin{frame}{Graphen durchlaufen}
+	\taskheading{Tiefensuche revisited} 
+	Implementiert Tiefensuche nicht-rekursiv als Pseudocode. Das asymptotische Laufzeitverhalten von eigentlicher Tiefensuche darf hierbei nicht überschritten werden.
+\end{frame}
+
+\begin{frame}{Graphen durchlaufen}
+	\solutionheading
+	Recursion-Faking mittels Stack: 
+	\begin{algorithm}[H]
+		\Procedure{DFS$\left(G=(V,E),\ s \in V\right)$}{
+			$S := \llist{s} : \text{Stack}$ \;
+			$visited := (\KwFalse, ..., \KwFalse)$ \;
+			\While{$S \neq \emptyset$}{
+				$u := S$.popBack$()$ \;
+				\If{$\neg visited[u]$}{
+					visit$(u)$ \RComment{Do something with u} \;
+					$visited[u] := \KwTrue$ \; 
+					\ForEach{$(u,v) \in E$}{
+						$S$.pushBack$(v)$ \;
+					}
+				}
+			}
+		}
+	\end{algorithm}
+	\vphantom{\impl Tp}
+\end{frame}
+
+\begin{frame}{Graphen durchlaufen}
+	\solutionheading
+	Zum Vergleich: Breitensuche mit Queue
+	\begin{algorithm}[H]
+		\Procedure{BFS$(G = (V, E),\ s \in V)$} {
+			$\alert{Q} := \llist{s}: \alert{\|Queue|}$ \;
+			$visited := (\KwFalse, ... , \KwFalse)$\;
+			\While{$\alert{Q} \neq \emptyset$} {
+				$u := \alert{Q}.\text{pop\alert{Front}}()$\;
+				\If{$\neg visited[u]$} {
+					visit$(u)$ \RComment{Do something with u} \;
+					$visited[u] := \KwTrue$\;
+					\ForEach{$(u, v) \in E$} {
+						$\alert{Q}.\text{pushBack}(v)$\;
+					}
+				}
+			}
+		}
+	\end{algorithm}
+	\impl Der Apfel fällt nicht weit vom Tiefensuchbaum... :P
+\end{frame}
+
+
 
 \xkcdframevert{761}{}{1.5}
 
