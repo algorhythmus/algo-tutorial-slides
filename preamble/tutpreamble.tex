@@ -593,6 +593,15 @@
 	\lastframetitled{height=.96\frameheight}{#3}{xkcd_#1}{http://xkcd.com/#1}{}{#2}
 }
 
+% #1 number
+% #2 title 
+% #3 vspace (positive) without unit (\baselineskip)
+% #4 \includegraphics[] optional parameters
+\newcommand{\xkcdframecustom}[4]
+{
+	\lastframetitled{#4}{#3}{xkcd_#1}{http://xkcd.com/#1}{}{#2}
+}
+
 \newif\ifisWS \isWSfalse
 
 \def\semesterWS{\isWStrue}

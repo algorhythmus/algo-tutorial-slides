@@ -123,8 +123,34 @@
 \end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
+	\vspace{-1.3\baselineskip}
+	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Buchhaltung}}
+		\begin{algorithm}[H]
+			\small 
+			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
+				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
+				$Q := \llist{s}$ \;
+				$\alert{parent[s] := s}$ \;
+				\While{$Q \neq \emptyset$} {
+					$u := Q.\text{popFront}()$\;
+					\If{$\neg visited[u]$} {
+						$visited[u] := \KwTrue, \quad \alert{d[u] := d[parent[u]] + 1}$ \;
+						visit$(u, \alert{d[u]})$  \RComment{Do something with u and $d[u]$} \;
+						\ForEach{$(u, v) \in E$} {
+							\alert{$parent[v] := u$} \;
+							$Q.\text{pushBack}(v)$  \;
+						} 
+					}
+				} 
+			}
+		\end{algorithm} 
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Graphen durchlaufen – Breitensuche}
 	\vspace{-.3\baselineskip}
-	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Layer-Counter} uvm.}
+	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{kompliziert} (siehe VL) }
 		\begin{algorithm}[H]
 			\small \vspace{-.4\baselineskip}
 			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
@@ -134,8 +160,8 @@
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
 					\If{$\neg visited[u]$} {
-						visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
 						$visited[u] := \KwTrue, \quad \alert{d[u] := layer}$ \;
+						visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
 						\ForEach{$(u, v) \in E$} {
 							\alert{$parent[v] := u$} \;
 							$Q'.\text{pushBack}(v)$  \RComment{Append to next-queue Q'} \;
@@ -252,51 +278,48 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Graphen durchlaufen – Kantentypen}
-	\begin{itemize}
-		\item Gibt es eine Art von Kante, die bei Breitensuche nicht auftreten kann? Falls ja, warum?
-		\pause
-		\implitem \textit{forward}-Kanten können \textbf{nicht} auftreten \\
-		(BFS bestimmt schon den Pfad mit kleinster Kantenanzahl)
-	\end{itemize}
+\begin{frame}[t]{Graphen durchlaufen – Kantentypen}
+	\ContentQuestion{
+		Gibt es eine Art von Kante, die bei Breitensuche nicht auftreten kann? Falls ja, warum?
+	}{
+		\textit{forward}-Kanten können \textbf{nicht} auftreten. \\
+		(BFS bestimmt schon den Pfad mit kleinster Kantenanzahl.)
+	}
+	\ContentQuestion{
+		Gibt es eine Art von Kante, die bei Tiefensuche nicht auftreten kann? Falls ja, warum?
+	}{
+		Bei Tiefensuche können \textbf{alle} Arten von Kanten auftreten.
+	}
+	
 \end{frame}
 
-\begin{frame}{Graphen durchlaufen – Kantentypen}
-	\begin{itemize}
-		\item Gibt es eine Art von Kante, die bei Tiefensuche nicht auftreten kann? Falls ja, warum?
-		\pause
-		\item Bei Tiefensuche können \textbf{alle} Arten von Kanten auftreten.
-	\end{itemize}
+
+\begin{frame}[t]{Graphen durchlaufen – Kantentypen}
+	\ContentQuestion{
+		Gibt es eine Art von Kante, die bei Tiefensuche \textbf{auf ungerichteten Graphen} nicht auftreten kann? Falls ja, warum?
+	}{
+		 \emph{cross}-Kanten können nicht auftreten: \\
+		 Wäre nämlich schon \textbf{vorher} entlanggelaufen worden (da ungerichtet!). Die einzigen Kanten, die hier das Ende eines Tiefensuch-Astes markieren können, sind \emph{backward}-/\emph{forward}-Kanten. \\
+		 (Ob man die jetzt \emph{backward}- oder \emph{forward}- nennt, ist wurscht, sind ja faktisch \textbf{beides}.) Bsp. dazu: 
+		 \begin{center}
+		 	 \includegraphics[width=.35\textwidth]{backward-dfs-undirected}
+		 \end{center}
+	}
 \end{frame}
 
-\begin{frame}{Graphen durchlaufen – Kantentypen}
-	\begin{itemize}
-		\item Gibt es eine Art von Kante, die bei Tiefensuche \textbf{auf ungerichteten Graphen} nicht auftreten kann? Falls ja, warum?
-		\pause
-		\item \emph{cross}-Kanten können nicht auftreten: \\
-		Wäre nämlich schon \textbf{vorher} entlanggelaufen worden (da ungerichtet!). Die einzigen Kanten, die hier das Ende eines Tiefensuch-Astes markieren können, sind \emph{backward}-/\emph{forward}-Kanten. \\
-		(Ob man die jetzt \emph{backward}- oder \emph{forward}- nennt, ist wurscht, sind ja faktisch \textbf{beides}.) Bsp. dazu:
-	\end{itemize}
-	\centering
-	\visible<2->{\includegraphics[width=.35\textwidth]{backward-dfs-undirected}}
+\begin{frame}[t]{Graphen durchlaufen – Kantentypen}
+	\ContentQuestion{
+		Sind \emph{cross}-Kanten eindeutig? Falls ja, warum?
+	}{
+		\emph{cross}-Kanten sind genau dann eindeutig, wenn der zugehörige Baum eindeutig ist. \impl I.~A. \textbf{nicht} der Fall (da Nachbarn i.~A. nicht in bestimmter Reihenfolge gewählt).
+	}
+	\ContentQuestion{
+		Nach welcher Strategie muss bei Tiefensuche die Reihenfolge der rekursiven Abstiege (also die Reihenfolge der Nachbarn) gewählt werden, damit keine \textit{forward}-Kanten auftreten?
+	}{
+		\textbf{Fangfrage}! :P \\
+		Es gibt \textbf{keine} solche Strategie; \emph{forward}-Kanten bei DFS in manchen Fällen unvermeidbar.
+	}
 \end{frame}
-
-\begin{frame}{Graphen durchlaufen – Kantentypen}
-	\begin{itemize}
-		\item Sind \emph{cross}-Kanten eindeutig? Falls ja, warum?
-		\pause
-		\item \emph{cross}-Kanten sind genau dann eindeutig, wenn der zugehörige Baum eindeutig ist. \impl I.~A. \textbf{nicht} der Fall (da Nachbarn i.~A. nicht in bestimmter Reihenfolge gewählt).
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Graphen durchlaufen – Kantentypen}
-	\begin{itemize}
-		\item Nach welcher Strategie muss bei Tiefensuche die Reihenfolge der rekursiven Abstiege (also die Reihenfolge der Nachbarn) gewählt werden, damit keine \textit{forward}-Kanten auftreten?
-		\pause
-		\item \textbf{Fangfrage}! :P \\
-		Es gibt \textbf{keine} solche Strategie; \emph{forward}-Kanten bei DFS in manchen Fällen unvermeidbar
-	\end{itemize}
-\end{frame}	
 
 
 % Theoretisch prokrastinierbar, aber weils hier thematisch besser passt... Zeit langt vermutl. eh nicht:
@@ -350,9 +373,7 @@
 	\impl Der Apfel fällt nicht weit vom Tiefensuchbaum... :P
 \end{frame}
 
-
-
-\xkcdframevert{761}{}{1.5}
+\xkcdframecustom{761}{}{2}{height=1.01\frameheight}
 
 \only<beamer:0>{\slideThanks}
 
