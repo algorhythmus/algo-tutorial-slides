@@ -54,6 +54,7 @@
 \usepackage{xspace} % for \xspace command
 \usepackage{varwidth}
 \usepackage{csquotes}
+\usepackage{ulem}
 
 \newcommand{\mycomment}[1]{}
 
@@ -407,7 +408,7 @@
 \newcommand{\GenericQuestion}[5]{
 	\setlength\fboxrule{2pt}
 	\only<+|handout:0>{\hspace{-2pt}\fcolorbox{white}{questionlightgray}{\QuestionParbox{#4} \quad\textbf{?}}}
-	\visible<+->{\hspace{-2pt}\fcolorbox{white}{#1}{\QuestionParbox{#4} \quad\textbf{\textcolor{#2}{#3}}} \ExplanationParbox{#5}} \\
+	\visible<+->{\hspace{-2pt}\fcolorbox{white}{#1}{\QuestionParbox{#4} \quad\textbf{\textcolor{#2}{#3}}} \if\relax#5\relax\else\ExplanationParbox{#5}\fi} \\
 	\setlength\fboxrule{\defaultfboxrule}
 }
 
