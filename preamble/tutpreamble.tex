@@ -54,7 +54,7 @@
 \usepackage{xspace} % for \xspace command
 \usepackage{varwidth}
 \usepackage{csquotes}
-\usepackage{ulem}
+\usepackage{kbordermatrix}
 
 \newcommand{\mycomment}[1]{}
 
@@ -95,6 +95,10 @@
 \newcommand{\tuple}[1]{\left(#1\right)}
 
 \newcommand*{\from}{\colon}
+
+% kbordermatrix settings
+\renewcommand{\kbldelim}{(} % Left delimiter
+\renewcommand{\kbrdelim}{)} % Right delimiter
 
 \newcommand{\morescalingdelimiters}{   % for proper \left( \right) typography
 	\delimitershortfall=0pt  % formerly: 0pt  
