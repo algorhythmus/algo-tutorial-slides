@@ -130,7 +130,7 @@
 			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
 				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
 				$Q := \llist{s}$ \;
-				$\alert{parent[s] := s}$ \;
+				$\alert{parent[s] := s, \quad d[s] := -1}$ \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
 					\If{$\neg visited[u]$} {
