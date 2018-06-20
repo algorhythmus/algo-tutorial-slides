@@ -394,7 +394,7 @@
 	\begin{itemize}
 		\item<+-> \textbf{Intuitiv}: BFS vom Startmenschen, bis man den Zielmenschen gefunden hat
 		\item<+->[\Cons\symbitemnegoffset] Laufzeit: Pro Schicht \textbf{verhundertfacht} sich die Anzahl der Kanten \\
-			\impl Zu überprüfende Kanten: \quad $100^6 = 10^{12} > 7.5 \* 10^9 \approx \text{\#People on Earth}$!
+			\impl Zu überprüfende Kanten: \quad $100^6 = 10^{12} \gg 7.5 \* 10^9 \approx \text{\#People on Earth}$!
 		\implitem<+-> \textbf{Besser: } \textbf{Zwei} BFS \textbf{parallel} vom Start und vom Ziel aus \\
 			\impl Zu überprüfende Kanten: \quad $2 \* 100^3 = 2 \* 10^6$ \\
 			\impl Um Faktor $10^6$ \textbf{schneller}!
