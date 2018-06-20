@@ -8,22 +8,22 @@
 	
 \starttut{9}
 
-
-\begin{frame}{Zu Blatt \#7}
-	\textbf{Durchschnitt}: \quad \thassedaniel{XXX}{71}~\% der Punkte
-	\begin{itemize}
-		\item Heaps liegen \textbf{lückenlos} im Speicher!
-		\item Binäre Suche sieht rekursiv einfach viel schöner aus \smiley
-		\item Laufzeiten begründen!
-	\end{itemize}
-\end{frame}
-
+\thasse{
+	\begin{frame}{Zu Blatt \#7}
+		\textbf{Durchschnitt}: \quad \thassedaniel{XXX}{71}~\% der Punkte
+		\begin{itemize}
+			\item Heaps liegen \textbf{lückenlos} im Speicher!
+			\item Binäre Suche sieht rekursiv einfach viel schöner aus \smiley
+			\item Laufzeiten begründen!
+		\end{itemize}
+	\end{frame}
+}
 
 \begin{frame}[t]{Quiz}
-	\FalseQuestionE{Ein binärer Heap ist ein (1,2)-Baum} {Heaps sind nicht sortiert}
-	\FalseQuestionE{Beim Einfügen in einen (a,b)-Baum kann es zu balance- und fuse-Operationen kommen}{Beim Einfügen split, beim Löschen balance/fuse}
-	\TrueQuestion{Adjazenzfelder eignen sich besser zum traversieren von Graphen als Adjazenzmatrizen}
-	\FalseQuestionE{Jeder kreisfreie Graph, bei dem es zu jedem Knoten höchstens einen Pfad gibt, ist ein Baum.}{Es gibt auch Wälder.}
+	\FalseQuestionE{Ein binärer Heap ist ein (1,2)-Baum.} {Heaps sind nicht sortiert.}
+	\FalseQuestionE{Beim Einfügen in einen (a,b)-Baum kann es zu \emph{balance}- und \emph{fuse}-Operationen kommen.}{Beim Einfügen \emph{split}, beim Löschen \emph{balance}/\emph{fuse}.}
+	\TrueQuestion{Adjazenzfelder eignen sich besser zum Traversieren von Graphen als Adjazenzmatrizen.}
+	\FalseQuestionE{Jeder kreisfreie Graph, bei dem es zu jedem Knoten \\ höchstens einen Pfad gibt, ist ein Baum.}{Es gibt auch Wälder.}
 	\TrueQuestion{Jeder ungerichtete, zusammenhängende, kreisfreie Graph ist ein Baum.}
 \end{frame}
 	
@@ -226,7 +226,7 @@
 	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{kompliziert} (siehe VL) }
 		\begin{algorithm}[H]
 			\small \vspace{-.4\baselineskip}
-			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
+			\Function{BFS$(G = (V, E),\ s \in V): \alert{(parent, d)}$} {
 				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
 				$Q := \llist{s},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue Q'} \;
 				$\|visit|(s\alert{, 0}), \quad visited[s] := \KwTrue, \quad \alert{parent[s] := s, \quad layer := 0}$ \;
