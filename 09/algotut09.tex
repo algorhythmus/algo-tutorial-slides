@@ -49,6 +49,7 @@
 }
 
 \begin{frame}{Graphen durchlaufen – Tiefensuche}
+	\vspace{-.3\baselineskip}
 	\begin{exampleblock}{Intuitive Implementierung: Tiefensuche\only<all:1>{, Beta-Version}\only<all:2>{, Release-Candidate}}
 		\begin{algorithm}[H]
 			\Function{DFS$(G = (V, E),\, s \in V)$}{
@@ -56,18 +57,20 @@
 				\visible<all:2>{$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$}  \;
 				\medskip
 				\Procedure{DFS-step$(u\visible<all:2>{,\, prev} \in V)$} {
-					\If{$\neg visited[u]$} {
-						$visited[u] := \KwTrue\visible<all:2>{, \quad parent[u] := prev, \quad  d[u] := d[prev] + 1}$\;
-						visit$(u\only<all:2>{,\, prev})$ \only<all:1>{\hphantom{$,\, prev$}} \RComment{Do something with u \only<all:2>{and prev}} \;
-						\ForEach{$(u, v) \in E$} {
+					\ForEach{$(u, v) \in E$} {
+						\If{$\neg visited[v]$} {
+							$visited[v] := \KwTrue\visible<all:2>{, \quad \rlap{\small $parent[v] := prev, \quad  d[v] := d[prev] + 1$}}$\;
+							visit$(v\only<all:2>{,\, prev})$ \only<all:1>{\hphantom{$,\, prev$}} \RComment{Do something with v \only<all:2>{and prev}} \;
 							DFS-step$(v\only<all:2>{,\, prev = u})$
 						}
 					}
 				}
 				\medskip
+				visit$(s), \quad visited[s] := \KwTrue\only<all:2>{, \quad parent[s] := s}$ \;
 				DFS-step$(s\only<all:2>{,\,  prev = s})$ \;
 				\visible<all:2>{\Return{$(parent, d)$}}
 			}
+			\vspace{-.5\baselineskip}
 		\end{algorithm}
 	\end{exampleblock}
 \end{frame}
@@ -101,52 +104,105 @@
 	\end{itemize}
 \end{frame}
 
+\mycomment{% old and wrong
+	\begin{frame}{Graphen durchlaufen – Breitensuche}
+		\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche (einfach)}
+			\begin{algorithm}[H]
+				\Procedure{BFS$(G = (V, E),\ s \in V)$} {
+					$visited := (\KwFalse, ... , \KwFalse)$\;
+					$Q := \llist{s} : \|Queue|$ \;
+					\While{$Q \neq \emptyset$} {
+						$u := Q.\text{popFront}()$\;
+						\If{$\neg visited[u]$} {
+							visit$(u)$ \RComment{Do something with u} \;
+							$visited[u] := \KwTrue$\;
+							\ForEach{$(u, v) \in E$} {
+								$Q.\text{pushBack}(v)$\;
+							}
+						}
+					}
+				}
+			\end{algorithm}
+		\end{exampleblock}
+	\end{frame}
+	
+		\begin{frame}{Graphen durchlaufen – Breitensuche}
+			\vspace{-.3\baselineskip}
+			\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{kompliziert} (siehe VL) }
+				\begin{algorithm}[H]
+					\small \vspace{-.4\baselineskip}
+					\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
+						$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
+						$Q := \llist{s},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue $Q'$} \;
+						$\alert{parent[s] := s, \quad layer := 0}$ \;
+						\While{$Q \neq \emptyset$} {
+							$u := Q.\text{popFront}()$\;
+							\If{$\neg visited[u]$} {
+								$visited[u] := \KwTrue, \quad \alert{d[u] := layer}$ \;
+								visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
+								\ForEach{$(u, v) \in E$} {
+									\alert{$parent[v] := u$} \;
+									$Q'.\text{pushBack}(v)$  \RComment{Append to next-queue $Q'$} \;
+								} \vspace{-.2\baselineskip}
+							}
+							\alert{
+								\If{$Q = \emptyset$}{ 
+									$(Q, Q') := (Q', Q)$ \RComment{New layer, so swap queues} \;
+									$layer\pp$ 
+								}
+							} \vspace{-.2\baselineskip}
+						} \vspace{-.2\baselineskip}
+					}
+				\end{algorithm} \vspace{-.5\baselineskip}
+			\end{exampleblock}
+		\end{frame}
+}
+
 \begin{frame}{Graphen durchlaufen – Breitensuche}
+	\vspace{-1.3\baselineskip}
 	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche (einfach)}
 		\begin{algorithm}[H]
 			\Procedure{BFS$(G = (V, E),\ s \in V)$} {
 				$visited := (\KwFalse, ... , \KwFalse)$\;
-				$Q := \llist{s} : \|Queue|$ \;
+				$Q := \llist{s}: \|Queue|$ \;
+				$\|visit|(s),\hphantom{, 0} \quad visited[s] := \KwTrue$ \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
-					\If{$\neg visited[u]$} {
-						visit$(u)$ \RComment{Do something with u} \;
-						$visited[u] := \KwTrue$\;
-						\ForEach{$(u, v) \in E$} {
-							$Q.\text{pushBack}(v)$\;
-						}
-					}
-				}
-			}
-		\end{algorithm}
-	\end{exampleblock}
-\end{frame}
-
-\begin{frame}{Graphen durchlaufen – Breitensuche}
-	\vspace{-1.3\baselineskip}
-	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Buchhaltung}}
-		\begin{algorithm}[H]
-			\small 
-			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
-				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
-				$Q := \llist{s}$ \;
-				$\alert{parent[s] := s, \quad d[s] := -1}$ \;
-				\While{$Q \neq \emptyset$} {
-					$u := Q.\text{popFront}()$\;
-					\If{$\neg visited[u]$} {
-						$visited[u] := \KwTrue, \quad \alert{d[u] := d[parent[u]] + 1}$ \;
-						visit$(u, \alert{d[u]})$  \RComment{Do something with u and $d[u]$} \;
-						\ForEach{$(u, v) \in E$} {
-							\alert{$parent[v] := u$} \;
+					\ForEach{$(u, v) \in E$}{
+						\If{$\neg visited[v]$} {
+							$visited[v] := \KwTrue$ \;
+							visit$(v)$\hphantom{$, d[v]$} \RComment{Do something with v} \;
 							$Q.\text{pushBack}(v)$  \;
-						} 
-					}
+						}
+					}	
 				} 
 			}
 		\end{algorithm} 
 	\end{exampleblock}
 \end{frame}
 
+\begin{frame}{Graphen durchlaufen – Breitensuche}
+	\vspace{-1.3\baselineskip}
+	\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche \textbf{mit Buchhaltung}}
+		\begin{algorithm}[H] 
+			\Function{BFS$(G = (V, E),\ s \in V): \alert{(parent, d)}$} {
+				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
+				$Q := \llist{s}: \|Queue|$ \;
+				$\|visit|(s\alert{, 0}), \quad visited[s] := \KwTrue, \quad \alert{parent[s] := s}$ \;
+				\While{$Q \neq \emptyset$} {
+					$u := Q.\text{popFront}()$\;
+					\ForEach{$(u, v) \in E$}{
+						\If{$\neg visited[v]$} {
+							$visited[v] := \KwTrue, \quad \alert{parent[v] := u, \quad  d[v] := d[u] + 1}$ \;
+							visit$(v\alert{, d[v]})$  \RComment{Do something with v and $d[v]$} \;
+							$Q.\text{pushBack}(v)$  \;
+						}
+					}	
+				} 
+			}
+		\end{algorithm} 
+	\end{exampleblock}
+\end{frame}
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
 	\vspace{-.3\baselineskip}
@@ -156,17 +212,16 @@
 			\Function{BFS$(G = (V, E),\ s \in V): (parent, d)$} {
 				$visited := (\KwFalse, ... , \KwFalse), \quad \alert{parent := (\bot, ..., \bot), \quad d := (0, ..., 0)}$\;
 				$Q := \llist{s},$ \quad \alert{$Q' := \emptyset$}  \RComment{Extra queue Q'} \;
-				$\alert{parent[s] := s, \quad layer := 0}$ \;
+				$\|visit|(s\alert{, 0}), \quad visited[s] := \KwTrue, \quad \alert{parent[s] := s, \quad layer := 0}$ \;
 				\While{$Q \neq \emptyset$} {
 					$u := Q.\text{popFront}()$\;
-					\If{$\neg visited[u]$} {
-						$visited[u] := \KwTrue, \quad \alert{d[u] := layer}$ \;
-						visit$(u, \alert{layer})$  \RComment{Do something with u and layer} \;
-						\ForEach{$(u, v) \in E$} {
-							\alert{$parent[v] := u$} \;
-							$Q'.\text{pushBack}(v)$  \RComment{Append to next-queue Q'} \;
+					\ForEach{$(u, v) \in E$}{
+						\If{$\neg visited[v]$} {
+							$visited[v] := \KwTrue, \quad \alert{parent[v] := u, \quad  d[v] := layer}$ \;
+							visit$(v\alert{, layer})$  \RComment{Do something with v and $layer$} \;
+							$\alert{Q'}.\text{pushBack}(v)$  \RComment{Append to next-queue Q'} \;
 						} \vspace{-.2\baselineskip}
-					}
+					} 
 					\alert{
 						\If{$Q = \emptyset$}{ 
 							$(Q, Q') := (Q', Q)$ \RComment{New layer, so swap queues} \;
@@ -178,6 +233,9 @@
 		\end{algorithm} \vspace{-.5\baselineskip}
 	\end{exampleblock}
 \end{frame}
+
+
+
 
 \begin{frame}{Graphen durchlaufen – Breitensuche}
 	\taskheading{Volle Breitseite}
@@ -321,18 +379,26 @@
 	}
 \end{frame}
 
-\begin{frame}{Graphen durchlaufen – Aufgabe}
-	\taskheading{Searching Facebook}
+\begin{frame}{Graphen durchlaufen}
+	\taskheading{Best-Friend-Search}
 	Das Kleine-Welt-Phänomen besagt, dass jeder Mensch mit jedem anderen über maximal sechs Ecken bekannt ist.\\
 	\medskip
-	Wir betrachten einen \emph{Freundschaftsgraphen} eines beliebigen \thassedaniel{\enquote{Überwachungsnetzwerkes}}{Überwachungsnetzwerkes}, bei dem Menschen als Knoten und ihre Freundschaften als Kanten dargestellt sind.
-	Weiter nehmen wir vereinfachend an, jeder Nutzer hat etwa 100 Freunde (dies entspricht dem Durchschnitt).\\
+	Wir betrachten einen \emph{Freundschaftsgraphen} eines beliebigen \thassedaniel{\enquote{Überwachungsnetzwerkes}}{Überwachungsnetzwerkes\TM}, bei dem Menschen als Knoten und ihre Freundschaften als Kanten dargestellt sind.
+	Weiter nehmen wir vereinfachend an, jeder Nutzer habe etwa 100 Freunde (dies entspricht dem Durchschnitt).\\
 	\medskip
 	Überlegt euch ein Verfahren, mit welchem in einem Freundschaftsgraphen möglichst schnell zwischen zwei gegebenen Menschen ein \enquote{Bekanntheitspfad} gefunden werden kann.
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Graphen durchlaufen}
 	\solutionheading
+	\begin{itemize}
+		\item<+-> \textbf{Intuitiv}: BFS vom Startmenschen, bis man den Zielmenschen gefunden hat
+		\item<+->[\Cons\symbitemnegoffset] Laufzeit: Pro Schicht \textbf{verhundertfacht} sich die Anzahl der Kanten \\
+			\impl Zu überprüfende Kanten: \quad $100^6 = 10^{12} > 7.5 \* 10^9 \approx \text{\#People on Earth}$!
+		\implitem<+-> \textbf{Besser: } \textbf{Zwei} BFS \textbf{parallel} vom Start und vom Ziel aus \\
+			\impl Zu überprüfende Kanten: \quad $2 \* 100^3 = 2 \* 10^6$ \\
+			\impl Um Faktor $10^6$ \textbf{schneller}!
+	\end{itemize}
 \end{frame}
 
 % Theoretisch prokrastinierbar, aber weils hier thematisch besser passt... Zeit langt vermutl. eh nicht:
@@ -342,6 +408,52 @@
 	Implementiert Tiefensuche nicht-rekursiv als Pseudocode. Das asymptotische Laufzeitverhalten von eigentlicher Tiefensuche darf hierbei nicht überschritten werden.
 \end{frame}
 
+\mycomment{%old
+	\begin{frame}{Graphen durchlaufen}
+		\solutionheading
+		Recursion-Faking mittels Stack: 
+		\begin{algorithm}[H]
+			\Procedure{DFS$\left(G=(V,E),\ s \in V\right)$}{
+				$S := \llist{s} : \text{Stack}$ \;
+				$visited := (\KwFalse, ..., \KwFalse)$ \;
+				\While{$S \neq \emptyset$}{
+					$u := S$.popBack$()$ \;
+					\If{$\neg visited[u]$}{
+						visit$(u)$ \RComment{Do something with u} \;
+						$visited[u] := \KwTrue$ \; 
+						\ForEach{$(u,v) \in E$}{
+							$S$.pushBack$(v)$ \;
+						}
+					}
+				}
+			}
+		\end{algorithm}
+		\vphantom{\impl Tp}
+	\end{frame}
+	
+	\begin{frame}{Graphen durchlaufen}
+		\solutionheading
+		Zum Vergleich: Breitensuche mit Queue
+		\begin{algorithm}[H]
+			\Procedure{BFS$(G = (V, E),\ s \in V)$} {
+				$\alert{Q} := \llist{s}: \alert{\|Queue|}$ \;
+				$visited := (\KwFalse, ... , \KwFalse)$\;
+				\While{$\alert{Q} \neq \emptyset$} {
+					$u := \alert{Q}.\text{pop\alert{Front}}()$\;
+					\If{$\neg visited[u]$} {
+						visit$(u)$ \RComment{Do something with u} \;
+						$visited[u] := \KwTrue$\;
+						\ForEach{$(u, v) \in E$} {
+							$\alert{Q}.\text{pushBack}(v)$\;
+						}
+					}
+				}
+			}
+		\end{algorithm}
+		\impl Der Apfel fällt nicht weit vom Tiefensuchbaum... :P
+	\end{frame}
+}
+
 \begin{frame}{Graphen durchlaufen}
 	\solutionheading
 	Recursion-Faking mittels Stack: 
@@ -349,12 +461,13 @@
 		\Procedure{DFS$\left(G=(V,E),\ s \in V\right)$}{
 			$S := \llist{s} : \text{Stack}$ \;
 			$visited := (\KwFalse, ..., \KwFalse)$ \;
+			$\|visit|(s), \quad visited[s] := \KwTrue$ \;
 			\While{$S \neq \emptyset$}{
 				$u := S$.popBack$()$ \;
-				\If{$\neg visited[u]$}{
-					visit$(u)$ \RComment{Do something with u} \;
-					$visited[u] := \KwTrue$ \; 
-					\ForEach{$(u,v) \in E$}{
+				\ForEach{$(u,v) \in E$}{
+					\If{$\neg visited[v]$}{
+						visit$(v)$ \RComment{Do something with v} \;
+						$visited[v] := \KwTrue$ \; 
 						$S$.pushBack$(v)$ \;
 					}
 				}
@@ -371,12 +484,13 @@
 		\Procedure{BFS$(G = (V, E),\ s \in V)$} {
 			$\alert{Q} := \llist{s}: \alert{\|Queue|}$ \;
 			$visited := (\KwFalse, ... , \KwFalse)$\;
+			$\|visit|(s), \quad visited[s] := \KwTrue$ \;
 			\While{$\alert{Q} \neq \emptyset$} {
 				$u := \alert{Q}.\text{pop\alert{Front}}()$\;
-				\If{$\neg visited[u]$} {
-					visit$(u)$ \RComment{Do something with u} \;
-					$visited[u] := \KwTrue$\;
-					\ForEach{$(u, v) \in E$} {
+				\ForEach{$(u, v) \in E$} {
+					\If{$\neg visited[v]$} {
+						visit$(v)$ \RComment{Do something with v} \;
+						$visited[v] := \KwTrue$\;
 						$\alert{Q}.\text{pushBack}(v)$\;
 					}
 				}
