@@ -73,18 +73,18 @@
 				$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
 				\visible<all:2>{$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$}  \;
 				\medskip
-				\Procedure{DFS-step$(u\visible<all:2>{,\, prev} \in V)$} {
+				\Procedure{DFS-step$(u \in V)$} {
 					\ForEach{$(u, v) \in E$} {
 						\If{$\neg visited[v]$} {
-							$visited[v] := \KwTrue\visible<all:2>{, \quad \rlap{\small $parent[v] := prev, \quad  d[v] := d[prev] + 1$}}$\;
-							visit$(v\only<all:2>{,\, prev})$ \only<all:1>{\hphantom{$,\, prev$}} \RComment{Do something with v \only<all:2>{and prev}} \;
-							DFS-step$(v\only<all:2>{,\, prev = u})$
+							$visited[v] := \KwTrue\visible<all:2>{, \quad \rlap{$parent[v] := u, \quad  d[v] := d[u] + 1$}}$\;
+							visit$(v\only<all:2>{,\, u})$ \only<all:1>{\hphantom{$,\, u$}} \RComment{Do something with v \only<all:2>{and u}} \;
+							DFS-step$(v)$
 						}
 					}
 				}
 				\medskip
 				visit$(s), \quad visited[s] := \KwTrue\only<all:2>{, \quad parent[s] := s}$ \;
-				DFS-step$(s\only<all:2>{,\,  prev = s})$ \;
+				DFS-step$(s)$ \;
 				\visible<all:2>{\Return{$(parent, d)$}}
 			}
 			\vspace{-.5\baselineskip}
