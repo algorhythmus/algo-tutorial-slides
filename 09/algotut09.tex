@@ -22,7 +22,7 @@
 \begin{frame}[t]{Quiz}
 	\FalseQuestionE{Ein binärer Heap ist ein (1,2)-Baum.} {Heaps sind nicht sortiert.}
 	\FalseQuestionE{Beim Einfügen in einen (a,b)-Baum kann es zu \emph{balance}- und \emph{fuse}-Operationen kommen.}{Beim Einfügen \emph{split}, beim Löschen \emph{balance}/\emph{fuse}.}
-	\TrueQuestion{Adjazenzfelder eignen sich besser zum Traversieren von Graphen als Adjazenzmatrizen.}
+	\TrueQuestion{Adjazenzfelder eignen sich besser zum Traversieren von \\ Graphen als Adjazenzmatrizen.}
 	\FalseQuestionE{Jeder kreisfreie Graph, bei dem es zu jedem Knoten \\ höchstens einen Pfad gibt, ist ein Baum.}{Es gibt auch Wälder.}
 	\TrueQuestion{Jeder ungerichtete, zusammenhängende, kreisfreie Graph ist ein Baum.}
 \end{frame}
@@ -41,7 +41,7 @@
 
 \morescalingdelimiters
 
-\mycomment{  % Forest-Fassung:
+\mycomment{  % Forest-Fassung, alt:
 	\Function{DFS-Forest$(G = (V, E)): (\KwArrayOf V, \KwArrayOf \N_0)$} {
 		$visited = (\KwFalse, ... , \KwFalse): \KwArrayOf \|Boolean|$ \;
 		$parent = (\bot, ... , \bot): \KwArrayOf V$, \qquad $d = (0, ..., 0): \KwArrayOf \N_0$  \;
@@ -122,6 +122,7 @@
 \end{frame}
 
 \mycomment{% old and wrong
+	
 	\begin{frame}{Graphen durchlaufen – Breitensuche}
 		\begin{exampleblock}{Organisierte Reihenfolge: Breitensuche (einfach)}
 			\begin{algorithm}[H]
