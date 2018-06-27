@@ -191,9 +191,9 @@
 	Führe \textbf{Dijkstra} auf dem Netzwerk-Graphen durch, allerdings mit...
 	\begin{itemize}
 		\item Zuverlässigkeit $\bar{p}_{(a,b)} := 1 - p_{(a,b)}$ als \textbf{Kantengewichten},
-		\item Suche nach dem „Longest Path“ \\ 
-		\impl Verwende Max-Heap statt Min-Heap, \\ 
-		\impl relaxiere Kanten unter Bevorzugung „\textbf{längerer}“ {\small ($=$~zuverlässigerer)} Pfade, 
+		\item Suche nach dem „Longest Path“ \\
+		\impl Verwende \textbf{Max}-Heap statt Min-Heap, \\
+		\impl relaxiere Kanten unter Bevorzugung „\textbf{längerer}“ {\small ($=$~zuverlässigerer)} Pfade,
 		\item \textbf{Multiplikation} statt Addition der Kantengewichte (Wahrscheinlichkeiten auf einem Pfad akkumulieren sich multiplikativ).
 	\end{itemize}
 	\pause
