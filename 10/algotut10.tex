@@ -174,7 +174,34 @@
 	\textbf{Modifiziere} Dijkstra: Definiere Kantengewichte um als \textbf{Tupel} $c'(e) := \left(c(e), 1\right)$ (mit komponentenweiser Addition) und folgender Ordnung: \\ $(a, b) < (c, d) \Gdwdef a < c \ \lor\  (a = c \land b < d)$ 
 \end{frame}
 
+\begin{frame}{Kürzeste Pfade}
+	\taskheading{Unerschlossenes Neuland}
+	Ihr seid Administrator eines Computernetzwerks bestehend aus $n$ Rechnern und Netzwerkverbindungen
+	zwischen diesen. Leider sind die Netzwerkverbindungen nicht absolut zuverlässig: Jede Verbindung
+	zwischen zwei Rechnern $a$ und $b$ hat eine Wahrscheinlichkeit $0 < p_{(a,b)} < 1$, dass ein auf dieser
+	Verbindung gesendetes Paket nicht ankommt. Die Verbindungen sind gerichtet, das heißt es kann sein,
+	dass $p_{(a,b)} \neq p_{(b,a)}$ gilt. \\
+	\medskip
+	Eure Aufgabe ist es nun, zwischen zwei gegebenen Rechnern einen möglichst zuverlässigen Pfad zu finden.
+	Gebt dafür einen möglichst effizienten Algorithmus an.
+\end{frame}
 
+\begin{frame}{Kürzeste Pfade}
+	\solutionheading
+	Führe \textbf{Dijkstra} auf dem Netzwerk-Graphen durch, allerdings mit...
+	\begin{itemize}
+		\item Zuverlässigkeit $\bar{p}_{(a,b)} := 1 - p_{(a,b)}$ als \textbf{Kantengewichten},
+		\item Suche nach dem „Longest Path“ \\ 
+		\impl Verwende Max-Heap statt Min-Heap, \\ 
+		\impl relaxiere Kanten unter Bevorzugung „\textbf{längerer}“ {\small ($=$~zuverlässigerer)} Pfade, 
+		\item \textbf{Multiplikation} statt Addition der Kantengewichte (Wahrscheinlichkeiten auf einem Pfad akkumulieren sich multiplikativ).
+	\end{itemize}
+	\pause
+	Dies funktioniert, da $ 0 < \bar{p} < 1$ \impl Pfade mit mehr Kanten haben also kleinere Zuverlässigkeitswerte. \\
+	\pause
+	\smallskip
+	Laufzeit: Wie Dijkstra in $\Oh{(m+n) \log n}$.
+\end{frame}
 
 \section{Bellman-Ford}
 
