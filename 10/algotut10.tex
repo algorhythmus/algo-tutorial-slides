@@ -179,7 +179,7 @@
 	Ihr seid Administrator eines Computernetzwerks bestehend aus $n$ Rechnern und Netzwerkverbindungen
 	zwischen diesen. Leider sind die Netzwerkverbindungen nicht absolut zuverlässig: Jede Verbindung
 	zwischen zwei Rechnern $a$ und $b$ hat eine Wahrscheinlichkeit $0 < p_{(a,b)} < 1$, dass ein auf dieser
-	Verbindung gesendetes Paket nicht ankommt. Die Verbindungen sind gerichtet, das heißt es kann sein,
+	Verbindung gesendetes Paket ankommt. Die Verbindungen sind gerichtet, das heißt es kann sein,
 	dass $p_{(a,b)} \neq p_{(b,a)}$ gilt. \\
 	\medskip
 	Eure Aufgabe ist es nun, zwischen zwei gegebenen Rechnern einen möglichst zuverlässigen Pfad zu finden.
@@ -190,14 +190,14 @@
 	\solutionheading
 	Führe \textbf{Dijkstra} auf dem Netzwerk-Graphen durch, allerdings mit...
 	\begin{itemize}
-		\item Zuverlässigkeit $\bar{p}_{(a,b)} := 1 - p_{(a,b)}$ als \textbf{Kantengewichten},
+		\item Zuverlässigkeit $p_{(a,b)}$ als \textbf{Kantengewichten},
 		\item Suche nach dem „Longest Path“ \\
 		\impl Verwende \textbf{Max}-Heap statt Min-Heap, \\
 		\impl relaxiere Kanten unter Bevorzugung „\textbf{längerer}“ {\small ($=$~zuverlässigerer)} Pfade,
 		\item \textbf{Multiplikation} statt Addition der Kantengewichte (Wahrscheinlichkeiten auf einem Pfad akkumulieren sich multiplikativ).
 	\end{itemize}
 	\pause
-	Dies funktioniert, da $ 0 < \bar{p} < 1$ \impl Pfade mit mehr Kanten haben also kleinere Zuverlässigkeitswerte. \\
+	Dies funktioniert, da $ 0 < p < 1$ \impl Pfade mit mehr Kanten haben also kleinere Zuverlässigkeitswerte. \\
 	\pause
 	\smallskip
 	Laufzeit: Wie Dijkstra in $\Oh{(m+n) \log n}$.
@@ -248,7 +248,7 @@
 \end{frame}
 
 \begin{frame}{Kürzeste Pfade}
-	\taskheading{}
+	\taskheading{Währungsarbitrage}
 	Der ebenso geniale wie wirtschaftliche Superbösewicht Doktor Meta wittert das große Geld! Um seine Weltherrschaftspläne zu finanzieren, hat er einen teuflischen Plan ersonnen, mit dem er den internationalen Devisenhandel über den Tisch ziehen will: Zwischen je zwei Währungen $i$~und $j$ gibt es einen Wechselkurs, dargestellt als Umrechnungs-Faktor $T[i,j] > 0$. Doktor Meta will nun so lange Währungen tauschen, bis er am Ende mehr Geld in seiner Ausgangswährung „M\$“ hat als zuvor; das heißt, er sucht eine „Umtausch-Kette“, deren Gesamt-Faktor $> 1$ ist. \\
 	\smallskip
 	Sein größter Widersacher Turing-Man {\small (halb Mensch, halb Turingmaschine)} ist ihm jedoch auf den Fersen und will den Finanzmarkt gezielt aufmischen, um die Pläne des Superbösewichts zu vereiteln. Dafür braucht er allerdings die genaue Tauschreihenfolge von Währungen, die Doktor Meta ausnutzen will. Helft Turing-Man und  überlegt euch ein Verfahren, mit welchem ihr Metas genauen Plan enttarnen könnt.
