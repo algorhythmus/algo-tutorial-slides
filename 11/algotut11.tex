@@ -9,34 +9,34 @@
 	
 \starttut{11}
 
-\begin{frame}{Schwarzes Brett + Klausurinfos!}
-	\begin{itemize}
-		\item $\forall$, die nicht in die VL gehen: $\exists$ Aufzeichnung vom \textbf{letzten Jahr}! \\
-		\impl {\footnotesize \url{https://www.youtube.com/playlist?list=PLfk0Dfh13pBPqVarZXE8VZxsyBlW8taxe}}
-		\item \textbf{Gesamtpunkte} der \textbf{ÜBs} stehen fest: \\
-		Es wird \textbf{11 Blätter} geben \impl \textbf{198~P} insgesamt! \\
-		\impl für 25~\% mind. notwendig: 49.5~P \\
-		\impl für 50~\% mind. notwendig: 99~P \\
-		\impl für 75~\% mind. notwendig: 148.5~P \\
-		\item \textbf{Klausuranmeldung} freigeschaltet (bis \textbf{spätestens} zum 28.08.!) \\
-		\textbf{Klausur} selbst am \textbf{04.09.2017} von \textbf{11–13~Uhr}.
-	\end{itemize}
-\end{frame}
+\mycomment{
+	\begin{frame}{Schwarzes Brett + Klausurinfos!}
+		\begin{itemize}
+			\item $\forall$, die nicht in die VL gehen: $\exists$ Aufzeichnung vom \textbf{vorletzten Jahr}! \\
+			\impl {\footnotesize \url{https://www.youtube.com/playlist?list=PLfk0Dfh13pBPqVarZXE8VZxsyBlW8taxe}}
+			\item \textbf{Gesamtpunkte} der \textbf{ÜBs} stehen fest: \\
+			Es wird \textbf{11 Blätter} geben \impl \textbf{198~P} insgesamt! \\
+			\impl für 25~\% mind. notwendig: 49.5~P \\
+			\impl für 50~\% mind. notwendig: 99~P \\
+			\impl für 75~\% mind. notwendig: 148.5~P \\
+			\item \textbf{Klausuranmeldung} freigeschaltet (bis \textbf{spätestens} zum 28.08.!) \\
+			\textbf{Klausur} selbst am \textbf{04.09.2017} von \textbf{11–13~Uhr}.
+		\end{itemize}
+	\end{frame}
+}
 
-\begin{headframe}[Spannung pur!]
-	Spannbäume
-\end{headframe}
+\sectionheadframe{Spannbäume}{Spannung pur!}
 
 \begin{frame}{Spannbäume}
 	\textbf{Ein paar Definitionen} 
 	\begin{itemize}
 		\item Für heute: Alle Graphen $G = (V, E)$ \\ 
-		ungerichtet, zusammenhängend, mit positiven Kantengewichten
+		\textbf{ungerichtet}, \textbf{zusammenhängend}, mit \textbf{positiven} Kantengewichten
 		\pause
-		\item \textbf{Spannbaum}: Baum $(V, T \subseteq E)$ von $G$, \\
+		\item \textbf{Spannbaum}: Baum $(V, T)$ von $G$ \quad {\small (also $ T \subseteq E$)}, \\
 		„spannt $G$ auf“ ($=$ zusammenhängend)
 		\pause
-		\item Bekannte Algorithmen, die Spannbäume bestimmen:
+		\item Bekannte Algorithmen, die (irgendwelche) Spannbäume bestimmen:
 		\begin{itemize}
 			\item Tiefensuche
 			\item Breitensuche
@@ -53,25 +53,25 @@
 \end{frame}
 
 
-\begin{frame}{Spannbäume}
-	\underline{Aufgabe 1: Scharf hinsehen} \\
-	Gebt von folgendem Graphen einen MST an: \\
+\begin{frame}[t]{Spannbäume}
+	\taskheading{Scharf hinsehen}
+	Gebt zu folgendem Graphen einen MST an: \\
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{scharfhinsehen}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Spannbäume}
-	\underline{Lösung zu Aufgabe 1} \\
-	\forcenewline
+\begin{frame}[t]{Spannbäume}
+	\solutionheading
+	\medskip
 	\begin{figure}[htp]
 		\centering
 		\includegraphics[height=6cm]{scharfhinsehensolution}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Spannbäume} %TODO: Maybe {u,v} \in E | u \in S, v \in V\S ?
+\begin{frame}{Spannbäume} % Maybe {u,v} \in E | u \in S, v \in V\S ?
 	\textbf{Die Schnitteigenschaft („Cut Property“)} 
 	\begin{itemize}
 		\item Sei $U\ \dot{\cup}\ W = V$ irgendeine „Aufteilung“ von $V$ und $C = \big\lbrace \{u, w\} \in E \bigm| u \in U, w \in W \big\rbrace$ alle „Brücken dazwischen“ (genannt \textbf{Schnitt})
@@ -102,6 +102,7 @@
 	\end{itemize}
 \end{frame}
 
+\section{Jarník-Prim}
 
 \begin{frame}{Spannbäume – Jarník-Prim}
 	\textbf{Ein Algorithmus für MSTs: Jarník-Prim} 
@@ -126,15 +127,15 @@
 			\small							
 			\Function {Jarník-Prim$(G = (V, E))$ \RComment{sieht aus wie Dijkstra}} {
 				$\KwSty{pick any } s \in V$\;
-				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$  \RComment{Distanz zu Knotenmenge S, nicht zu $s \in V$!} \;
+				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$  \RComment{Distanz \alert{zu Knotenmenge S}, nicht zu $s \in V$!} \;
 				$parent := (\bot, ..., \bot) : \KwArray[1...n] \KwOf V$\;
-				$PQ = \{s\} : \text{PriorityQueue}$\;
+				$PQ = \llist{s} : \text{PriorityQueue}$\;
 				$parent[s] := s$ \;
 				\While{$PQ \neq \emptyset$} {
-					$u := PQ.\text{deleteMin}()$, \quad $d[u] := 0$ \;
+					$u := PQ.\text{deleteMin}()$, \quad \alert{$d[u] := 0$} \;
 					\ForEach{$e = \{u, v\} \in E$} {
-						\If{$c(e) < d[v]$} {
-							$d[v] := c(e)$\;
+						\If{$\alert{c(e)} < d[v]$} {
+							\alert{$d[v] := c(e)$} \;
 							$parent[v] := u$\;
 							\begin{tabbing}
 								\leIf{$v \in PQ$} {
@@ -149,7 +150,7 @@
 				}
 			\KwRet{$\big\lbrace\,(parent[v],\, v) \mid s \neq v \in V \,\big\rbrace$}\;
 			}
-		\end{algorithm}
+		\end{algorithm} \vspace{-.4\baselineskip}
 	\end{exampleblock}
 \end{frame}
 
@@ -167,6 +168,8 @@
 	\end{itemize}
 \end{frame}
 
+\section{Kruskal}
+
 \begin{frame}{Spannbäume – Kruskal}
 	\textbf{Rosinen rauspicken mit Kruskal} 
 	\begin{itemize}
@@ -180,9 +183,13 @@
 		\pause
 		\item[\yop] Funktioniert dank Schnitt- und Kreiseigenschaft
 	\end{itemize}
-	\pause
-	\forcenewline
-	\textbf{Wollen dafür effizient}...
+\end{frame}
+
+\input{kruskal-ex}
+
+\begin{frame}{Union-Find}
+	\textbf{Implementierung} \\
+	Wollen dafür effizient...
 	\begin{itemize}
 		\item ...heraus\textbf{finden}, zu welcher Menge ein Element gehört ($find$)
 		\item ...die Mengen zweier Elemente \textbf{vereinigen} ($union$)
@@ -284,7 +291,7 @@
 			\Function {Kruskal$(G = (V, E))$} {
 				$forest := \KwNew \text{UnionFind}(n)$ \;
 				$T := \emptyset$\;
-				$\text{Sort}(E) \KwSty{ by } c$ \;
+				$\text{Sort}(E) \KwSty{ by } c(\cdot)$ \;
 				\ForEach{$e = \{u, v\} \in E$} {
 					\If{$forest.\text{find}(u) \neq forest.\text{find}(v)$} {
 						$T := T \cup \{e\}$\;
@@ -297,10 +304,7 @@
 	\end{exampleblock}
 \end{frame}
 
-\input{kruskal-ex}
-
 \morescalingdelimiters
-%TODO
 
 \begin{frame}{Spannbäume – Kruskal}
 	\textbf{Laufzeit von Kruskal} 
@@ -327,13 +331,15 @@
 		Bloß interne Hierarchie für die Knoten. MST-Kanten tauchen da drin gar nicht auf.
 	}
 	\FalseQuestionE{
-			Dijkstra ist zur Bestimmung eines MST bei gerichteten Graphen (mit nichtnegativen Kantengewichten) geeignet.
+			Dijkstra ist zur Bestimmung eines MST bei gerichteten \\ Graphen (mit nichtnegativen Kantengewichten) geeignet.
 		}{
 		Dijkstra bestimmt im Allgemeinen \textbf{keinen} \textbf{M}ST  {\small (und MST auf gerichteten Graphen nicht in dieser VL)}.
 	}
 	\TrueQuestionE{
-			Sowohl der Algorithmus von Jarník-Prim als auch Kruskals Algorithmus funktionieren auch bei negativen Kantengewichten.
-		}{\small (JP nach kleiner Anpassung)}
+			Sowohl der Algorithmus von Jarník-Prim als auch Kruskals \\ Algorithmus funktionieren auch bei negativen Kantengewichten.
+		}{
+		(JP braucht kleine Anpassung: $d[u]$ muss beim Rausholen aus der PQ auf $-\infty$ gesetzt werden.)
+	}
 \end{frame}
 
 \begin{frame}[t]{Spannbäume}
@@ -341,7 +347,7 @@
 			Dijkstra funktioniert nicht, wenn negative Kantengewichte vorhanden sind.
 		}{
 		Dijkstra funktioniert nicht, wenn es negative \textbf{Zyklen} gibt \\ (\impl Endlosschleife). \\
-		Ansonsten bestimmt Dijkstra auch \textbf{mit} negativen Kantengewichten \textbf{korrekte kürzeste Pfade}, aber in deutlich \textbf{schlechterer Laufzeit}. \\ (Achtung, \textbf{nicht} in VL gezeigt!)
+		Ansonsten bestimmt Dijkstra auch \textbf{mit} negativen Kantengewichten \textbf{korrekte kürzeste Pfade}, aber in \textbf{deutlich schlechterer Laufzeit}. \\ \ifnum\thisyear=2018\relax\else (Achtung, \textbf{nicht} in VL gezeigt!) \fi
 	}
 	\FalseQuestionE{
 			Bellman-Ford bestimmt stets einen \textbf{beliebigen} Spannbaum.
@@ -351,12 +357,12 @@
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Aufgabe 2: Streaming MST} \\
+	\taskheading{Streaming MST}
 	Gegeben sei ein ungerichteter zusammenhängender Graph $G = (V, E)$ mit $n$ Knoten, $m$ Kanten und positiven Kantengewichten. Die Knoten sind lokal gespeichert, die Kanten sind hingegen zunächst \textbf{unbekannt} und können nur \textbf{stückweise} (und in zufälliger Reihenfolge) aus dem Netz angefordert und im Speicher gehalten werden, da \textbf{nur} $O(n)$ \textbf{Platz} zur Verfügung steht. Gebt einen Algorithmus an, der unter diesen Einschränkungen einen MST von $G$ bestimmt.
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Lösung zu Aufgabe 2} \\
+	\solutionheading
 	\begin{itemize}
 		\item Verwende eine \textbf{Union-Find-Datenstruktur} (wie bei Kruskal). 
 		\item Falls die neu angeforderte Kante \textbf{zwei Teilbäume verbindet}, füge sie hinzu. 
@@ -366,15 +372,15 @@
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Aufgabe 3: Streaming MST mit Dünger} \\
-	\hanging{ Wie bei Aufgabe 2: \newline
+	\taskheading{Streaming MST mit Dünger} 
+	\hanging{ Wie bei Aufgabe \thetasknumminusone: \newline
 		Gegeben sei ein ungerichteter zusammenhängender Graph $G = (V, E)$ mit $n$ Knoten, $m$ Kanten und positiven Kantengewichten. Die Knoten sind lokal gespeichert, die Kanten sind hingegen zunächst \textbf{unbekannt} und können nur \textbf{stückweise} (und in zufälliger Reihenfolge) aus dem Netz angefordert und im Speicher gehalten werden, da \textbf{nur} $O(n)$ \textbf{Platz} zur Verfügung steht. Gebt einen Algorithmus an, der unter diesen Einschränkungen einen MST von $G$ bestimmt.
 	} \\
 	Er darf \textbf{nur $O(m \log n)$ Rechenzeit benötigen}.
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Lösung zu Aufgabe 3} \\
+	\solutionheading
 	Wir besorgen uns Kanten-Pakete mit jeweils $n$ Kanten. \\
 	Mit dem \textbf{ersten} Paket bestimmen wir (mit Kruskal) einen Minimum~Spanning~Forest (MSF) und entfernen alle anderen Kanten. \\
 	\textbf{Restliche} Pakete behandeln wir so: \\
@@ -387,12 +393,12 @@
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Aufgabe 4: Ein Algorithmus mit Ecken und Kanten} \\
+	\taskheading{Ein Algorithmus mit Ecken und Kanten} 
 	Erneut betrachten wir einen ungerichteten zusammenhängenden Graphen $G = (V, E)$ mit $V = \{1...n\}$ und Kantengewichten in $\{1, 3\}$. $G$~sei in Form eines Adjazenzfeldes gegeben. Gebt einen Algorithmus an, der in $O(m)$ einen MST von $G$ berechnet (und begründet das Laufzeitverhalten).
 \end{frame}
 
 \begin{frame}{Spannbäume}
-	\underline{Lösung zu Aufgabe 4} \\
+	\solutionheading
 	Getweaktes \textbf{Jarník-Prim}: \\
 	\begin{itemize}
 		\item Komplette PriorityQueue wäre \textbf{overkill} \impl \textbf{stattdessen} zwei einfache Queues $Q_1$ und $Q_3$ \quad (eine für jedes Kantengewicht)
@@ -401,6 +407,7 @@
 		\implitem \textbf{Laufzeit}: $O(n + m) = O(m)$ \\ (da für zusammenhängende Graphen $n \in O(m)$).
 	\end{itemize}
 	\forcenewline
+	\pause
 	(Eine clevere Alternative wäre, die Kanten mit \textbf{Bucketsort} zu sortieren und dann \textbf{Kruskal} draufloszulassen \impl Laufzeit: $O\left(m \cdot \alpha_T(m, n)\right) \stackrel{\text{realistisch}}{\approx} O(5 \cdot m) = O(m)$. {\small Aber Achtung, $\alpha_T$ ist \textbf{nicht} konstant, deshalb „$\approx$“!})
 \end{frame}
 
