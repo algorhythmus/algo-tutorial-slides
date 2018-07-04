@@ -10,6 +10,25 @@
 	
 \starttut{10}
 
+\daniel{
+	\begin{frame}{Zur Probeklausur}
+		\textbf{Durchschnitt}: \quad \thassedaniel{XXX}{58}~\% der Gesamtpunkte
+		\begin{itemize}
+			\item Recht gnädige Korrektur, weil sie ja zählt
+			\item \textbf{Trotzdem}: verschenkte Punkte zuhauf
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[t]{Zu Blatt \#9 {\small (bzw. \#8, je nachdem...)}}
+		\textbf{Durchschnitt}: \quad \thassedaniel{XXX}{69}~\% der Gesamtpunkte
+		\begin{itemize}
+			\item \TrueQuestionE{Beim Einfügen in einen $(a,b)$-Baum verwendet man \emph{split}.}{Wieso macht ihr dann \emph{balance}!?}
+			\item<+-> B: „\emph{ohne} Datenliste“
+			\item<+-> B: Bei 0-Indizierung $\floor{\fract n/2 }$, nicht $\ceil{\fract n/2 }$ \impl sonst \textbf{unbalanciert}!
+		\end{itemize}
+	\end{frame}
+}
+
 \sectionheadframe{Kürzeste Pfade}{Es kommt halt \emph{doch} auf die Länge an...}
 
 \section{Dijkstra}
@@ -176,7 +195,7 @@
 
 \begin{frame}{Kürzeste Pfade}
 	\taskheading{Unerschlossenes Neuland}
-	Ihr seid Administrator eines Computernetzwerks bestehend aus $n$ Rechnern und Netzwerkverbindungen
+	Ihr seid Administrator eines Computernetzwerks bestehend aus $n$~Rechnern und Netzwerkverbindungen
 	zwischen diesen. Leider sind die Netzwerkverbindungen nicht absolut zuverlässig: Jede Verbindung
 	zwischen zwei Rechnern $a$ und $b$ hat eine Wahrscheinlichkeit $0 < p_{(a,b)} < 1$, dass ein auf dieser
 	Verbindung gesendetes Paket ankommt. Die Verbindungen sind gerichtet, das heißt es kann sein,
@@ -190,7 +209,7 @@
 	\solutionheading
 	Führe \textbf{Dijkstra} auf dem Netzwerk-Graphen durch, allerdings mit...
 	\begin{itemize}
-		\item Zuverlässigkeit $p_{(a,b)}$ als \textbf{Kantengewichten},
+		\item Zuverlässigkeiten $p_{(a,b)}$ als \textbf{Kantengewichten},
 		\item Suche nach dem „Longest Path“ \\
 		\impl Verwende \textbf{Max}-Heap statt Min-Heap, \\
 		\impl relaxiere Kanten unter Bevorzugung „\textbf{längerer}“ {\small ($=$~zuverlässigerer)} Pfade,
@@ -223,7 +242,7 @@
 	\begin{exampleblock}{}
 		\begin{algorithm}[H]
 			\small
-			\Function {BellmanFord$(G = (V, E),\ s \in V)$} {
+			\Function {Bellman-Ford$(G = (V, E),\ s \in V)$} {
 				$d := (\infty, ..., \infty) : \KwArray[1...n] \KwOf \R$\;
 				$parent := (\bot, ..., \bot) : \KwArray[1...n] \KwOf V$\;
 				$parent[s] := s ; \quad d[s] := 0$ \;
@@ -248,7 +267,7 @@
 \end{frame}
 
 \begin{frame}{Kürzeste Pfade}
-	\taskheading{Währungsarbitrage}
+	\taskheading{\thassedaniel{Währungsarbitrage}{Geld rotiert die Welt}}
 	Der ebenso geniale wie wirtschaftliche Superbösewicht Doktor Meta wittert das große Geld! Um seine Weltherrschaftspläne zu finanzieren, hat er einen teuflischen Plan ersonnen, mit dem er den internationalen Devisenhandel über den Tisch ziehen will: Zwischen je zwei Währungen $i$~und $j$ gibt es einen Wechselkurs, dargestellt als Umrechnungs-Faktor $T[i,j] > 0$. Doktor Meta will nun so lange Währungen tauschen, bis er am Ende mehr Geld in seiner Ausgangswährung „M\$“ hat als zuvor; das heißt, er sucht eine „Umtausch-Kette“, deren Gesamt-Faktor $> 1$ ist. \\
 	\smallskip
 	Sein größter Widersacher Turing-Man {\small (halb Mensch, halb Turingmaschine)} ist ihm jedoch auf den Fersen und will den Finanzmarkt gezielt aufmischen, um die Pläne des Superbösewichts zu vereiteln. Dafür braucht er allerdings die genaue Tauschreihenfolge von Währungen, die Doktor Meta ausnutzen will. Helft Turing-Man und  überlegt euch ein Verfahren, mit welchem ihr Metas genauen Plan enttarnen könnt.
@@ -263,23 +282,23 @@
 		\pause
 		\item [Denn:\!] Für eine Währungstauschfolge $(w_1, ..., w_\ell)$ mit $w_\ell = w_1$ gilt: 
 		\begin{align*}
-			& \prod_{i = w_1}^{w_{\ell-1}} T[i, i+1] \stackrel{!}{>} 1 \Gdw \log \prod_i T[i, i+1] > 0 \\ 
-			{\Gdw} &-\log \prod_i T[i, i+1] < 0 \Gdw -\sum_i \log T[i, i+1] < 0 \\
-			{\Gdw} &\sum_i c(i, i+1) < 0. \qed
+			& \prod_{k = 1}^{{\ell-1}} T[w_k, w_{k+1}] \stackrel{!}{>} 1 \Gdw \log \prod_k T[w_k, w_{k+1}] > 0 \\ 
+			{\Gdw} &-\log \prod_k T[w_k, w_{k+1}] < 0 \Gdw -\sum_k \log T[w_k, w_{k+1}] < 0 \\
+			{\Gdw} & \sum_k -\log T[w_k, w_{k+1}] < 0 \Gdw \sum_k c(w_k, w_{k+1}) < 0. \qed
 		\end{align*}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Graphen}
-	\taskheading{Travelling ferryman} % Dear Lord...
-	Ein Fährmann soll einen Wolf, eine Ziege und einen Kohlkopf von der linken auf die rechte Seite eines Flusses befördern. Sein kleines Boot hat aber nur Platz für ihn und ein weiteres Objekt. \\
-	Außerdem frisst der Wolf die Ziege und die Ziege den Kohlkopf, wenn der Fährmann nicht dabei ist. Zum Glück mag der Wolf kein Gemüse. Wie kann der Fährmann den Wolf, die Ziege und den Kohlkopf unbeschadet übersetzen? \\
+	\taskheading{DISHONEST WITCH HUNT!} 
+	Ein Fährmann soll einen Wolf, eine Ziege und Donald Trump von der rechten auf die linke Seite eines Flusses befördern. Sein kleines Boot hat aber nur Platz für ihn und ein weiteres Objekt. \\
+	Außerdem frisst der Wolf die Ziege und die Ziege den Hohlkopf, wenn der Fährmann nicht dabei ist. Zum Glück mag der Wolf keine Nazis. Wie kann der Fährmann den Wolf, die Ziege und den Hohlkopf unbeschadet übersetzen? \\
 	Löst das Problem mithilfe eines Graphen zeichnerisch.
 \end{frame}
 
 \begin{frame}{Graphen}
 	\solutionheading
-	Ein Zustandsgraph: \\
+	Ein Zustandsgraph: \quad {\small (\textbf{K} steht für \textbf{K}ushners Schwiegervater Trump)} \\
 	\includegraphics[width=1.03\textwidth]{faehrmann} \\
 	Weg von [WZKF|] nach [|WZKF] ist Lösung.
 \end{frame}
