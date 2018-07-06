@@ -267,14 +267,14 @@
 \end{frame}
 
 \begin{frame}{Kürzeste Pfade}
-	\taskheading{\thassedaniel{Währungsarbitrage}{Geld rotiert die Welt}}
+	\taskheading{Geld rotiert die Welt\thasse{ (Währungsarbitrage)}}
 	Der ebenso geniale wie wirtschaftliche Superbösewicht Doktor Meta wittert das große Geld! Um seine Weltherrschaftspläne zu finanzieren, hat er einen teuflischen Plan ersonnen, mit dem er den internationalen Devisenhandel über den Tisch ziehen will: Zwischen je zwei Währungen $i$~und $j$ gibt es einen Wechselkurs, dargestellt als Umrechnungs-Faktor $T[i,j] > 0$. Doktor Meta will nun so lange Währungen tauschen, bis er am Ende mehr Geld in seiner Ausgangswährung „M\$“ hat als zuvor; das heißt, er sucht eine „Umtausch-Kette“, deren Gesamt-Faktor $> 1$ ist. \\
 	\smallskip
 	Sein größter Widersacher Turing-Man {\small (halb Mensch, halb Turingmaschine)} ist ihm jedoch auf den Fersen und will den Finanzmarkt gezielt aufmischen, um die Pläne des Superbösewichts zu vereiteln. Dafür braucht er allerdings die genaue Tauschreihenfolge von Währungen, die Doktor Meta ausnutzen will. Helft Turing-Man und  überlegt euch ein Verfahren, mit welchem ihr Metas genauen Plan enttarnen könnt.
 \end{frame}
 
 \begin{frame}{Kürzeste Pfade}
-	\solutionheading
+	\solutionheading 
 	\begin{itemize}
 		\item Definiere $V := \set{\text{Währungen $i$}}$, $E := \set{(i, j) \Mid T[i,j] \neq \bot}$ und Kantengewichte $c(i, j) := -\log T[i,j]$. 
 		\pause
@@ -289,6 +289,7 @@
 	\end{itemize}
 \end{frame}
 
+\daniel{
 \begin{frame}{Graphen}
 	\taskheading{DISHONEST WITCH HUNT!} 
 	Ein Fährmann soll einen Wolf, eine Ziege und Donald Trump von der rechten auf die linke Seite eines Flusses befördern. Sein kleines Boot hat aber nur Platz für ihn und ein weiteres Objekt. \\
@@ -302,6 +303,7 @@
 	\includegraphics[width=1.03\textwidth]{faehrmann} \\
 	Weg von [WZKF|] nach [|WZKF] ist Lösung.
 \end{frame}
+}
 
 \begin{frame}{Graphen}
 	\taskheading{Domino-Day}
