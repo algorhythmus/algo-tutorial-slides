@@ -349,15 +349,29 @@
 			Dijkstra ist zur Bestimmung eines MST bei gerichteten \\ Graphen (mit nichtnegativen Kantengewichten) geeignet.
 		}{
 		Dijkstra bestimmt im Allgemeinen \textbf{keinen} \textbf{M}ST  {\small (und MST auf gerichteten Graphen nicht in dieser VL)}.
+		\begin{figure}
+		 \centering
+		\begin{tikzpicture}[->,>=stealth,baseline=-5mm]
+		\matrix[matrix of math nodes,nodes={draw,circle,minimum size=5mm,inner sep=2pt},row sep=10mm,column sep=10mm,ampersand replacement=\&]
+		{
+			|(0)|  \& |(1)|  \\
+			\& |(2)| S \\
+		};
+		\draw  (2) -- node [anchor=west] {5} (1);
+		\draw  (1) -- node [anchor=south] {5} (0);
+		\draw  (2) -- node [anchor=south] {8} (0);
+		\end{tikzpicture}
+		\end{figure}
 	}
-	\TrueQuestionE{
-			Sowohl der Algorithmus von Jarník-Prim als auch Kruskals \\ Algorithmus funktionieren auch bei negativen Kantengewichten.
-		}{
-		(JP braucht kleine Anpassung: $d[u]$ muss beim Rausholen aus der PQ auf $-\infty$ gesetzt werden.)
-	}
+	
 \end{frame}
 
 \begin{frame}[t]{Spannbäume}
+	\TrueQuestionE{
+		Sowohl der Algorithmus von Jarník-Prim als auch Kruskals \\ Algorithmus funktionieren auch bei negativen Kantengewichten.
+	}{
+		(JP braucht kleine Anpassung: $d[u]$ muss beim Rausholen aus der PQ auf $-\infty$ gesetzt werden.)
+	}
 	\FalseQuestionE{
 			Dijkstra funktioniert nicht, wenn negative Kantengewichte vorhanden sind.
 		}{
@@ -382,7 +396,7 @@
 		\item Verwende eine \textbf{Union-Find-Datenstruktur} (wie bei Kruskal). 
 		\item Falls die neu angeforderte Kante \textbf{zwei Teilbäume verbindet}, füge sie hinzu. 
 		\item Falls sie zwei Knoten \textbf{im selben} Teilbaum verbindet, füge sie provisorisch hinzu, schmeiße auf dem Pfad zwischen den Knoten die \textbf{schwerste Kante} raus. 
-		\item \textbf{Laufzeit} in $O(m \cdot n)$, da bei der Bestimmung des Pfades maximal $n-1$ Kanten abgelaufen werden
+		\item \textbf{Laufzeit} in $O(m \cdot n)$, da bei der Bestimmung des Pfades maximal $n-1$ Kanten abgelaufen werden (es sind zu jedem Zeitpunkt maximal $n$ Kanten im Graphen enthalten).
 	\end{itemize}
 \end{frame}
 
