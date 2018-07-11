@@ -222,6 +222,39 @@
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{Optimierung – DP}
+	\vspace{-.3\baselineskip}
+	\taskheading{Ein paar Euro für den Frieden}
+	Der ebenso berechenbare wie sterbliche Turing-Man {\small (halb Mensch, halb Turing-Maschine)} ist Doktor Meta auf den Fersen! Nachdem er dank der Hilfe einiger pfiffiger Informatik-Studenten am KIT die Pläne des Superbösewichts aufdecken konnte, will er nun die Wechselkurse gehörig aufmischen. Dafür braucht er allerdings selbst hohe Geldsummen. Glücklicherweise kennt Turing-Man ein paar alte Bekannte, die ihm genau dabei aushelfen können: Ausrangierte Geldautomaten! In Reih' und Glied stehen $n$ solcher Maschinen auf einem Schrottplatz, wobei jeder Automat $i = 1,...,n$ eine Menge an Münzen $a_i$ beinhaltet. Diese gibt er allerdings nur ab, wenn Turing-Man den Automaten davor nicht um Geld gebeten hat. 
+	Der wandelnde Schreiblesekopf muss nun die Automaten der Reihe nach ablaufen und sich für jeden Automaten entscheiden, ob er ihn anpumpt oder nicht. Erfreulicherweise kennt Turing-Man seine alten Freunde in- und auswendig und weiß ihre Münzanzahl. Helft dem mechanischen Helden und löst dieses Problem mittels DP.
+\end{frame}
+
+\begin{frame}{Optimierung – DP}
+	\solutionheading
+	\begin{itemize}
+		\item \textbf{Idee}: Frage ich den Automaten, oder frage ich ihn nicht?
+		\item Sei $C[i] = $ Anzahl der Münzen, die Turing-Man von Automat $i$ bis $n$ im Best-Case einsammeln kann \\
+		\pause
+		\item $n$ ist letzter Automat: Setze $C[n] := a_n$ \: (Best-Case). \\ 
+		Setze $\forall j > n: \quad C[j] := 0$.
+		\implitem Rekursionsformel: \\
+			$C[i] = \max(\underbrace{C[i+1]}_{\text{Fragen $i$ nicht}}, \underbrace{C[i+2] + a_i}_{\text{Fragen $i$ doch}})$\\
+		\pause
+		\implitem Von hinten nach vorne ausfüllen: 
+		\begin{algorithm}[H]
+			\For{$i := n-1 \KwDownto 1$}{
+				$C[i] := \max(C[i+1], C[i+2] + a_i)$ 
+			}	
+		\end{algorithm} \vspace{-.2\baselineskip}
+		$Taken[\*]$ rekonstruieren: \vspace{-.2\baselineskip} \\
+		\begin{algorithm}[H]
+			\For{$i := 1 \KwTo n$}{
+				\lIf{$C[i+1] < C[i+2] + a_i$}{$Taken[i] := \KwTrue$}
+			}	
+		\end{algorithm}
+	\end{itemize}
+\end{frame}
+
 \section{Integer Linear Programs}
 
 \begin{frame}{Optimierungsprobleme – ILPs}
