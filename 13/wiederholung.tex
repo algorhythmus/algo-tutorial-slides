@@ -1,20 +1,22 @@
+\section{Algorithmenanalyse}
+
 \begin{frame}{Algorithmenanalyse}
 	\textbf{O-Kalkül} \\
 	{
 		\renewcommand{\arraystretch}{2}%
 	
 		\begin{center}
-			\begin{tabular}{ | c | c | c | }
+			\begin{tabular}{ | c | >{\Large}c | c | }
 				\hline
-				$     o (f(n))$ & $<$ & echt schwächer wachsende Funktionen
+				$     o (f(n))$ & $\prec$ & echt schwächer wachsende Funktionen
 				\\ \hline
-				$     O (f(n))$ & $\leq$ & schwächer oder gleich stark wachsende Funktionen
+				$     O (f(n))$ & $\preccurlyeq$ & schwächer oder gleich stark wachsende Funktionen
 				\\ \hline
-				$\Theta (f(n))$ & $=$ & genau gleich stark wachsende Funktionen
+				$\Theta (f(n))$ & $\asymp$ & genau gleich stark wachsende Funktionen
 				\\ \hline
-				$\Omega (f(n))$ & $\geq$ & stärker oder gleich stark wachsende Funktionen
+				$\Omega (f(n))$ & $\succcurlyeq$ & stärker oder gleich stark wachsende Funktionen
 				\\ \hline
-				$\omega (f(n))$ & $>$ & echt stärker wachsende Funktionen
+				$\omega (f(n))$ & $\succ$ & echt stärker wachsende Funktionen
 				\\ \hline
 			\end{tabular}
 		\end{center}
@@ -42,6 +44,9 @@
 			%\renewcommand{\arraystretch}{\stdarraystretch}
 		\end{center}
 	}
+	\bigskip
+	\small
+	Aufgaben: \ZB: Altklausuren 2015 A1a, 2010 A1g/h, ...
 \end{frame}
 
 \begin{frame}{Algorithmenanalyse}
@@ -65,14 +70,14 @@
 	
 	\begin{itemize}
 		\item Invariante finden: Manchmal offensichtlich, manchmal \textbf{Kreativität} gefragt
-		
-		\item Invarianten beweisen – im Prinzip \textbf{Induktion}:
-		
+		\pause
+		\item Korrektheitsbeweise über Invarianten gehen im Prinzip wie \textbf{Induktion}:
+		\pause
 		\item „IA“: Invariante gilt bei \textbf{Beginn} des Algorithmus / der Schleife
-		
-		\item „IV“: Die Invariante war beim Ende des \textbf{vorherigen} Ausführungsschrittes gültig
-		
-		\item „IS“: Mithilfe der IV zeigen, dass die Invariante auch beim Ende des \textbf{aktuellen} Ausführungsschrittes gültig ist
+		\pause
+		\item „IV“: Die Invariante war beim Ende des \textbf{vorherigen} Schleifendurchlaufs gültig
+		\pause
+		\item „IS“: Mithilfe der IV zeigen, dass die Invariante auch beim Ende des \textbf{aktuellen} Schleifendurchlaufs gültig ist
 		\item \textbf{Achtung}: Invarianten müssen auch \textbf{nach Ende der Schleife} noch gelten!
 	\end{itemize}
 \end{frame}
@@ -86,10 +91,13 @@
 		\item \textbf{Dijkstra}: Endgültiger kürzester Pfad zum $min$ der $PriorityQueue$ ist bekannt
 		\item Doppelt verkettete \textbf{Liste}: $next \access prev = prev \access next = \KwThis$
 	\end{itemize}
+	\bigskip
+	\small
+	Aufgaben: \ZB: Altklausur 2016\_2 A5a,c, \,...
 \end{frame}
 
 \begin{frame}{Algorithmenanalyse}
-	\underline{Aufgabe: Korrektheitsbeweis} \\
+	\taskheading{Korrektheitsbeweis} 
 	Beweist die Korrektheit von $ArraySum$: 
 	\begin{algorithm}[H]
 		\Function{ArraySum$(A: \KwArray[1..n] \KwOf \R): \R$}{
@@ -105,84 +113,165 @@
 	\end{algorithm}
 \end{frame}
 
-\newcommand{\selsortinvariant}{A[1\ ... \ i-1] \KwIs \text{sorted} \KwAnd \max(A[1\ ...\ i-1]) \leq \min(A[i..n])}
-\begin{frame}{Beispiel SelectionSort}
-	\begin{exampleblock}{SelectionSort}
+\begin{frame}{Algorithmenanalyse}
+	\solutionheading
+	\Impl Invariante: \\
+	\begin{algorithm}[H]
+		\While{$i \leq n$}{
+			\vspace{-.5\baselineskip}
+			$\KwInvariant 1 \leq i \leq n+1 \KwAnd s = \sum\limits_{j=1}^{i-1} A[j]$ \;
+			\vspace{-.65\baselineskip}
+			$s := s + A[i]$ \;
+			$i\pp$ \;	
+		}
+	\end{algorithm}
+	Bezeichne $s_i$ den Wert von $s$ zu Beginn von Schleifendurchlauf $i$. \\
+	\hanging \textbf{IA}. ($i=1$): \quad $0 = s_1 = \sum\limits_{j=1}^{i-1} A[j] = \sum\limits_{j=1}^{0} A[j] = 0. \quad \checkmark$ \\
+	\pause
+	\hanging \textbf{IV}.: Die Invariante galt zu Beginn von Schleifendurchlauf $i$ für festes $i$. \\
+	\pause
+	\hanging {\textbf{IS}. ($i \~~> i + 1$): Es gilt zu Beginn von Schleifendurchlauf $i+1$: \newline
+		$s_{i+1} = s_i + A[i+1] \stackrel{\text{IV}}{=} \sum\limits_{j=1}^{i-1} A[j] + A[i] = \sum\limits_{j=1}^{i} A[j]$. \qed
+	} \\
+	Nach dem $n$-ten Durchlauf gilt also $s = \sum\limits_{j=1}^{n} A[j]$.
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\solutionheading
+	\Impl Terminierung:
+	\begin{itemize}
+		\item Zu Beginn ist $i = 1$
+		\item Die Schleife läuft nur, solange $i \leq n$
+		\item In jedem Durchlauf wird $i$ um eins erhöht
+		\implitem Nach $n$ Durchläufen terminiert die Schleife.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithmenanalyse}
+	\begin{exampleblock}{SS~17 Blatt 1 Aufgabe 2 c)}
 		\begin{algorithm}[H]
-			\small
-			\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf Element)$}{
-				\For{$i := 1 \KwTo n$}{
-					\only<2>{$\KwInvariant \selsortinvariant $\;}
-					minIndex $ := i$ \;
-					\For{$j := i + 1 \KwTo n$}{
-						\If{$A[j] < A[$minIndex$]$}{
-							minIndex $ := j$ \;	
-						} 
-					} 	
-					$\KwAssert A[minIndex] = \min(A[i..n])$ \;
-					$swap(A[i], A[minIndex])$ \;
-				}	
+			\Function{f$(n, m : \N): (\N_0, \N_0)$}{
+				$a = 0 : \N_0$ \;
+				$b = m : \N_0$ \;
+				$c = 1 : \N_0$ \;
+				\While{$m - c \cdot n \geq 0$}{
+					$\KwInvariant \only<all:1>{???}\only<all:2>{m = a \cdot n + b}$ \;
+					$a := c$ \;
+					$c := c+1$ \;
+					$b := m - a \cdot n$ \;
+				}
+				\Return{$(a,b)$}
 			}
 		\end{algorithm}
 	\end{exampleblock}
+	Invariante? \only<all:2>{Beweis?}
 \end{frame}
 
-\begin{frame}{SelectionSort -- Beweis Invariante}
-	\begin{overlayarea}{\textwidth}{.60\textwidth}
-		{Definiere \quad $\max(()) := -\infty$ \quad und \quad $\min(()) := +\infty$. \\} 
+\begin{frame}{Algorithmenanalyse}
+	\textbf{Lösung} \\ 
+		\begin{algorithm}[H] 
+			\While{$m - c \cdot n \geq 0$}{
+				$\KwInvariant m = a \cdot n + b$ \;
+				$a := c$ \;
+				$c := c+1$ \;
+				$b := m - a \cdot n$ \;
+			}
+		\end{algorithm}
 		
-		Beweis Invariante: \\ 
-		$\quad\quad \selsortinvariant$ 
-		
-		{\hanging\textbf{IA}. ($i=1$): \ $A[1..0] = ()$ ist sortiert und $-\infty = \max(A[1..0]) \leq \min(A[1..n])$. \\}
-		{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
-		\hanging\textbf{IS}. ($i - 1 \rightsquigarrow i$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
-		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $minIndex \in \{i,...,n\}$ \newline
-		$\Rightarrow A[i-1] \leq A[minIndex]$ \ und \ $A[minIndex] \leq A[i]$. \newline
-		$\Rightarrow A[minIndex]$ kann zur Fortsetzung der Sortierung problemlos nach $A[i]$ verschoben werden! 
-		Tauschen von $A[i]$, $A[minIndex]$: \newline
-		$\Rightarrow A[1..i]$ ist sortiert, \newline
-		$A[i] = \max(A[1..i]) \leq \min(A[i+1 \ ... \ n]). \qed$ \newline
-		
-		$\Rightarrow$ Nach dem $n$-ten Schleifendurchlauf gilt also: $A[1..n]$ ist sortiert.
-	\end{overlayarea}
+	Bezeichne $i$ die Nummer des aktuellen Schleifendurchlaufs und $a_i, b_i, c_i$ den Wert von $a$, $b$, $c$ zu Beginn von Schleifendurchlauf $i$. \\
+	\pause
+	\hanging \textbf{IA}. ($i=1$): \quad $a_1 \cdot n + b_1 = 0 \cdot n + m = m. \quad \checkmark$ \\
+	\pause
+	\hanging \textbf{IV}.: Die Invariante galt zu Beginn von Schleifendurchlauf $i$ für festes $i$. \\
+	\pause
+	\hanging {\textbf{IS}. ($i \~~> i + 1$): Es gilt zu Beginn von Schleifendurchlauf $i+1$: \newline
+		$a_{i+1} = c_i$, \newline
+		$b_{i+1} = m - a_{i+1} \cdot n$. \newline
+		\hspace*{-0.4cm}$\Impl a_{i+1} \cdot n + b_{i+1} = c_i \cdot n + \left(m - c_i \cdot n\right) = m. \qed$
+	}
 \end{frame}
 
-\begin{frame}{SelectionSort -- Beweis Terminierung}
-	In diesem Fall trivial: 
-	\begin{itemize}
-		\item Schleifenvariable $i$ nach oben durch $n$ beschränkt
-		\item ...und wird in jedem Durchlauf inkrementiert (und sonst nicht verändert)
-		\implitem SelectionSort terminiert
-	\end{itemize}
-	\impl SelectionSort funktioniert! Yay! :D
-\end{frame}
+\mycomment{ % This year already done at the beginning of the semester, thus...
+	\newcommand{\selsortinvariant}{A[1\ ... \ i-1] \KwIs \text{sorted} \KwAnd \max(A[1\ ...\ i-1]) \leq \min(A[i..n])}
+	\begin{frame}{Beispiel SelectionSort}
+		\begin{exampleblock}{SelectionSort}
+			\begin{algorithm}[H]
+				\small
+				\Procedure{SelectionSort$(A: \KwArray[1..n] \KwOf Element)$}{
+					\For{$i := 1 \KwTo n$}{
+						\only<2>{$\KwInvariant \selsortinvariant $\;}
+						minIndex $ := i$ \;
+						\For{$j := i + 1 \KwTo n$}{
+							\If{$A[j] < A[$minIndex$]$}{
+								minIndex $ := j$ \;	
+							} 
+						} 	
+						$\KwAssert A[minIndex] = \min(A[i..n])$ \;
+						$swap(A[i], A[minIndex])$ \;
+					}	
+				}
+			\end{algorithm}
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{SelectionSort -- Beweis Invariante}
+		\begin{overlayarea}{\textwidth}{.60\textwidth}
+			{Definiere \quad $\max(()) := -\infty$ \quad und \quad $\min(()) := +\infty$. \\} 
+			
+			Beweis Invariante: \\ 
+			$\quad\quad \selsortinvariant$ 
+			
+			{\hanging\textbf{IA}. ($i=1$): \ $A[1..0] = ()$ ist sortiert und $-\infty = \max(A[1..0]) \leq \min(A[1..n])$. \\}
+			{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante galt am Ende des Durchlaufs $i - 1$. \\}
+			\hanging\textbf{IS}. ($i - 1 \rightsquigarrow i$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
+			$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $minIndex \in \{i,...,n\}$ \newline
+			$\Rightarrow A[i-1] \leq A[minIndex]$ \ und \ $A[minIndex] \leq A[i]$. \newline
+			$\Rightarrow A[minIndex]$ kann zur Fortsetzung der Sortierung problemlos nach $A[i]$ verschoben werden! 
+			Tauschen von $A[i]$, $A[minIndex]$: \newline
+			$\Rightarrow A[1..i]$ ist sortiert, \newline
+			$A[i] = \max(A[1..i]) \leq \min(A[i+1 \ ... \ n]). \qed$ \newline
+			
+			$\Rightarrow$ Nach dem $n$-ten Schleifendurchlauf gilt also: $A[1..n]$ ist sortiert.
+		\end{overlayarea}
+	\end{frame}
+	
+	\begin{frame}{SelectionSort -- Beweis Terminierung}
+		In diesem Fall trivial: 
+		\begin{itemize}
+			\item Schleifenvariable $i$ nach oben durch $n$ beschränkt
+			\item ...und wird in jedem Durchlauf inkrementiert (und sonst nicht verändert)
+			\implitem SelectionSort terminiert
+		\end{itemize}
+		\impl SelectionSort funktioniert! Yay! :D
+	\end{frame}
+	
+}
 
 
 
+\section{Master-Theorem / Amortisierte Analyse}
 
-
-
-\begin{frame}{Das Master-Theorem (einfache Form)}
-	$a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \mathbb{N}$ sei 
+\begin{frame}{Das Master-Theorem (einfache Form)} 
+	Seien $a, \textcolor{blue}{b}, c, \textcolor{darkgreen}{d}$ positive Konstanten und für $n \in \N$ sei 
 	\[
 	T(n) = 
 	\begin{cases}
 	a,  & \text{für } n = 1 \\
-	\textcolor{darkgreen}{d} \cdot T(\lceil \frac{n}{\textcolor{blue}{b}} \rceil) + cn, & \text{für } n > 1
-	\end{cases}.
+	\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\*n, & \text{für } n > 1
+	\end{cases}
 	\]
+	gegeben. \\ \smallskip
+	
 	Dann gilt:
 	\[
 	T(n) \in 
 	\begin{cases}
-	\Theta(n),                                                        & \textcolor{darkgreen}{d} < \textcolor{blue}{b} \\
-	\Theta(n \log n),                                                 & \textcolor{darkgreen}{d} = \textcolor{blue}{b} \\
-	\Theta(n^{\log _{\textcolor{blue}{b}} \textcolor{darkgreen}{d}}), & \textcolor{darkgreen}{d} > \textcolor{blue}{b}
+	\Th{n},                                                        & \textcolor{darkgreen}{d} < \textcolor{blue}{b} \\
+	\Th{n \log n},                                                 & \textcolor{darkgreen}{d} = \textcolor{blue}{b} \\
+	\Th{n^{\log _{\textcolor{blue}{b}} \textcolor{darkgreen}{d}}}, & \textcolor{darkgreen}{d} > \textcolor{blue}{b}
 	\end{cases}.
-	\] 
+	\]
 \end{frame}
-
 
 
 
@@ -205,24 +294,26 @@
 \end{frame}
 
 
-
+\section{Listen und Co.}
 
 \begin{frame}{Listen und Co.}
-	\textbf{Doppelt verkettete Liste} \\[0,125cm]
+	\textbf{Doppelt verkettete Liste}
 	\begin{itemize}
 		\item Invariante: $next \access prev = prev \access next = \KwThis$
 		\item \textbf{Dummy-Header} $h$ für Bequemlichkeit und als Sentinel (Wächter-Element) beim Suchen
-		\item[\Pros] Flexibel
-		\item[\Cons] Nicht cachefreundlich
+		\item[\Pros] Flexibel, meiste Veränderungen in $\Oh{1}$
+		\item[\Cons] Nicht cachefreundlich, Indexzugriff in $\Oh{n}$
 	\end{itemize}
-	\textbf{Unbeschränktes Array} \\[0,125cm]
+	\textbf{Unbeschränktes Array} 
 	\begin{itemize}
 		\item Array voll \impl Ziehe in \textbf{doppelt} so großes Array um
 		\item Array viertel-voll 
 		\impl Ziehe in \textbf{halb} so großes Array um
-		\item[\Pros] Cachefreundlich
-		\item[\Cons] Eher unflexibel
+		\item[\Pros] Cachefreundlich, Indexzugriff in $\Oh{1}$
+		\item[\Cons] Eher unflexibel, viele Veränderungen in $\Oh{n}$
 	\end{itemize}
+	\medskip
+	\small \ZB: Altklausur 2016\_2 A6.
 \end{frame}
 
 \begin{frame}{Listen und Co.}
@@ -234,12 +325,12 @@
 \end{frame}
 
 \begin{frame}{Listen und Co.}
-	\underline{Aufgabe} \\
+	\taskheading{}
 	Entwerft einen Stack, der $push$, $pop$ und $min$ kann und zwar in $O(1)$ (nicht amortisiert).
 \end{frame}
 
 \begin{frame}{Listen und Co.}
-	\underline{Lösung} \\
+	\solutionheading
 	\begin{algorithm}[H]
 		$BasicStack, MinimumStack: Stack$ \;
 		\;
@@ -261,18 +352,22 @@
 \end{frame}
 
 
-
+\section{Hashing}
 
 \begin{frame}{Hashing}
 	\begin{itemize}
 		\item \textbf{Erwartete} Laufzeit!
-		\item \textbf{Hashfunktion} $h$ weist Elemente einem Platz zu 
+		\item \textbf{Hashfunktion} $h$ weist Elemente einem Platz in der Tabelle zu 
 		\item \textbf{Universelle} Hashfunktionen \quad --- \quad  Vorlesung: \\
 		Wenn $n \in O(m)$ Elemente in die Hashtable eingefügt werden \impl erwartete $\abs{\text{Kollisionen}} \in O(1)$ 
-		\item Typische univ. Hashfunktion: \\
+		\item Typische Familie univ. Hashfunktionen: \\
 		$h_a(x) := a \cdot x \mod m \quad (0 < a < m)$ \quad ($m$ \textbf{prim}!)
 		\item Oder generisch (z. B., falls in Klausur nötig): „Sei $h$ eine beliebige Hashfunktion aus der Familie universeller Hashfunktionen“
 	\end{itemize}
+	\bigskip
+	\small Aufgaben: \\
+	\hanging \emph{Konstruktion}: Probeklausur '17 A4, SS 2017 ÜB4 A1, Altklausuren 2015 A6b, 2010 A3, ... \\
+	\emph{Op-Folge angeben}: Probeklausur '17 A2b, Altklausur 2010 A6a, ...
 \end{frame}	
 
 \begin{frame}{Hashing}	
@@ -286,7 +381,7 @@
 	\begin{itemize}
 		\implitem Nur $\KwArrayOf \text{Element}$: \\
 		Platz besetzt? Gucke rechts davon. \\
-		Beim \textbf{Löschen}: Ggfs. wieder nach links zurückschieben!
+		Beim \textbf{Löschen}: Ggfs. wieder nach links zurückschieben, damit Lücken wieder zu!
 		\item Ganz rechts im Array Platz dicht? \\
 		\impl Pufferbereich (der dann hoffentlich langt)  \quad oder \\
 		\impl Zyklisch 
@@ -295,22 +390,23 @@
 	
 
 
+\section{Sortieren}
 
 \begin{frame}{Sortieralgorithmen}
 	\textbf{Vergleichsbasiert}
 	\begin{itemize}
-		\item InsertionSort
-		\item (SelectionSort)
-		\item (BubbleSort)
-		\item Mergesort
-		\item Quicksort
-		\item Heapsort (absteigende Sortierung!)
+		\item InsertionSort \hfill {\small (Elemente blubbern einzeln nach unten, bis sie passen)}
+		\item (SelectionSort) \hfill {\small (Wähle nächstes passendes Element aus)}
+		\item (BubbleSort) 
+		\item Mergesort \hfill {\small (Listen mehrmals halbieren, dann zurückmergen)}
+		\item Quicksort \hfill  {\small („Pivot-Vorsortierung“, Teile rekursiv weitersortieren)} 
+		\item Heapsort (\textbf{ab}steigende Sortierung!) \hfill {\small (baue Heap auf, $n$-mal $deleteMin$)}  
 	\end{itemize}
 	\textbf{Ganzzahlig}
 	\begin{itemize}
-		\item BucketSort
-		\item CountingSort
-		\item RadixSort
+		\item BucketSort \hfill {\small (Elemente in passenden „Eimer“ werfen)}
+		\item CountingSort \hfill {\small (Anzahl zählen statt reinzuwerfen)}
+		\item LSD-RadixSort \hfill {\small (nach den einzelnen Ziffern sortieren)}
 	\end{itemize}
 \end{frame}
 
@@ -433,6 +529,8 @@
 
 
 
+\section{Binäre Heaps / Sortierte Folgen}
+
 \begin{frame}{Binäre Heaps}
 	\textbf{Implementierung} \\
 	\begin{itemize}
@@ -459,9 +557,9 @@
 
 \begin{frame}{Binäre Heaps}
 	\begin{itemize}
-		\item $insert$: Nach unten und \emph{siftUp}
+		\item $insert$: Nach unten rechts und \emph{siftUp}
 		\item $deleteMin$: Element ganz unten rechts \~~> ganz oben, \emph{siftDown}
-		\item $buildHeap$: „Ebenen“ von unten \~~> oben durchgehen und „down-siften“ \quad in $O(n)$
+		\item $buildHeap$: „Ebenen“ von unten \~~> oben durchgehen und „down-siften“, dass es passt \quad in $O(n)$
 	\end{itemize}
 \end{frame}
 
@@ -479,6 +577,7 @@
 
 
 
+\section{Graphen}
 
 \begin{frame}{Graphen}
 	\textbf{Repräsentationen} 
@@ -496,14 +595,22 @@
 		\item Breitensuche
 		\implitem Kantenklassifikation
 	\end{itemize}
+	
+	\bigskip
+	\small
+	Aufgaben: \\
+	\emph{Konstruktion}: Altklausur 2010 A1a, ... \\
+	\emph{BFS anwenden, sodass}: Altklausur 2010 A1f, ...\\
 \end{frame}
 
 \begin{frame}{Graphen}
 	\textbf{Kürzeste Wege}
-	\begin{description}
-		\item[\textbf{Dijkstra}] Kantengewichte $\geq 0$, \quad $O((m+n) \log n)$
-		\item[\quad\textbf{Bellman-Ford}] Kantengewichte $\in \R$, erkennt neg. Zyklen, \quad $O(n \cdot m)$
-	\end{description}
+	\begin{tabular}{rll}
+		Dijkstra &  Kantengewichte $\geq 0$, & $O((m+n) \log n)$ \\
+		Bellman-Ford & Kantengew. $\in \R$, erkennt neg. Zyklen, & $O(n \cdot m)$ 
+	\end{tabular} \\
+	\smallskip
+	\hfill {\tiny Aufgaben: \emph{Anwenden} (Altk. 2010 A2, 2013 A2a), \emph{Theorie} (Altk. 2013 A2c), ...} \\
 	\pause
 	\textbf{Minimale Spannbäume}
 	\begin{itemize}
@@ -512,16 +619,18 @@
 		\implitem \emph{Jarník-Prim}: Dijkstra-ähnlich – Aufspannen
 		\implitem \emph{Kruskal}: Kanten von leicht \~~> schwer hinzufügen, wenn's geht
 	\end{itemize}
+	\hfill {\tiny Aufgaben: \emph{Anwenden} (Altk. 2010 A5a, 2015 A2b, 2014 A6b), ...} \\
 	\pause
-	\textbf{UnionFind} (für Kruskal)
+	\textbf{Union-Find} (für Kruskal)
 	\begin{itemize}
-		\item Kleine Bäumchen repräsentieren \textbf{Knoten}mengen
+		\item Kleine Bäumchen repräsentieren zusammenhäng. \textbf{Knoten}mengen
 		\item Pfadkompression
 		\item Union-By-Rank
 	\end{itemize}
 \end{frame}
 
 
+\section{Optimierungsprobleme}
 
 \begin{frame}{Optimierungsprobleme}
 	\textbf{Ansätze:}
@@ -534,9 +643,9 @@
 	\forcenewline
 	{\small Aufgaben: 
 		\begin{itemize}
-			\item Altklausur März 2015 A3 „MaxSubArray“;
+			\item Altklausur 2014\_2 A3 „MaxSubArray“;
 			\item Münzproblem (SS~2016 Übung~12 Folie~5 \\ {\footnotesize \url{http://crypto.iti.kit.edu/fileadmin/User/Lectures/Algorithmen\_SS16/ue12-slides.pdf}})
-			\item Altklausur März 2017 A5 „Chemie-ILP“
+			\item Altklausur 2016\_2 A5 „Chemie-ILP“
 		\end{itemize}
 	}
 \end{frame}
