@@ -131,9 +131,9 @@
 	\hanging \textbf{IV}.: Die Invariante galt zu Beginn von Schleifendurchlauf $i$ für festes $i$. \\
 	\pause
 	\hanging {\textbf{IS}. ($i \~~> i + 1$): Es gilt zu Beginn von Schleifendurchlauf $i+1$: \newline
-		$s_{i+1} = s_i + A[i+1] \stackrel{\text{IV}}{=} \sum\limits_{j=1}^{i-1} A[j] + A[i] = \sum\limits_{j=1}^{i} A[j]$. \qed
+		$s_{i+1} = s_i + A[i] \stackrel{\text{IV}}{=} \sum\limits_{j=1}^{i-1} A[j] + A[i] = \sum\limits_{j=1}^{i} A[j]$. \qed
 	} \\
-	Nach dem $n$-ten Durchlauf gilt also $s = \sum\limits_{j=1}^{n} A[j]$.
+	Nach dem $n$-ten Schleifendurchlauf gilt also $s = \sum\limits_{j=1}^{n} A[j]$.
 \end{frame}
 
 \begin{frame}{Algorithmenanalyse}
