@@ -165,9 +165,13 @@
 \newcommand{\qqquad}{\q3uad}
 \newcommand{\minusquad}{\hspace{-1em}}
 
+%% Placeholder utils
+% \§{#1}   Saves #1 as placeholder and prints it
+% \.       Prints an \hphantom with the size of the recalled placeholder.
 \def\indentstring{}
 \def\§#1{\def\indentstring{#1}#1}
 \def\.{{$\hphantom{\text{\indentstring}}$}}
+%% Placeholder utils end
 
 
 \newcommand{\impl}{\ifmmode\ensuremath{\mskip\thinmuskip\Rightarrow\mskip\thinmuskip}\else$\Rightarrow$\xspace\fi}  
@@ -357,12 +361,23 @@
 \newcommand{\hanging}{\hangindent=0.7cm}
 \newcommand{\indented}{\hanging}
 
+% \hstretchto prints #2 left-aligned into a box of the width of #1
 \def\hstretchto#1#2{%
 	\mbox{}\vphantom{#2}\rlap{#2}\hphantom{#1}%
 }
 
 \def\vstretchto#1#2{%
 	\mbox{}\hphantom{#2}\smash{#2}\vphantom{#1}%
+}
+
+% \hstretchtocentered prints #2 centered into a box of the width of #1
+\def\hstretchtocentered#1#2{%
+	\mbox{}\vphantom{#2}\scalebox{0.5}{\hphantom{#1}}\clap{#2}\scalebox{0.5}{\hphantom{#1}}%
+}
+
+% vertical centering
+\newcommand{\vertcenter}[1]{%
+	\ensuremath{\vcenter{\hbox{#1}}}%
 }
 
 \newcommand{\Pros}{{\huge \protect\textcolor{adaptinggreen}{\protect\contour{black}{\raisebox{-.3pt}{$\protect\textbf{+}$}}}}\xspace}
