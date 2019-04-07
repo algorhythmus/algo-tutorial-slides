@@ -1,25 +1,36 @@
 % ALGO TUT CONFIG FILE
 
+% PLEASE COPY THIS TEMPLATE FILE INTO A NEW `config.tex` FILE WHICH YOU CAN THEN CUSTOMIZE.
+
+% Fill in these for customization.
 \newcommand{\myname}{Max Mustermann}
 \newcommand{\mynamebold}{\textbf{Max} Mustermann}
-\newcommand{\mymail}{max.mustermann@student.kit.edu}  % Consider using your named student Mail address to keep your u-Account private.
+\newcommand{\mymail}{max.mustermann@student.kit.edu}  % Consider using your named student e-mail address to keep your u**** account private.
 \newcommand{\mytutnumber}{42}
 \newcommand{\mysocrativeroom}{???}
+
+% Toggle ONE (!) of these
+%\def\ThassesTut{}
+\def\DanielsTut{}
 
 \newcommand{\aboutMeFrame}{
 	\begin{frame}{tbd.}
 		\centering
-		\includegraphics[height=.3\frameheight]{../customdata/DJ-rofl.jpg} \\
+		% A photo of you, if you want
+		\includegraphics[height=.3\frameheight]{../customdata/some-picture-of-me.jpg} \\
 		\myname \\
 		\mailto{\mymail} \\ \vspace{.2\baselineskip}
-		Informatik, 6. Fachsemester (Bachelor). \\
+		Informatik, X. Fachsemester (Bachelor). \\
 		\bigskip
-		In $\heartsuit$ with Haskell and \\ Functional Programming. :)
+		% something more about you... (optional)
 	\end{frame}
 }
 
-\def\thisyear{2018}
+% Please insert the current year here
+\def\thisyear{2019}
+% PLEASE REMEMBER to change the \ILIAS command's URL inside tutpreamble.tex!
 
+% This list is for your own tutorial dates -- please adjust accordingly
 \def\mydate#1{%
 	\ifnum#1=1\relax	  	  27. April \thisyear \
 	\else \ifnum#1=2\relax	  04. Mai \thisyear \

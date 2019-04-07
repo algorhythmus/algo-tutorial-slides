@@ -56,6 +56,7 @@
 \usepackage{csquotes}
 \usepackage{kbordermatrix}
 
+% 
 \newcommand{\mycomment}[1]{}
 
 %%%% CONFIG
@@ -104,9 +105,6 @@
 	\delimitershortfall=0pt  % formerly: 0pt  
 	\delimiterfactor=1
 }
-% todo later
-%\delimitershortfall=0pt  % for proper \left( \right) typography
-%\delimiterfactor=1
 
 % --- \frameheight constant ---
 \newlength\fullframeheight
@@ -491,6 +489,7 @@
 			Vorgänger dieses Foliensatzes wurden erstellt von: \\[1em]
 			Christopher Hommel  (urspr. Verfasser)\\
 			Daniel Jungkind 
+			Thassilo Helmold
 		%\end{block}
 	\end{frame}
 }
@@ -658,9 +657,14 @@
 % change the following line to "ngerman" for German style date and logos
 \selectlanguage{ngerman}
 
-\ifnum\thisyear=2018 \else \errmessage{Old ILIAS link inside preamble. Please update.} \fi
+% Commented out in order to avoid confusion with unfamiliar users
+% \ifnum\thisyear=2019 \else \errmessage{Old ILIAS link inside preamble. Please update the URL of the ILIAS command.} \fi
+
+% ILIAS URL %%%
 
 \newcommand{\ILIAS}{\urlnamed{https://ilias.studium.kit.edu/ilias.php?ref_id=808428&cmdClass=ilrepositorygui&cmdNode=k8&baseClass=ilrepositorygui}{ILIAS}\xspace} 
+
+% ILIAS URL END %%%
 
 \newcommand{\Socrative}{\only<handout:0>{socrative.com $\qquad$ \~~> Student login \\ Raumname:  \mysocrativeroom\\ \medskip}}
 
