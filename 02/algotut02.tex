@@ -260,7 +260,7 @@
 				\For{$i := 1 \KwTo \textcolor{darkgreen}{d}$} {
 					$R_i := \|Foo|(L_i)$\;
 				}
-				führe alle $R_i$ in Laufzeit $c\·n$ zusammen
+				führe alle $R_i$ in Laufzeit $c\*n$ zusammen
 			}
 		\end{algorithm}
 	\end{exampleblock}
@@ -271,18 +271,18 @@
 	
 	\textbf{Vorgehen:}
 	\begin{enumerate}
-		\item Rekurrenzgleichung aufstellen:\\
+		\item[1.] Rekurrenzgleichung aufstellen:\\
 		Abschätzen der Laufzeit $T(n)$ \enquote{wie vorhin am Code}, dabei für Foo $T(n)$ einsetzen.
 		\[
 		T(n) = 
 		\begin{cases}
 		a,  & \text{für } n = 1 \\
-		\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\·n, & \text{für } n > 1
+		\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\*n, & \text{für } n > 1
 		\end{cases}
 		\]
 		
 		\pause
-		\item Auflösen:\\ 
+		\item[2.] Auflösen:\\ 
 		Mit Master-Theorem (wenn möglich), ansonsten von Hand.
 	\end{enumerate}
 
@@ -294,7 +294,7 @@
 	T(n) = 
 	\begin{cases}
 	a,  & \text{für } n = 1 \\
-	\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\·n, & \text{für } n > 1
+	\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\*n, & \text{für } n > 1
 	\end{cases}
 	\]
 	gegeben. \\ \smallskip
@@ -388,7 +388,7 @@
 			$
 			T(n) = \casesl{
 				a,  & n = 1 \\
-				\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\·n, & n > 1
+				\textcolor{darkgreen}{d} \cdot T\large(\frac{n}{\textcolor{blue}{b}}\large) + c\*n, & n > 1
 			} 
 			$ \hspace{-1.2\baselineskip} \\
 			\impl 	$T(n) \in 
@@ -430,13 +430,13 @@
 
 \begin{frame}[t]{Aufgaben Master-Theorem}
 	\solutionheading \smallskip
-	Laufzeit von BinarySearch ist $T(n) = \casesl{1, & n = 1 \\ 1 \· T(\fract n/2 ) {\color<3->{alertcolor} \vphantom{.} + 1}, & n > 1 }.$ \\
+	Laufzeit von BinarySearch ist $T(n) = \casesl{1, & n = 1 \\ 1 \* T(\fract n/2 ) {\color<3->{alertcolor} \vphantom{.} + 1}, & n > 1 }.$ \\
 	\pause \smallskip
 	\impl Master-Theorem sagt 
 		\only<.(1)|handout:0>{$T(n) \in \Th{n}$}%
 		\only<.(2)->{$\xcancel{T(n) \in \Th{n}}$}. \\
 	\pause
-	\impl \textbf{Reingefallen}! :P Master-Theorem will noch „$\color{alertcolor} \vphantom{.} + c\·n$“. \textbf{Gibt's hier nicht}! \\ 
+	\impl \textbf{Reingefallen}! :P Master-Theorem will noch „$\color{alertcolor} \vphantom{.} + c\*n$“. \textbf{Gibt's hier nicht}! \\ 
 	\pause \medskip
 	Hirn einschalten: BinarySearch \textbf{halbiert das Array} in jedem Durchlauf. \\
 	Wie oft kann man $n := \size{A}$ halbieren? \\
