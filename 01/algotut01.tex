@@ -224,8 +224,8 @@
 \begin{frame}{Pseudocode}
 	\begin{exampleblock}{Arrays}
 		\begin{algorithm}[H]
-			Schema: \quad $ arr : \KwArray[\textit{Von}..\textit{Bis}] \KwOf T $ \\
-			Heißt: \quad $arr$ ist ein $T$-\KwArray. Der erste Index ist \textit{Von}, der letzte ist \textit{Bis}. \\ 
+			Schema: \quad $ arr : \KwArray[\textit{Von}..\textit{Bis}] \KwOf \|T| $ \\
+			Heißt: \quad $arr$ ist ein T-\KwArray. Der erste Index ist \textit{Von}, der letzte ist \textit{Bis}. \\ 
 			\forcenewline
 			\pause
 			Bsp.: \\ 
@@ -662,7 +662,7 @@
 		
 		\only<2-3|handout:1>{\hanging\textbf{IA}. ($i=1$): \ $A[1..0] = ()$ ist sortiert und $-\infty = \max(A[1..0]) \leq \min(A[1..n])$. \\}
 		\pause
-		\only<3-|handout:2>{\hanging\textbf{IV}. \textit{($i > 1$)}: \ Die Invariante gilt zu Beginn des Durchlaufs $i$ für ein \textit{festes} $i$. \\}
+		\only<3-|handout:2>{\hanging\textbf{IV}. ($i > 1$): \ Die Invariante gilt zu Beginn des Durchlaufs $i$ für ein \textit{festes} $i$. \\}
 		\pause
 		\visible<4-|handout:2>{\hanging\textbf{IS}. ($i \~~> i + 1$): \ Laut IV ist $A[1\ ...\ i-1]$ sortiert und \newline
 		$\max(A[1\ ...\ i-1]) \leq \min(A[i...n])$ \quad und \quad $\|minIndex| \in \{i,...,n\}$ \newline
@@ -686,7 +686,9 @@
 		\item ...und wird in jedem Durchlauf inkrementiert (und sonst nicht verändert)
 		\implitem SelectionSort terminiert
 	\end{itemize}
-	\impl SelectionSort funktioniert! Yay! :D
+	\impl SelectionSort funktioniert! Yay! :D \\
+	\bigskip
+	{\small (Disclaimer: Eigentlich fehlt in der Invariante noch, dass die Elemente dieselben bleiben $=$ bloß permutiert werden. Trivial zeigbar, weil nur swap$(\*,\*)$ benutzt wird. Omitted for the sake of simplicity.)}
 \end{frame}
 
 %\begin{frame}{Max}

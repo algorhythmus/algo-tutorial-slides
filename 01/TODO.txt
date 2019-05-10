@@ -1,0 +1,2 @@
+Selsortbeweis:
+IV mit i>1 flawed: i>=1 geht nicht, weil im IS auf A[i-1] zugegriff. wird, aber i>1 auch kaputt, weil es den IA nicht abdeckt und somit ein IA f�r i=1 notwendig w�re (aber sehr h�sslich dann). Wird noch gefixt.
