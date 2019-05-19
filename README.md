@@ -12,7 +12,7 @@ Wenn ihr Fragen habt, stellt sie gerne an Daniel, Thassilo oder Christopher.
 
 ### FAQ
 1. _Ich verwende eure Folien als Grundlage für meine eigenen. Ist das für euch ok?_  
- Ja, das Material darf beliebig weiterverwendet und modifiziert werden. Aber wenn du Fehler findest, sei so lieb und sag uns Bescheid. Danke! :o)
+ Ja, das Material darf beliebig weiterverwendet und modifiziert werden. Sei aber bitte so lieb und gib die Urheber dieses Foliensatzes an (dafür gibt es praktischerweise das `\slideThanks`-Kommando :P). Wenn du Fehler findest, sag uns ruhig Bescheid. Danke! :o)
 2. _Da sind komische LaTeX-Tags, die ich nicht kenne. Hilfe!_  
  Ja, Standard-LaTeX ist ziemlich mickrig und umständlich, weshalb wir es etwas aufgepeppt haben. :D  
  Viele Sachen sind selbsterklärend, wenn man sie im Einsatz sieht, ansonsten lohnt sich ein Blick in die `tutpreamble.tex`.  
